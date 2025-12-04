@@ -10,7 +10,6 @@ import game.Game;
  */
 public class Enemy extends Entity {
 
-
     public Enemy(double positionx, double positiony, double size, double speed, Game game) {
         super(positionx, positiony, size, 1, speed, game);
     }

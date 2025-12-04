@@ -9,6 +9,7 @@ enum EDirectionMissile {
 public class Missile {
     private double speed;
     private double positiony;
+
     public double getPositiony() {
         return positiony;
     }
@@ -47,13 +48,12 @@ public class Missile {
         return positiony > 1 || positiony < 0;
     }
 
-    public boolean hitEntity(Entity e){
-         if((positiony - e.getPositiony() < 0.001) && (positionx - e.getPositionx() < 0.001)){
-            e.setHealth(e.getHealth()-1);
+    public boolean hitEntity(Entity e) {
+        if (((positiony - e.getPositiony()) < 0.001) && ((positionx - e.getPositionx()) < 0.001)) {
+            e.setHealth(e.getHealth() - 1);
             return true;
-         } 
-         return false;
+        }
+        return false;
     }
-
 
 }
