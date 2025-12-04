@@ -28,9 +28,6 @@ public class Missile {
         this.direction = direction;
     }
 
-    public boolean hit(Entity e) {
-        return e.getPositiony() == this.positiony;
-    }
 
     public void update() {
         if (direction == EDirectionMissile.UP) {
@@ -49,7 +46,12 @@ public class Missile {
     }
 
     public boolean hitEntity(Entity e) {
-        if (((positiony - e.getPositiony()) < 0.001) && ((positionx - e.getPositionx()) < 0.001)) {
+        double distanceX = this.positionx - e.positionx;
+        double distanceY = this.positiony - e.positiony;
+        double distance = distanceX * distanceX + distanceY * distanceY;
+        double hitboxes = e.size/2 + 0.01; // taille du missile
+
+        if (distance <= hitboxes * hitboxes) {
             e.setHealth(e.getHealth() - 1);
             return true;
         }
