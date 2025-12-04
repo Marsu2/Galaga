@@ -9,6 +9,14 @@ enum EDirectionMissile {
 public class Missile {
     private double speed;
     private double positiony;
+    public double getPositiony() {
+        return positiony;
+    }
+
+    public double getPositionx() {
+        return positionx;
+    }
+
     private double positionx;
     private EDirectionMissile direction;
 
@@ -34,5 +42,18 @@ public class Missile {
         StdDraw.setPenColor(StdDraw.RED);
         StdDraw.filledRectangle(positionx, positiony, 0.005, 0.01);
     }
+
+    public boolean isOutOfBound() {
+        return positiony > 1 || positiony < 0;
+    }
+
+    public boolean hitEntity(Entity e){
+         if((positiony - e.getPositiony() < 0.001) && (positionx - e.getPositionx() < 0.001)){
+            e.setHealth(e.getHealth()-1);
+            return true;
+         } 
+         return false;
+    }
+
 
 }

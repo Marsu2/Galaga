@@ -22,6 +22,18 @@ public abstract class Entity {
 
     }
 
+    public int getHealth() {
+        return health;
+    }
+
+    public void setHealth(int health) {
+        this.health = Math.max(0, health);
+    }
+
+    public double getPositionx() {
+        return positionx;
+    }
+
     public double getPositiony() {
         return positiony;
     }
@@ -45,5 +57,9 @@ public abstract class Entity {
     public abstract void move();
 
     public abstract void shoot();
+
+    public boolean isDead() {
+        return health <= 0;
+    }
 
 }

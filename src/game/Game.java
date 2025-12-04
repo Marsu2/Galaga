@@ -1,8 +1,12 @@
 package game;
 
 import engine.StdDraw;
+import game.actors.Enemy;
+import game.actors.Entity;
 import game.actors.Missile;
 import game.actors.Player;
+
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -14,9 +18,15 @@ public class Game {
 
     public Player player; // Jouer, seul éléments actuellement dans notre jeu
     private List<Missile> missilesPlayers;
+    private List<Missile> missilesEnemies;
+    private List<Entity> enemies;
 
     public void addMissilesPlayers(Missile m) {
         missilesPlayers.add(m);
+    }
+
+    public void addMissilesEnemies(Missile m) {
+        missilesEnemies.add(m);
     }
 
     /**
@@ -24,7 +34,11 @@ public class Game {
      */
     public Game() {
         player = new Player(0.5, 0.1, 0.1, 5, 0.01, this);
+        enemies = new LinkedList<>();
+        Enemy enemy1 = new Enemy(0.5, 0.9, 0.05, 0.01, this);
+        enemies.add(enemy1);
         missilesPlayers = new LinkedList<>();
+        missilesEnemies = new LinkedList<>();
     }
 
     /**
@@ -71,6 +85,12 @@ public class Game {
         for (Missile m : missilesPlayers) {
             m.drawSprite();
         }
+        for (Missile m : missilesEnemies) {
+            m.drawSprite();
+        }
+        for (Entity e : enemies) {
+            e.drawSprite();
+        }
     }
 
     /**
@@ -78,8 +98,43 @@ public class Game {
      */
     private void update() {
         player.update();
+        for (Entity e : enemies) {
+            e.update();
+        }
+
+        List<Missile> hiddenMissiles = new ArrayList<>();
         for (Missile m : missilesPlayers) {
+            if (m.isOutOfBound()) {
+                hiddenMissiles.add(m);
+            }
             m.update();
         }
+
+        for (Missile m : missilesEnemies) {
+            if (m.isOutOfBound()) {
+                hiddenMissiles.add(m);
+            }
+            m.update();
+        }
+        missilesPlayers.removeAll(hiddenMissiles);
+        missilesEnemies.removeAll(hiddenMissiles);
+        checkHit();
+    }
+
+    private void checkHit(){
+        List<Missile> missilesDead = new ArrayList<>();
+        List<Entity> enemiesDead = new ArrayList<>();
+        for (Missile m : missilesPlayers) {
+            for (Entity e : enemies) {
+                if (m.hitEntity(e)) {
+                    if(e.isDead()){
+                        enemiesDead.add(e);
+                    }
+                    missilesDead.add(m);
+                }
+            }
+        }
+        enemies.removeAll(enemiesDead);
+        missilesPlayers.removeAll(missilesDead);
     }
 }

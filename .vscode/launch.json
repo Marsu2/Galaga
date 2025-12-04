@@ -9,6 +9,13 @@
             "name": "App",
             "request": "launch",
             "mainClass": "engine.App",
+            "projectName": "Galaga_d1889a22"
+        },
+        {
+            "type": "java",
+            "name": "App",
+            "request": "launch",
+            "mainClass": "engine.App",
             "projectName": "Galaga_a35230f7"
         },
         {
