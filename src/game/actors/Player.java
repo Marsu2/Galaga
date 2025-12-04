@@ -27,7 +27,7 @@ public class Player extends Entity {
         }
         // Si la flèche droite est préssé
         if (StdDraw.isKeyPressed(39)) {
-            positionx += speed;
+            positionx += speed; // zeez
         }
     }
 
