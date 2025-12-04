@@ -8,8 +8,6 @@ import game.actors.Player;
  * Gère la création de l'espace de jeu et la boucle de jeu en temps réel.
  */
 public class Game {
-    public static int canvaHeight = 1000;
-    public static int canvasWidth = 1000;
 
     public Player player; // Jouer, seul éléments actuellement dans notre jeu
 
@@ -24,6 +22,8 @@ public class Game {
      * Initialise l'espace de jeu
      */
     private void init() {
+        int canvaHeight = 1000;
+        int canvasWidth = 1000;
         StdDraw.setCanvasSize(canvaHeight, canvasWidth);
         StdDraw.enableDoubleBuffering();
     }

@@ -1,6 +1,7 @@
 package game.actors;
 
 import engine.StdDraw;
+import game.Game;
 
 /**
  * Classe représentant le jouuer.
@@ -9,7 +10,8 @@ import engine.StdDraw;
  */
 public class Player extends Entity {
     /**
-     * Créé un joueur.
+     * Créé un joueur
+     * 
      * 
      */
 
@@ -23,11 +25,16 @@ public class Player extends Entity {
 
     public void move() {
         if (StdDraw.isKeyPressed(37)) {
-            positionx -= speed;
+            if (positionx > 0) {
+                positionx -= speed;
+            }
         }
         // Si la flèche droite est préssé
         if (StdDraw.isKeyPressed(39)) {
-            positionx += speed; // zeez
+            if (positionx < 1) {
+                positionx += speed;
+
+            }
         }
     }
 
