@@ -15,12 +15,13 @@ public class Player extends Entity {
      * 
      */
 
-    public Player(double positionx, double positiony, double size, int health, double speed) {
-        super(positionx, positiony, size, health, speed);
+    public Player(double positionx, double positiony, double size, int health, double speed, Game game) {
+        super(positionx, positiony, size, health, speed, game);
     }
 
     public void update() {
         move();
+        shoot();
     }
 
     public void move() {
@@ -39,6 +40,10 @@ public class Player extends Entity {
     }
 
     public void shoot() {
+        if (StdDraw.isKeyPressed(32)) {
+            Missile m1 = new Missile(speed * 3, positiony, positionx, EDirectionMissile.UP);
+            game.addMissilesPlayers(m1);
+        }
 
     }
 

@@ -1,7 +1,10 @@
 package game;
 
 import engine.StdDraw;
+import game.actors.Missile;
 import game.actors.Player;
+import java.util.LinkedList;
+import java.util.List;
 
 /**
  * Classe du jeu principal.
@@ -10,20 +13,26 @@ import game.actors.Player;
 public class Game {
 
     public Player player; // Jouer, seul éléments actuellement dans notre jeu
+    private List<Missile> missilesPlayers;
+
+    public void addMissilesPlayers(Missile m) {
+        missilesPlayers.add(m);
+    }
 
     /**
      * Créé un jeu avec tous les éléments qui le composent
      */
     public Game() {
-        player = new Player(0.5, 0.5, 0.1, 5, 0.01);
+        player = new Player(0.5, 0.1, 0.1, 5, 0.01, this);
+        missilesPlayers = new LinkedList<>();
     }
 
     /**
      * Initialise l'espace de jeu
      */
     private void init() {
-        int canvaHeight = 1000;
-        int canvasWidth = 1000;
+        int canvaHeight = 700;
+        int canvasWidth = 700;
         StdDraw.setCanvasSize(canvaHeight, canvasWidth);
         StdDraw.enableDoubleBuffering();
     }
@@ -59,6 +68,9 @@ public class Game {
      */
     public void draw() {
         player.drawSprite();
+        for (Missile m : missilesPlayers) {
+            m.drawSprite();
+        }
     }
 
     /**
@@ -66,5 +78,8 @@ public class Game {
      */
     private void update() {
         player.update();
+        for (Missile m : missilesPlayers) {
+            m.update();
+        }
     }
 }
