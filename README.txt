@@ -1,5 +1,5 @@
-BARBIER Elouan binôme 1
-ESNAULT Damien binôme 2
+  METTRE NOMbinôme 1
+  binôme 2
 
 Explication des fonctionnalitées réalisée :
 ...
