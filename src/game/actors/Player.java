@@ -9,19 +9,22 @@ import game.Game;
  * clavier.
  */
 public class Player extends Entity {
-    /**
-     * Créé un joueur
-     * 
-     * 
-     */
+    private int coolDownShoot;
+    private int coolDownShootMax;
 
     public Player(double positionx, double positiony, double size, int health, double speed, Game game) {
         super(positionx, positiony, size, health, speed, game);
+        coolDownShoot = 0;
+        coolDownShootMax = 7;
     }
 
     public void update() {
         move();
         shoot();
+
+        if (coolDownShoot > 0) {
+            coolDownShoot--;
+        }
     }
 
     public void move() {
@@ -39,9 +42,14 @@ public class Player extends Entity {
         }
     }
 
+    public boolean canShootPlayer() {
+        return game.getMissilesPlayers().size() < 3 && coolDownShoot == 0;
+    }
+
     public void shoot() {
-        if (StdDraw.isKeyPressed(32) && game.canShootPlayer()) {
-            Missile m1 = new Missile(speed * 3, positionx, positiony+size/2, EDirectionMissile.UP);
+        if (StdDraw.isKeyPressed(32) && canShootPlayer()) {
+            coolDownShoot = coolDownShootMax;
+            Missile m1 = new Missile(speed * 3, positionx, positiony + size / 2, EDirectionMissile.UP);
             game.addMissilesPlayers(m1);
         }
 

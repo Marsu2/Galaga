@@ -9,9 +9,11 @@ import game.Game;
  * clavier.
  */
 public abstract class Enemy extends Entity {
+    protected int score;
 
-    public Enemy(double positionx, double positiony, double size, double speed, Game game) {
+    public Enemy(double positionx, double positiony, double size, int score, double speed, Game game) {
         super(positionx, positiony, size, 1, speed, game);
+        this.score = score;
     }
 
     public void update() {
