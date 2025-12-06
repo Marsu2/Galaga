@@ -47,4 +47,9 @@ public class Player extends Entity {
 
     }
 
+    public void drawSprite() {
+        StdDraw.setPenColor(StdDraw.RED);
+        StdDraw.filledCircle(positionx, positiony, size / 2);
+    }
+
 }

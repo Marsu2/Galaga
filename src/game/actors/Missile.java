@@ -52,7 +52,6 @@ public class Missile {
         double hitboxes = e.size/2 + 0.01; // taille du missile
 
         if (distance <= hitboxes * hitboxes) {
-            e.setHealth(e.getHealth() - 1);
             return true;
         }
         return false;

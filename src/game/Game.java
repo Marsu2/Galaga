@@ -1,10 +1,7 @@
 package game;
 
 import engine.StdDraw;
-import game.actors.Enemy;
-import game.actors.Entity;
-import game.actors.Missile;
-import game.actors.Player;
+import game.actors.*;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -35,7 +32,7 @@ public class Game {
     public Game() {
         player = new Player(0.5, 0.1, 0.1, 5, 0.01, this);
         enemies = new LinkedList<>();
-        Enemy enemy1 = new Enemy(0.5, 0.9, 0.05, 0.01, this);
+        Enemy enemy1 = new Moth(0.5, 0.9, 0.05, 0.01, this);
         enemies.add(enemy1);
         missilesPlayers = new LinkedList<>();
         missilesEnemies = new LinkedList<>();
@@ -121,13 +118,14 @@ public class Game {
         checkHit();
     }
 
-    private void checkHit(){
+    private void checkHit() {
         List<Missile> missilesDead = new ArrayList<>();
         List<Entity> enemiesDead = new ArrayList<>();
         for (Missile m : missilesPlayers) {
             for (Entity e : enemies) {
                 if (m.hitEntity(e)) {
-                    if(e.isDead()){
+                    e.setHealth(e.getHealth() - 1);
+                    if (e.isDead()) {
                         enemiesDead.add(e);
                     }
                     missilesDead.add(m);

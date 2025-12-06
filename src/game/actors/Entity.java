@@ -38,19 +38,7 @@ public abstract class Entity {
         return positiony;
     }
 
-    public void drawSprite() {
-        StdDraw.setPenColor(StdDraw.RED);
-        StdDraw.filledCircle(positionx, positiony, size / 2);
-        try {
-            // List<String> lines =
-            // Files.readAllLines(Paths.get("ressources/sprites/catcher.spr"));
-            // for (String line : lines) {
-            // System.out.println(line);
-            // }
-
-        } catch (IllegalArgumentException ie) {
-        }
-    }
+    public abstract void drawSprite();
 
     public abstract void update();
 

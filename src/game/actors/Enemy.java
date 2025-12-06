@@ -8,7 +8,7 @@ import game.Game;
  * A ce stade cen'est qu'un point rouge qui se déplace avec les flèches du
  * clavier.
  */
-public class Enemy extends Entity {
+public abstract class Enemy extends Entity {
 
     public Enemy(double positionx, double positiony, double size, double speed, Game game) {
         super(positionx, positiony, size, 1, speed, game);
@@ -27,4 +27,6 @@ public class Enemy extends Entity {
         Missile m1 = new Missile(speed * 3, positiony, positionx, EDirectionMissile.DOWN);
         game.addMissilesEnemies(m1);
     }
+
+    public abstract void drawSprite();
 }
