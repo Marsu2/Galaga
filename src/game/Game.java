@@ -30,7 +30,7 @@ public class Game {
      * Créé un jeu avec tous les éléments qui le composent
      */
     public Game() {
-        player = new Player(0.5, 0.1, 0.1, 5, 0.01, this);
+        player = new Player(0.5, 0.1, 0.08, 5, 0.01, this);
         enemies = new LinkedList<>();
         Enemy enemy1 = new Moth(0.5, 0.9, 0.05, 0.01, this);
         enemies.add(enemy1);
@@ -134,5 +134,9 @@ public class Game {
         }
         enemies.removeAll(enemiesDead);
         missilesPlayers.removeAll(missilesDead);
+    }
+
+    public boolean canShootPlayer() {
+        return missilesPlayers.size() < 3;
     }
 }

@@ -40,16 +40,15 @@ public class Player extends Entity {
     }
 
     public void shoot() {
-        if (StdDraw.isKeyPressed(32)) {
-            Missile m1 = new Missile(speed * 3, positiony, positionx, EDirectionMissile.UP);
+        if (StdDraw.isKeyPressed(32) && game.canShootPlayer()) {
+            Missile m1 = new Missile(speed * 3, positionx, positiony, EDirectionMissile.UP);
             game.addMissilesPlayers(m1);
         }
 
     }
 
     public void drawSprite() {
-        StdDraw.setPenColor(StdDraw.RED);
-        StdDraw.filledCircle(positionx, positiony, size / 2);
+        super.drawSpriteV2(positionx, positiony, size, "ressources/sprites/ship.spr");
     }
 
 }

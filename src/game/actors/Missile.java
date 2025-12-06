@@ -21,7 +21,7 @@ public class Missile {
     private double positionx;
     private EDirectionMissile direction;
 
-    public Missile(double speed, double positiony, double positionx, EDirectionMissile direction) {
+    public Missile(double speed, double positionx, double positiony, EDirectionMissile direction) {
         this.speed = speed;
         this.positiony = positiony;
         this.positionx = positionx;

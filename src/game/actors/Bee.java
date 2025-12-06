@@ -10,8 +10,8 @@ public class Bee extends Enemy {
     }
 
     public void drawSprite() {
-        StdDraw.setPenColor(StdDraw.BLUE);
-        StdDraw.filledCircle(positionx, positiony, size / 2);
+        super.drawSpriteV2(positionx, positiony, size, "ressources/sprites/bee.spr");
     }
+    
     
 }

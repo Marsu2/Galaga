@@ -6,12 +6,11 @@ import game.Game;
 public class Moth extends Enemy {
 
     public Moth(double positionx, double positiony, double size, double speed, Game game) {
-        super(positionx, positiony,size, speed, game);
+        super(positionx, positiony, size, speed, game);
     }
 
     public void drawSprite() {
-        StdDraw.setPenColor(StdDraw.BLUE);
-        StdDraw.filledCircle(positionx, positiony, size / 2);
+        super.drawSpriteV2(positionx, positiony, size, "ressources/sprites/catcher.spr");
     }
-    
+
 }
