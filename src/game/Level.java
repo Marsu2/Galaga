@@ -87,13 +87,17 @@ public class Level {
                 double size = Double.parseDouble(split[3]);
                 int score = Integer.parseInt(split[4]);
                 double speed = Double.parseDouble(split[5]);
+
                 switch (type) {
                     case "Moth":
                         enemiesFormation.add(new Moth(positionx, positiony, size, score, speed, game));
-                    case "Bee":
-                        enemiesFormation.add(new Bee(positionx, positiony, size, score, speed, game));
+                        break;
                     case "Butterfly":
                         enemiesFormation.add(new Butterfly(positionx, positiony, size, score, speed, game));
+                        break;
+                    case "Bee":
+                        enemiesFormation.add(new Bee(positionx, positiony, size, score, speed, game));
+                        break;
                 }
 
             }
