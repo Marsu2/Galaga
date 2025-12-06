@@ -55,7 +55,7 @@ public class Game {
         init();
 
         while (isGameRunning()) {
-            StdDraw.clear(); // On efface tous ce qu'il y a sur l'interface
+            StdDraw.clear(StdDraw.BLACK); // On efface tous ce qu'il y a sur l'interface
 
             update(); // on met a jour les attributs de chaque éléments
             draw(); // on dessine chaques éléments

@@ -41,7 +41,7 @@ public class Player extends Entity {
 
     public void shoot() {
         if (StdDraw.isKeyPressed(32) && game.canShootPlayer()) {
-            Missile m1 = new Missile(speed * 3, positionx, positiony, EDirectionMissile.UP);
+            Missile m1 = new Missile(speed * 3, positionx, positiony+size/2, EDirectionMissile.UP);
             game.addMissilesPlayers(m1);
         }
 

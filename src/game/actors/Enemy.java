@@ -24,7 +24,7 @@ public abstract class Enemy extends Entity {
     }
 
     public void shoot() {
-        Missile m1 = new Missile(speed * 3, positionx, positiony, EDirectionMissile.DOWN);
+        Missile m1 = new Missile(speed * 3, positionx, positiony-size/2, EDirectionMissile.DOWN);
         game.addMissilesEnemies(m1);
     }
 
