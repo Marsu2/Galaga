@@ -3,12 +3,30 @@ package game.actors;
 import engine.StdDraw;
 import game.Game;
 
+/**
+ * Papillon ennemi qui vole dans le jeu.
+ * Hérite des comportements Enemy de base avec son propre sprite.
+ */
 public class Butterfly extends Enemy {
+
+    /**
+     * Crée un nouveau papillon ennemi aux coordonnées spécifiées.
+     * 
+     * @param positionx position horizontale du papillon
+     * @param positiony position verticale du papillon
+     * @param size      taille du papillon
+     * @param score     points accordés quand le papillon est détruit
+     * @param speed     vitesse de déplacement du papillon
+     * @param game      référence au jeu principal
+     */
 
     public Butterfly(double positionx, double positiony, double size, int score, double speed, Game game) {
         super(positionx, positiony, size, score, speed, game);
     }
 
+    /**
+     * Dessine le sprite spécifique du papillon à sa position actuelle.
+     */
     public void drawSprite() {
         super.drawSpriteV2(positionx, positiony, size, "ressources/sprites/butterfly.spr");
     }

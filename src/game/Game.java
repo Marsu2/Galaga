@@ -7,19 +7,30 @@ import java.util.LinkedList;
 import java.util.List;
 
 /**
- * Classe du jeu principal.
- * Gère la création de l'espace de jeu et la boucle de jeu en temps réel.
+ * Classe principale du jeu.
+ * Gère la boucle de jeu, les collisions, le rendu et la logique principale.
  */
 public class Game {
 
+    /**
+     * Retourne la liste des missiles ennemis.
+     * 
+     * @return liste des missiles ennemis
+     */
     public List<Missile> getMissilesEnemies() {
         return missilesEnemies;
     }
 
-    public Player player; // Jouer, seul éléments actuellement dans notre jeu
+    private Player player; // Jouer, seul éléments actuellement dans notre jeu
     private List<Missile> missilesPlayers;
     private LevelManager manager;
+    private Score score;
 
+        /**
+     * Retourne la liste des missiles du joueur.
+     * 
+     * @return liste des missiles joueurs
+     */
     public List<Missile> getMissilesPlayers() {
         return missilesPlayers;
     }
@@ -27,21 +38,30 @@ public class Game {
     private List<Missile> missilesEnemies;
     private List<Enemy> enemies;
 
+        /**
+     * Ajoute un missile joueur à la liste active.
+     * 
+     * @param m missile à ajouter
+     */
     public void addMissilesPlayers(Missile m) {
         missilesPlayers.add(m);
     }
 
+        /**
+     * Ajoute un missile ennemi à la liste active.
+     * 
+     * @param m missile à ajouter
+     */
     public void addMissilesEnemies(Missile m) {
         missilesEnemies.add(m);
     }
-
     /**
-     * Créé un jeu avec tous les éléments qui le composent
+     * Initialise le jeu avec joueur, ennemis, score et premier niveau.
      */
     public Game() {
         player = new Player(0.5, 0.1, 0.08, 5, 0.02, this);
         enemies = new LinkedList<>();
-
+        score = new Score();
         manager = new LevelManager(this);
         manager.toNextLevel();
 
@@ -52,7 +72,7 @@ public class Game {
     }
 
     /**
-     * Initialise l'espace de jeu
+     * Initialise le jeu avec joueur, ennemis, score et premier niveau.
      */
     private void init() {
         int canvaHeight = 700;
@@ -101,6 +121,7 @@ public class Game {
         for (Entity e : enemies) {
             e.drawSprite();
         }
+        System.out.printf("Score : %d  || HighScore : %d", score.getScore(), score.getHighscore());
     }
 
     /**
@@ -130,16 +151,19 @@ public class Game {
         missilesEnemies.removeAll(hiddenMissiles);
         checkHit();
     }
-
+        /**
+     * Détecte les collisions missile-ennemi et met à jour score/santé.
+     */
     private void checkHit() {
         List<Missile> missilesDead = new ArrayList<>();
         List<Entity> enemiesDead = new ArrayList<>();
         for (Missile m : missilesPlayers) {
-            for (Entity e : enemies) {
+            for (Enemy e : enemies) {
                 if (m.hitEntity(e)) {
                     e.setHealth(e.getHealth() - 1);
                     if (e.isDead()) {
                         enemiesDead.add(e);
+                        score.addScore(e);
                     }
                     missilesDead.add(m);
                 }
@@ -150,6 +174,11 @@ public class Game {
         missilesPlayers.removeAll(missilesDead);
     }
 
+        /**
+     * Retourne le gestionnaire de niveaux.
+     * 
+     * @return gestionnaire de niveaux actuel
+     */
     public LevelManager getLevelManager() {
         return manager;
     }

@@ -10,6 +10,10 @@ import java.util.List;
 
 import game.actors.*;
 
+/**
+ * Représente un niveau de jeu chargé depuis un fichier.
+ * Contient la formation d'ennemis et les paramètres de difficulté.
+ */
 public class Level {
     private String levelName;
     private double formationSpeed;
@@ -17,50 +21,114 @@ public class Level {
     private int attackCooldown;
     private int shootCooldown;
 
+        /**
+     * Définit le nom du niveau.
+     * 
+     * @param levelName nouveau nom
+     */
     public void setLevelName(String levelName) {
         this.levelName = levelName;
     }
 
+        /**
+     * Retourne la vitesse de la formation d'ennemis.
+     * 
+     * @return vitesse de formation
+     */
     public double getFormationSpeed() {
         return formationSpeed;
     }
 
+        /**
+     * Définit la vitesse de la formation d'ennemis.
+     * 
+     * @param formationSpeed nouvelle vitesse
+     */
     public void setFormationSpeed(double formationSpeed) {
         this.formationSpeed = formationSpeed;
     }
 
+        /**
+     * Définit la formation d'ennemis du niveau.
+     * 
+     * @param enemiesFormation nouvelle liste d'ennemis
+     */
     public void setEnemiesFormation(List<Enemy> enemiesFormation) {
         this.enemiesFormation = enemiesFormation;
     }
 
+
+    /**
+     * Retourne le délai d'attaque de la formation.
+     * 
+     * @return cooldown d'attaque (ms)
+     */
     public double getAttackCooldown() {
         return attackCooldown;
     }
 
+
+    /**
+     * Définit le délai d'attaque de la formation.
+     * 
+     * @param attackCooldown nouveau cooldown (ms)
+     */
     public void setAttackCooldown(int attackCooldown) {
         this.attackCooldown = attackCooldown;
     }
 
+    
+    /**
+     * Retourne le délai de tir des ennemis.
+     * 
+     * @return cooldown de tir (ms)
+     */
     public double getShootCooldown() {
         return shootCooldown;
     }
 
+        /**
+     * Définit le délai de tir des ennemis.
+     * 
+     * @param shootCooldown nouveau cooldown (ms)
+     */
     public void setShootCooldown(int shootCooldown) {
         this.shootCooldown = shootCooldown;
     }
 
+
+    /**
+     * Retourne le nom du niveau.
+     * 
+     * @return nom du niveau
+     */
     public String getLevelName() {
         return levelName;
     }
 
+        /**
+     * Retourne la liste des ennemis du niveau.
+     * 
+     * @return formation d'ennemis
+     */
     public List<Enemy> getEnemiesFormation() {
         return enemiesFormation;
     }
 
+        /**
+     * Charge un niveau depuis un fichier de configuration.
+     * 
+     * @param filePath chemin vers le fichier de niveau
+     * @param game référence au jeu principal
+     */
     public Level(String filePath, Game game) {
         loadLevel(filePath, game);
     }
 
+        /**
+     * Charge les données du niveau depuis un fichier texte.
+     * Format : première ligne = nom vitesse attack shoot ; lignes suivantes = type x y size score speed
+     */
     private void loadLevel(String filePath, Game game) {
 
         // Lecture d'un fichier vu durant la séance du CM10

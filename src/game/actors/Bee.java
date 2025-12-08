@@ -3,15 +3,32 @@ package game.actors;
 import engine.StdDraw;
 import game.Game;
 
+/**
+ * Abeille ennemie qui vole dans le jeu.
+ * Hérite des comportements Enemy de base avec son propre sprite.
+ */
 public class Bee extends Enemy {
+
+    /**
+     * Crée une nouvelle abeille ennemie aux coordonnées spécifiées.
+     * 
+     * @param positionx position horizontale de l'abeille
+     * @param positiony position verticale de l'abeille
+     * @param size      taille de l'abeille
+     * @param score     points accordés quand l'abeille est détruite
+     * @param speed     vitesse de déplacement de l'abeille
+     * @param game      référence au jeu principal
+     */
 
     public Bee(double positionx, double positiony, double size, int score, double speed, Game game) {
         super(positionx, positiony, size, score, speed, game);
     }
 
+    /**
+     * Dessine le sprite spécifique de l'abeille à sa position actuelle.
+     */
     public void drawSprite() {
         super.drawSpriteV2(positionx, positiony, size, "ressources/sprites/bee.spr");
     }
-    
-    
+
 }
