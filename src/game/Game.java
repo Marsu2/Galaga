@@ -44,6 +44,7 @@ public class Game {
 
         manager = new LevelManager(this);
         manager.toNextLevel();
+
         enemies = (manager.getCurrentLevel().getEnemiesFormation());
 
         missilesPlayers = new LinkedList<>();
@@ -145,6 +146,7 @@ public class Game {
             }
         }
         enemies.removeAll(enemiesDead);
+        System.out.println(enemies);
         missilesPlayers.removeAll(missilesDead);
     }
 
