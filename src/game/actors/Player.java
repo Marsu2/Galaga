@@ -33,7 +33,7 @@ public class Player extends Entity {
                 positionx -= speed;
             }
         }
-        // Si la flèche droite est préssé
+        // Si la flèche droite est pressé
         if (StdDraw.isKeyPressed(39)) {
             if (positionx < 1) {
                 positionx += speed;
@@ -42,12 +42,12 @@ public class Player extends Entity {
         }
     }
 
-    public boolean canShootPlayer() {
+    public boolean canShoot() {
         return game.getMissilesPlayers().size() < 3 && coolDownShoot == 0;
     }
 
     public void shoot() {
-        if (StdDraw.isKeyPressed(32) && canShootPlayer()) {
+        if (StdDraw.isKeyPressed(32) && canShoot()) {
             coolDownShoot = coolDownShootMax;
             Missile m1 = new Missile(speed * 3, positionx, positiony + size / 2, EDirectionMissile.UP);
             game.addMissilesPlayers(m1);

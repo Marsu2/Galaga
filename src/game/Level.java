@@ -13,6 +13,10 @@ import game.actors.*;
 public class Level {
     private String levelName;
     private double formationSpeed;
+    private List<Enemy> enemiesFormation;
+    private int attackCooldown;
+    private int shootCooldown;
+
     public void setLevelName(String levelName) {
         this.levelName = levelName;
     }
@@ -33,7 +37,7 @@ public class Level {
         return attackCooldown;
     }
 
-    public void setAttackCooldown(double attackCooldown) {
+    public void setAttackCooldown(int attackCooldown) {
         this.attackCooldown = attackCooldown;
     }
 
@@ -41,16 +45,8 @@ public class Level {
         return shootCooldown;
     }
 
-    public void setShootCooldown(double shootCooldown) {
+    public void setShootCooldown(int shootCooldown) {
         this.shootCooldown = shootCooldown;
-    }
-
-    private List<Enemy> enemiesFormation;
-    private double attackCooldown;
-    private double shootCooldown;
-
-    public Level(String filePath, Game game) {
-        loadLevel(filePath, game);
     }
 
     public String getLevelName() {
@@ -61,7 +57,13 @@ public class Level {
         return enemiesFormation;
     }
 
+    public Level(String filePath, Game game) {
+        loadLevel(filePath, game);
+    }
+
     private void loadLevel(String filePath, Game game) {
+
+        // Lecture d'un fichier vu durant la séance du CM10
         List<String> lines = new ArrayList<>();
         Path file = Paths.get(filePath);
         try (BufferedReader reader = Files.newBufferedReader(file)) {
@@ -69,18 +71,21 @@ public class Level {
             while (((line = reader.readLine()) != null)) {
                 lines.add(line);
             }
-            //Initalisition du niveau
+            // Initalisition du niveau
             String firstLine = lines.get(0);
             String[] firstsplit = firstLine.split(" ");
             this.levelName = firstsplit[0];
             this.formationSpeed = Double.parseDouble(firstsplit[1]);
-            this.attackCooldown = Double.parseDouble(firstsplit[2]);
-            this.shootCooldown = Double.parseDouble(firstsplit[3]);
-            //Init(ialisation des ennemis
+            this.attackCooldown = Integer.parseInt(firstsplit[2]);
+            this.shootCooldown = Integer.parseInt(firstsplit[3]);
+
+            // Initialisation des ennemis
             enemiesFormation = new ArrayList<>();
-            for(int i =1; i < lines.size(); i++){
+
+            for (int i = 1; i < lines.size(); i++) {
                 String currentLine = lines.get(i);
                 String[] split = currentLine.split(" ");
+
                 String type = split[0];
                 double positionx = Double.parseDouble(split[1]);
                 double positiony = Double.parseDouble(split[2]);

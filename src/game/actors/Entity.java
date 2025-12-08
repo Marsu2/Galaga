@@ -61,6 +61,7 @@ public abstract class Entity {
     }
 
     public void drawSpriteV2(double positionx, double positiony, double size, String fileName) {
+        // Lecture d'un fichier vu durant la séance du CM10
         Path p = Paths.get(fileName);
         try (BufferedReader reader = Files.newBufferedReader(p)) {
             List<String> lines = new ArrayList<>();
@@ -111,5 +112,7 @@ public abstract class Entity {
                 return StdDraw.BLACK;
         }
     }
+
+    public abstract boolean canShoot();
 
 }

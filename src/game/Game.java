@@ -2,7 +2,6 @@ package game;
 
 import engine.StdDraw;
 import game.actors.*;
-
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
@@ -13,8 +12,13 @@ import java.util.List;
  */
 public class Game {
 
+    public List<Missile> getMissilesEnemies() {
+        return missilesEnemies;
+    }
+
     public Player player; // Jouer, seul éléments actuellement dans notre jeu
     private List<Missile> missilesPlayers;
+    private LevelManager manager;
 
     public List<Missile> getMissilesPlayers() {
         return missilesPlayers;
@@ -37,9 +41,10 @@ public class Game {
     public Game() {
         player = new Player(0.5, 0.1, 0.08, 5, 0.02, this);
         enemies = new LinkedList<>();
-        LevelManager levelManager = new LevelManager(this);
-        levelManager.toNextLevel();
-        enemies = (levelManager.getCurrentLevel().getEnemiesFormation());
+
+        manager = new LevelManager(this);
+        manager.toNextLevel();
+        enemies = (manager.getCurrentLevel().getEnemiesFormation());
 
         missilesPlayers = new LinkedList<>();
         missilesEnemies = new LinkedList<>();
@@ -141,6 +146,10 @@ public class Game {
         }
         enemies.removeAll(enemiesDead);
         missilesPlayers.removeAll(missilesDead);
+    }
+
+    public LevelManager getLevelManager() {
+        return manager;
     }
 
 }
