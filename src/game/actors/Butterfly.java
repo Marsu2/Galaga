@@ -1,8 +1,5 @@
 package game.actors;
 
-import engine.StdDraw;
-import game.Game;
-
 /**
  * Papillon ennemi qui vole dans le jeu.
  * Hérite des comportements Enemy de base avec son propre sprite.
