@@ -1,5 +1,8 @@
 package game.actors;
 
+import java.util.List;
+import java.util.ArrayList;
+
 import engine.StdDraw;
 import game.Game;
 import game.LevelManager;
@@ -51,10 +54,6 @@ public abstract class Enemy extends Entity {
         for (Missile missile : missiles) {
             missile.update();
         }
-        if (canShoot()) {
-            shoot();
-
-        }
 
         if (shootCooldown > 0) {
             shootCooldown--;
@@ -90,8 +89,16 @@ public abstract class Enemy extends Entity {
      * 
      * @return true si l'ennemi peut tirer, false sinon
      */
-    public boolean canShoot() {
+    public boolean canShoot(List<Enemy> enemies) {
         if (shootCooldown == 0) {
+            double marginWidth = size / 2;
+            for (Enemy enemy : enemies) {
+                if (Math.abs(enemy.getPositionx() - this.positionx) < marginWidth
+                        && enemy.getPositiony() < this.positiony) {
+                    shootCooldown = shootCooldownMax;
+                    return false;
+                }
+            }
             shootCooldown = shootCooldownMax;
             return true;
         }

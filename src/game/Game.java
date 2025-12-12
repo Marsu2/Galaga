@@ -118,13 +118,14 @@ public class Game {
         player.update();
         for (Entity e : enemies) {
             e.update();
+
         }
 
         for (Enemy e : enemies) {
-            e.checkHitBy(player.getMissiles());
-            {
+            if (e.canShoot(enemies)) {
+                e.shoot();
             }
-
+            e.checkHitBy(player.getMissiles());
         }
 
         List<Enemy> enemiesRemove = new ArrayList<>();

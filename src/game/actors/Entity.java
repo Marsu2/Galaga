@@ -196,8 +196,6 @@ public abstract class Entity {
      * @return true si autorisé à tirer
      */
 
-    public abstract boolean canShoot();
-
     public void drawMissiles() {
         for (Missile missile : missiles) {
             missile.drawSprite();
