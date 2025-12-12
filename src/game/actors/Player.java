@@ -21,8 +21,8 @@ public class Player extends Entity {
      * @param speed     vitesse de déplacement horizontal
      * @param game      référence au jeu principal
      */
-    public Player(double positionx, double positiony, double size, int health, double speed, Game game) {
-        super(positionx, positiony, size, health, speed, game);
+    public Player(double positionx, double positiony, double size, int health, double speed) {
+        super(positionx, positiony, size, health, speed);
         coolDownShoot = 0;
         coolDownShootMax = 7;
     }
@@ -33,6 +33,11 @@ public class Player extends Entity {
     public void update() {
         move();
         shoot();
+        removeMissilesOOB();
+        for (Missile missile : missiles) {
+            missile.update();
+        }
+
 
         if (coolDownShoot > 0) {
             coolDownShoot--;
@@ -66,7 +71,7 @@ public class Player extends Entity {
      * @return true si autorisé à tirer
      */
     public boolean canShoot() {
-        return game.getMissilesPlayers().size() < 3 && coolDownShoot == 0;
+        return missiles.size() < 3 && coolDownShoot == 0;
     }
 
     /**
@@ -77,7 +82,7 @@ public class Player extends Entity {
         if (StdDraw.isKeyPressed(32) && canShoot()) {
             coolDownShoot = coolDownShootMax;
             Missile m1 = new Missile(speed * 3, positionx, positiony + size / 2, EDirectionMissile.UP);
-            game.addMissilesPlayers(m1);
+            missiles.add(m1);
         }
 
     }
@@ -87,6 +92,7 @@ public class Player extends Entity {
      */
     public void drawSprite() {
         super.drawSpriteV2(positionx, positiony, size, "ressources/sprites/ship.spr");
+        drawMissiles();
     }
 
 }

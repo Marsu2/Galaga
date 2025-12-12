@@ -36,7 +36,7 @@ public class Score {
      * @return highscore lu ou 0 par défaut
      */
     private int readHighscore() {
-        Path cheminDuFichier = Paths.get("highscore/highscore.sc");
+        Path cheminDuFichier = Paths.get("ressources/highscore/highscore.sc");
         try (BufferedReader reader = Files.newBufferedReader(cheminDuFichier)) {
             String line = null;
             while (((line = reader.readLine()) != null)) {
@@ -64,11 +64,13 @@ public class Score {
      */
 
     public void saveHighscore() {
-        Path cheminDuFichier = Paths.get("highscore/highscore.sc");
-        try (BufferedWriter writer = Files.newBufferedWriter(cheminDuFichier)) {
-            writer.write(score + "\n");
-        } catch (IOException e) {
-            System.out.println(e);
+        if(highscore< score){
+            Path cheminDuFichier = Paths.get("ressources/highscore/highscore.sc");
+            try (BufferedWriter writer = Files.newBufferedWriter(cheminDuFichier)) {
+                writer.write(score + "\n");
+            } catch (IOException e) {
+                System.out.println(e);
+            }
         }
     }
 

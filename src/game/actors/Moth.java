@@ -18,8 +18,8 @@ public class Moth extends Enemy {
      * @param game      référence à l'objet principal du jeu
      */
 
-    public Moth(double positionx, double positiony, double size, int score, double speed, Game game) {
-        super(positionx, positiony, size, score, speed, game);
+    public Moth(double positionx, double positiony, double size, int score, double speed, int shootCooldown) {
+        super(positionx, positiony, size, score, speed, shootCooldown);
     }
 
     /**
@@ -27,6 +27,7 @@ public class Moth extends Enemy {
      */
     public void drawSprite() {
         super.drawSpriteV2(positionx, positiony, size, "ressources/sprites/catcher.spr");
+        drawMissiles();
     }
 
 }

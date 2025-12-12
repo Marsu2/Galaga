@@ -20,8 +20,8 @@ public class Butterfly extends Enemy {
      * @param game      référence au jeu principal
      */
 
-    public Butterfly(double positionx, double positiony, double size, int score, double speed, Game game) {
-        super(positionx, positiony, size, score, speed, game);
+    public Butterfly(double positionx, double positiony, double size, int score, double speed, int shootCooldown) {
+        super(positionx, positiony, size, score, speed, shootCooldown);
     }
 
     /**
@@ -29,6 +29,7 @@ public class Butterfly extends Enemy {
      */
     public void drawSprite() {
         super.drawSpriteV2(positionx, positiony, size, "ressources/sprites/butterfly.spr");
+        drawMissiles();
     }
 
 }

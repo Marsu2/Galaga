@@ -10,8 +10,8 @@ import game.LevelManager;
  */
 public abstract class Enemy extends Entity {
     protected int score;
-    protected int coolDownShootMax;
-    protected int coolDownShoot;
+    protected int shootCooldownMax;
+    protected int shootCooldown;
 
     /**
      * Crée un nouvel ennemi avec ses paramètres de base.
@@ -24,11 +24,11 @@ public abstract class Enemy extends Entity {
      * @param game      référence au jeu principal
      */
 
-    public Enemy(double positionx, double positiony, double size, int score, double speed, Game game) {
-        super(positionx, positiony, size, 1, speed, game);
+    public Enemy(double positionx, double positiony, double size, int score, double speed, int shootCooldown) {
+        super(positionx, positiony, size, 1, speed);
         this.score = score;
-        this.coolDownShootMax = 0;
-        this.coolDownShoot = coolDownShootMax;
+        this.shootCooldownMax = shootCooldown;
+        this.shootCooldown = shootCooldown;
 
     }
 
@@ -47,13 +47,17 @@ public abstract class Enemy extends Entity {
 
     public void update() {
         move();
+        removeMissilesOOB();
+        for (Missile missile : missiles) {
+            missile.update();
+        }
         if (canShoot()) {
             shoot();
 
         }
 
-        if (coolDownShoot > 0) {
-            coolDownShoot--;
+        if (shootCooldown > 0) {
+            shootCooldown--;
         }
 
     }
@@ -70,12 +74,12 @@ public abstract class Enemy extends Entity {
      */
     public void shoot() {
         Missile m1 = new Missile(speed * 2, positionx, positiony - size / 2, EDirectionMissile.DOWN);
-        game.addMissilesEnemies(m1);
+        missiles.add(m1);
 
     }
 
     /**
-     * Dessine le sprite spécifique de l'ennemi (à implémenter).
+     * Dessine le sprite spécifique de l'ennemi
      */
 
     public abstract void drawSprite();
@@ -87,12 +91,8 @@ public abstract class Enemy extends Entity {
      * @return true si l'ennemi peut tirer, false sinon
      */
     public boolean canShoot() {
-        if (coolDownShootMax == 0) {
-            coolDownShootMax = (int) game.getLevelManager().getCurrentLevel().getShootCooldown() / 100;
-            coolDownShoot = coolDownShootMax;
-        }
-        if (coolDownShoot == 0) {
-            coolDownShoot = coolDownShootMax;
+        if (shootCooldown == 0) {
+            shootCooldown = shootCooldownMax;
             return true;
         }
 

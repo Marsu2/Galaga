@@ -16,6 +16,8 @@ enum EDirectionMissile {
 public class Missile {
     private double speed;
     private double positiony;
+    private double positionx;
+    private EDirectionMissile direction;
 
     /**
      * Retourne la position verticale du missile.
@@ -34,9 +36,6 @@ public class Missile {
     public double getPositionx() {
         return positionx;
     }
-
-    private double positionx;
-    private EDirectionMissile direction;
 
     /**
      * Crée un nouveau missile avec ses paramètres initiaux.
@@ -86,7 +85,7 @@ public class Missile {
      * @param e entité à tester (joueur ou ennemi)
      * @return true si collision détectée
      */
-    public boolean hitEntity(Entity e) {
+    public boolean ishitingEntity(Entity e) {
         double distanceX = this.positionx - e.positionx;
         double distanceY = this.positiony - e.positiony;
         double distance = distanceX * distanceX + distanceY * distanceY;

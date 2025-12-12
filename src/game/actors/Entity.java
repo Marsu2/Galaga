@@ -24,6 +24,7 @@ public abstract class Entity {
     protected double size;
     protected int health;
     protected double speed;
+    protected List<Missile> missiles;
     protected Game game;
 
     /**
@@ -36,14 +37,22 @@ public abstract class Entity {
      * @param speed     vitesse de déplacement
      * @param game      référence au jeu principal
      */
-    public Entity(double positionx, double positiony, double size, int health, double speed, Game game) {
+    public Entity(double positionx, double positiony, double size, int health, double speed) {
         this.positionx = positionx;
         this.positiony = positiony;
         this.size = size;
         this.health = health;
         this.speed = speed;
-        this.game = game;
+        this.missiles = new ArrayList<>();
 
+    }
+
+    public List<Missile> getMissiles() {
+        return missiles;
+    }
+
+    public void setMissiles(List<Missile> missiles) {
+        this.missiles = missiles;
     }
 
     /**
@@ -188,5 +197,33 @@ public abstract class Entity {
      */
 
     public abstract boolean canShoot();
+
+    public void drawMissiles(){
+        for (Missile missile : missiles) {
+            missile.drawSprite();
+        }
+    }
+
+    public void removeMissilesOOB(){
+        List<Missile> rmMissiles = new ArrayList<>();
+        for (Missile missile : missiles) {
+            if(missile.isOutOfBound()){
+                rmMissiles.add(missile);
+            }
+        }
+        missiles.removeAll(rmMissiles);
+    }
+
+    public void checkHitBy(List<Missile> missiles) {
+        List<Missile> toRemove = new ArrayList<>();
+        for (Missile m : missiles) {
+            if (m.ishitingEntity(this)) {
+                this.health = (this.health - 1);
+                toRemove.add(m);
+            }
+        }
+        missiles.removeAll(toRemove);
+    }
+
 
 }

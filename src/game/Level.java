@@ -21,7 +21,7 @@ public class Level {
     private int attackCooldown;
     private int shootCooldown;
 
-        /**
+    /**
      * Définit le nom du niveau.
      * 
      * @param levelName nouveau nom
@@ -30,7 +30,7 @@ public class Level {
         this.levelName = levelName;
     }
 
-        /**
+    /**
      * Retourne la vitesse de la formation d'ennemis.
      * 
      * @return vitesse de formation
@@ -39,7 +39,7 @@ public class Level {
         return formationSpeed;
     }
 
-        /**
+    /**
      * Définit la vitesse de la formation d'ennemis.
      * 
      * @param formationSpeed nouvelle vitesse
@@ -48,7 +48,7 @@ public class Level {
         this.formationSpeed = formationSpeed;
     }
 
-        /**
+    /**
      * Définit la formation d'ennemis du niveau.
      * 
      * @param enemiesFormation nouvelle liste d'ennemis
@@ -56,7 +56,6 @@ public class Level {
     public void setEnemiesFormation(List<Enemy> enemiesFormation) {
         this.enemiesFormation = enemiesFormation;
     }
-
 
     /**
      * Retourne le délai d'attaque de la formation.
@@ -67,7 +66,6 @@ public class Level {
         return attackCooldown;
     }
 
-
     /**
      * Définit le délai d'attaque de la formation.
      * 
@@ -77,7 +75,6 @@ public class Level {
         this.attackCooldown = attackCooldown;
     }
 
-    
     /**
      * Retourne le délai de tir des ennemis.
      * 
@@ -87,7 +84,7 @@ public class Level {
         return shootCooldown;
     }
 
-        /**
+    /**
      * Définit le délai de tir des ennemis.
      * 
      * @param shootCooldown nouveau cooldown (ms)
@@ -95,7 +92,6 @@ public class Level {
     public void setShootCooldown(int shootCooldown) {
         this.shootCooldown = shootCooldown;
     }
-
 
     /**
      * Retourne le nom du niveau.
@@ -106,7 +102,7 @@ public class Level {
         return levelName;
     }
 
-        /**
+    /**
      * Retourne la liste des ennemis du niveau.
      * 
      * @return formation d'ennemis
@@ -115,25 +111,28 @@ public class Level {
         return enemiesFormation;
     }
 
-        /**
+    /**
      * Charge un niveau depuis un fichier de configuration.
      * 
      * @param filePath chemin vers le fichier de niveau
-     * @param game référence au jeu principal
      */
-    public Level(String filePath, Game game) {
-        loadLevel(filePath, game);
+    public Level(String filePath) {
+        loadLevel(filePath);
     }
 
-        /**
+    /**
      * Charge les données du niveau depuis un fichier texte.
-     * Format : première ligne = nom vitesse attack shoot ; lignes suivantes = type x y size score speed
+     * Format : première ligne = nom vitesse attack shoot ; lignes suivantes = type
+     * x y size score speed
      */
-    private void loadLevel(String filePath, Game game) {
+    private void loadLevel(String filePath) {
 
         // Lecture d'un fichier vu durant la séance du CM10
         List<String> lines = new ArrayList<>();
         Path file = Paths.get(filePath);
+        // Initialisation des ennemis
+        enemiesFormation = new ArrayList<>();
+
         try (BufferedReader reader = Files.newBufferedReader(file)) {
             String line = null;
             while (((line = reader.readLine()) != null)) {
@@ -146,9 +145,6 @@ public class Level {
             this.formationSpeed = Double.parseDouble(firstsplit[1]);
             this.attackCooldown = Integer.parseInt(firstsplit[2]);
             this.shootCooldown = Integer.parseInt(firstsplit[3]);
-
-            // Initialisation des ennemis
-            enemiesFormation = new ArrayList<>();
 
             for (int i = 1; i < lines.size(); i++) {
                 String currentLine = lines.get(i);
@@ -163,13 +159,13 @@ public class Level {
 
                 switch (type) {
                     case "Moth":
-                        enemiesFormation.add(new Moth(positionx, positiony, size, score, speed, game));
+                        enemiesFormation.add(new Moth(positionx, positiony, size, score, speed, shootCooldown));
                         break;
                     case "Butterfly":
-                        enemiesFormation.add(new Butterfly(positionx, positiony, size, score, speed, game));
+                        enemiesFormation.add(new Butterfly(positionx, positiony, size, score, speed, shootCooldown));
                         break;
                     case "Bee":
-                        enemiesFormation.add(new Bee(positionx, positiony, size, score, speed, game));
+                        enemiesFormation.add(new Bee(positionx, positiony, size, score, speed, shootCooldown));
                         break;
                 }
 
