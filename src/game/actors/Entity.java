@@ -198,16 +198,16 @@ public abstract class Entity {
 
     public abstract boolean canShoot();
 
-    public void drawMissiles(){
+    public void drawMissiles() {
         for (Missile missile : missiles) {
             missile.drawSprite();
         }
     }
 
-    public void removeMissilesOOB(){
+    public void removeMissilesOOB() {
         List<Missile> rmMissiles = new ArrayList<>();
         for (Missile missile : missiles) {
-            if(missile.isOutOfBound()){
+            if (missile.isOutOfBound()) {
                 rmMissiles.add(missile);
             }
         }
@@ -217,13 +217,12 @@ public abstract class Entity {
     public void checkHitBy(List<Missile> missiles) {
         List<Missile> toRemove = new ArrayList<>();
         for (Missile m : missiles) {
-            if (m.ishitingEntity(this)) {
+            if (m.isHitingEntity(this)) {
                 this.health = (this.health - 1);
                 toRemove.add(m);
             }
         }
         missiles.removeAll(toRemove);
     }
-
 
 }

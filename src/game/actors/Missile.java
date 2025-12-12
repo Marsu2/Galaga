@@ -85,7 +85,7 @@ public class Missile {
      * @param e entité à tester (joueur ou ennemi)
      * @return true si collision détectée
      */
-    public boolean ishitingEntity(Entity e) {
+    public boolean isHitingEntity(Entity e) {
         double distanceX = this.positionx - e.positionx;
         double distanceY = this.positiony - e.positiony;
         double distance = distanceX * distanceX + distanceY * distanceY;

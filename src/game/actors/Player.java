@@ -24,7 +24,7 @@ public class Player extends Entity {
     public Player(double positionx, double positiony, double size, int health, double speed) {
         super(positionx, positiony, size, health, speed);
         coolDownShoot = 0;
-        coolDownShootMax = 7;
+        coolDownShootMax = 6;
     }
 
     /**
@@ -37,7 +37,6 @@ public class Player extends Entity {
         for (Missile missile : missiles) {
             missile.update();
         }
-
 
         if (coolDownShoot > 0) {
             coolDownShoot--;

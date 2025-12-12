@@ -12,12 +12,10 @@ import java.util.List;
  */
 public class Game {
 
-
     private Player player; // Jouer, seul éléments actuellement dans notre jeu
     private LevelManager manager;
     private Score score;
     private List<Enemy> enemies;
-
 
     /**
      * Initialise le jeu avec joueur, ennemis, score et premier niveau.
@@ -75,41 +73,41 @@ public class Game {
             e.drawSprite();
         }
 
-        //Dessin de la zone d'information
+        // Dessin de la zone d'information
         StdDraw.setPenColor(StdDraw.WHITE);
         // Position du pixel de départ pour la ligne du bas
-        double downPx = 0 ;
+        double downPx = 0;
         double downPy = 0.1;
         // Position du pixel d'arrivé pour la ligne du bas
-        double downPxEnd = 700 ;
+        double downPxEnd = 700;
         double downPyEnd = 0.1;
 
         // On dessine le pixel en fonction de la position
-        StdDraw.line(downPx, downPy,downPxEnd,downPyEnd);
+        StdDraw.line(downPx, downPy, downPxEnd, downPyEnd);
 
-        manager.drawSpriteV2(0.95,0.07,0.03,"ressources/sprites/level.spr");
+        manager.drawSpriteV2(0.95, 0.07, 0.03, "ressources/sprites/level.spr");
 
-       //Dessin de la zone de score
-       
+        // Dessin de la zone de score
+
         // Position du pixel de départ pour la ligne du haut
-        double topPx = 0 ;
+        double topPx = 0;
         double topPy = 0.9;
         // Position du pixel d'arrivé pour la ligne du haut
-        double topPxEnd = 700 ;
+        double topPxEnd = 700;
         double topPyEnd = 0.9;
 
         // On dessine le pixel en fonction de la position
-        StdDraw.line(topPx, topPy,topPxEnd,topPyEnd);
+        StdDraw.line(topPx, topPy, topPxEnd, topPyEnd);
 
-        //on dessine score/High score
+        // on dessine score/High score
         StdDraw.setPenColor(StdDraw.RED);
-        StdDraw.text(0.15,0.97,"SCORE");
-        StdDraw.text(0.5,0.97,"HIGH SCORE");
-        
+        StdDraw.text(0.15, 0.97, "SCORE");
+        StdDraw.text(0.5, 0.97, "HIGH SCORE");
+
         // on dessine le score/High score en dessous du dessin de score/High score
         StdDraw.setPenColor(StdDraw.WHITE);
-        StdDraw.text(0.15,0.92, "" + score.getScore());
-        StdDraw.text(0.5,0.92, "" + score.getHighscore());
+        StdDraw.text(0.15, 0.92, "" + score.getScore());
+        StdDraw.text(0.5, 0.92, "" + score.getHighscore());
 
     }
 
@@ -121,28 +119,30 @@ public class Game {
         for (Entity e : enemies) {
             e.update();
         }
-        
+
         for (Enemy e : enemies) {
             e.checkHitBy(player.getMissiles());
-            score.addScore(e);
+            {
+            }
+
         }
 
         List<Enemy> enemiesRemove = new ArrayList<>();
         for (Enemy enemy : enemies) {
-            if(enemy.isDead()){
+            if (enemy.isDead()) {
                 enemiesRemove.add(enemy);
+                score.addScore(enemy);
             }
         }
         enemies.removeAll(enemiesRemove);
         score.saveHighscore();
     }
-        /**
+
+    /**
      * Détecte les collisions missile-ennemi et met à jour score/santé.
      */
 
-    
-
-        /**
+    /**
      * Retourne le gestionnaire de niveaux.
      * 
      * @return gestionnaire de niveaux actuel
