@@ -116,9 +116,9 @@ public class Game {
      */
     private void update() {
         player.update();
+        playerGetHit();
         for (Entity e : enemies) {
             e.update();
-
         }
 
         for (Enemy e : enemies) {
@@ -127,6 +127,8 @@ public class Game {
             }
             e.checkHitBy(player.getMissiles());
         }
+
+
 
         List<Enemy> enemiesRemove = new ArrayList<>();
         for (Enemy enemy : enemies) {
@@ -139,17 +141,15 @@ public class Game {
         score.saveHighscore();
     }
 
-    /**
-     * Détecte les collisions missile-ennemi et met à jour score/santé.
-     */
-
-    /**
-     * Retourne le gestionnaire de niveaux.
-     * 
-     * @return gestionnaire de niveaux actuel
-     */
-    public LevelManager getLevelManager() {
-        return manager;
+    private void playerGetHit() {
+        for (Enemy e : enemies) {
+            if (player.checkHitBy(e.getMissiles())) {
+                for (Enemy enemy : enemies) {
+                    enemy.setShootCooldown(90); //90 frame = 3 secondes
+                    enemy.removeAllMissiles();
+                }
+                break;
+            }
+        }
     }
-
 }

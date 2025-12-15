@@ -16,6 +16,10 @@ public abstract class Enemy extends Entity {
     protected int shootCooldownMax;
     protected int shootCooldown;
 
+    public void setShootCooldown(int shootCooldown) {
+        this.shootCooldown = shootCooldown;
+    }
+
     /**
      * Crée un nouvel ennemi avec ses paramètres de base.
      * 

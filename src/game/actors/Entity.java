@@ -212,15 +212,22 @@ public abstract class Entity {
         missiles.removeAll(rmMissiles);
     }
 
-    public void checkHitBy(List<Missile> missiles) {
+    public boolean checkHitBy(List<Missile> missiles) {
+        boolean res = false;
         List<Missile> toRemove = new ArrayList<>();
         for (Missile m : missiles) {
             if (m.isHitingEntity(this)) {
                 this.health = (this.health - 1);
                 toRemove.add(m);
+                res = true;
             }
         }
         missiles.removeAll(toRemove);
+        return res;
+    }
+
+    public void removeAllMissiles() {
+        missiles.clear();
     }
 
 }
