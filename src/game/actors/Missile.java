@@ -89,7 +89,7 @@ public class Missile {
         double distanceX = this.positionx - e.positionx;
         double distanceY = this.positiony - e.positiony;
         double distance = distanceX * distanceX + distanceY * distanceY;
-        double hitboxes = e.size / 2 + 0.01; // taille du missile
+        double hitboxes = e.size / 2 + 0.013; // taille du missile
 
         if (distance <= hitboxes * hitboxes) {
             return true;

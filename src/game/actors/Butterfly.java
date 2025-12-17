@@ -1,5 +1,7 @@
 package game.actors;
 
+import game.utils.SpriteLoader;
+
 /**
  * Papillon ennemi qui vole dans le jeu.
  * Hérite des comportements Enemy de base avec son propre sprite.
@@ -25,7 +27,10 @@ public class Butterfly extends Enemy {
      * Dessine le sprite spécifique du papillon à sa position actuelle.
      */
     public void drawSprite() {
-        super.drawSpriteV2(positionx, positiony, size, "ressources/sprites/butterfly.spr");
+        if (sprite == null) {
+            sprite = SpriteLoader.loadSprite("ressources/sprites/butterfly.spr");
+        }
+        SpriteLoader.drawSprite(sprite, positionx, positiony, size);
         drawMissiles();
     }
 

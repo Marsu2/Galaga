@@ -21,7 +21,7 @@ public class LevelManager {
     private Level[] levels;
     private int currentLevelIndex;
     private Player player;
-    private Color[][] sprite;
+    private Color[][] spriteHP;
     public int nbLevels = 2;
 
     /**
@@ -39,6 +39,25 @@ public class LevelManager {
         if (isRoundEnded()) {
             toNextLevel();
         }
+    }
+
+    public void draw(){
+        
+        // Dessin de la zone d'information
+        StdDraw.setPenColor(StdDraw.WHITE);
+        // Position du pixel de départ pour la ligne du bas
+        double downPx = 0;
+        double downPy = 0.1;
+        // Position du pixel d'arrivé pour la ligne du bas
+        double downPxEnd = 700;
+        double downPyEnd = 0.1;
+
+        // On dessine le pixel en fonction de la position
+        StdDraw.line(downPx, downPy, downPxEnd, downPyEnd);
+        
+        //draw le nombre de lvl passé
+        drawNbLvl(0.95, 0.07, 0.03, "ressources/sprites/level.spr");
+        
     }
 
     /**
@@ -80,10 +99,10 @@ public class LevelManager {
         return getCurrentLevel().areAllDead();
     }
 
-    public void drawSpriteV2(double positionx, double positiony, double size, String fileName) {
-        if (sprite == null) {
-            sprite = SpriteLoader.loadSprite(fileName);
+    public void drawNbLvl(double positionx, double positiony, double size, String fileName) {
+        if (spriteHP == null) {
+            spriteHP = SpriteLoader.loadSprite(fileName);
         }
-        SpriteLoader.drawSprite(sprite, positionx, positiony, size);
+        SpriteLoader.drawSprite(spriteHP, positionx, positiony, size);
     }
 }

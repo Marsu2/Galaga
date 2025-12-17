@@ -75,7 +75,7 @@ public class SpriteLoader {
 
                 // On dessine le pixel en fonction de la position
                 StdDraw.setPenColor(c);
-                StdDraw.filledSquare(px, py, pixelSize / 2);
+                StdDraw.filledSquare(px, py, (pixelSize / 2) * 1.1); // *1.1 pour eviter les trous dans les sprites
 
             }
         }

@@ -2,6 +2,7 @@ package game.actors;
 
 import engine.StdDraw;
 import game.Game;
+import game.utils.SpriteLoader;
 
 /**
  * Abeille ennemie qui vole dans le jeu.
@@ -28,7 +29,10 @@ public class Bee extends Enemy {
      * Dessine le sprite spécifique de l'abeille à sa position actuelle.
      */
     public void drawSprite() {
-        super.drawSpriteV2(positionx, positiony, size, "ressources/sprites/bee.spr");
+        if (sprite == null) {
+            sprite = SpriteLoader.loadSprite("ressources/sprites/bee.spr");
+        }
+        SpriteLoader.drawSprite(sprite, positionx, positiony, size);
         drawMissiles();
     }
 

@@ -2,6 +2,7 @@ package game.actors;
 
 import engine.StdDraw;
 import game.Game;
+import game.utils.SpriteLoader;
 
 /**
  * Sous class de enemy pour MOTH qui ca pouvoir attaquer
@@ -26,7 +27,10 @@ public class Moth extends Enemy {
      * Dessine le sprite personnalisé du papillon de nuit.
      */
     public void drawSprite() {
-        super.drawSpriteV2(positionx, positiony, size, "ressources/sprites/catcher.spr");
+        if (sprite == null) {
+            sprite = SpriteLoader.loadSprite("ressources/sprites/catcher.spr");
+        }
+        SpriteLoader.drawSprite(sprite, positionx, positiony, size);
         drawMissiles();
     }
 

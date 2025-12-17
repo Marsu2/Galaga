@@ -2,6 +2,7 @@ package game.actors;
 
 import engine.StdDraw;
 import game.Game;
+import game.utils.SpriteLoader;
 
 /**
  * Représente le joueur contrôlé par l'utilisateur.
@@ -90,7 +91,10 @@ public class Player extends Entity {
      * Dessine le sprite du vaisseau joueur depuis le fichier ship.spr.
      */
     public void drawSprite() {
-        super.drawSpriteV2(positionx, positiony, size, "ressources/sprites/ship.spr");
+        if (sprite == null) {
+            sprite = SpriteLoader.loadSprite("ressources/sprites/ship.spr");
+        }
+        SpriteLoader.drawSprite(sprite, positionx, positiony, size);
         drawMissiles();
     }
 

@@ -73,19 +73,8 @@ public class Game {
             e.drawSprite();
         }
 
-        // Dessin de la zone d'information
-        StdDraw.setPenColor(StdDraw.WHITE);
-        // Position du pixel de départ pour la ligne du bas
-        double downPx = 0;
-        double downPy = 0.1;
-        // Position du pixel d'arrivé pour la ligne du bas
-        double downPxEnd = 700;
-        double downPyEnd = 0.1;
-
-        // On dessine le pixel en fonction de la position
-        StdDraw.line(downPx, downPy, downPxEnd, downPyEnd);
-
-        manager.drawSpriteV2(0.95, 0.07, 0.03, "ressources/sprites/level.spr");
+        manager.draw();
+        
 
         // Dessin de la zone de score
 

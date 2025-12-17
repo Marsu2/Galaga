@@ -122,22 +122,6 @@ public abstract class Entity {
         return health <= 0;
     }
 
-    /**
-     * Dessine un sprite pixelisé depuis un fichier .spr.
-     * 
-     * @param positionx position horizontale du sprite
-     * @param positiony position verticale du sprite
-     * @param size      taille du sprite affiché
-     * @param fileName  chemin vers le fichier sprite (.spr)
-     */
-
-    public void drawSpriteV2(double positionx, double positiony, double size, String fileName) {
-        if (sprite == null) {
-            sprite = SpriteLoader.loadSprite(fileName);
-        }
-        SpriteLoader.drawSprite(sprite, positionx, positiony, size);
-
-    }
 
     /**
      * Convertit un caractère en couleur pour les sprites pixelisés.
