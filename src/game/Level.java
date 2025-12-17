@@ -117,7 +117,7 @@ public class Level {
      * @param filePath chemin vers le fichier de niveau
      */
     public Level(String filePath) {
-        loadLevel(filePath);
+        startRound(filePath);
     }
 
     /**
@@ -174,6 +174,28 @@ public class Level {
         } catch (IOException e) {
             System.out.println(e);
         }
+    }
+
+    public void resetEnemies(){
+        for(Enemy enemy : enemiesFormation){
+            enemy.reset();
+        }
+    }
+
+    private void startRound(String filePath){
+        loadLevel(filePath);
+        for (Enemy enemy : enemiesFormation) {
+            //TODO
+        }
+    }
+
+    public boolean areAllDead(){
+        for(Enemy enemy : enemiesFormation){
+            if(!enemy.isDead()){
+                return false;
+            }
+        }
+        return true;
     }
 
 }

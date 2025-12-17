@@ -20,7 +20,7 @@ public class LevelManager {
     private int currentLevelIndex;
     public int nbLevels = 2;
 
-        /**
+    /**
      * Initialise le gestionnaire de niveaux et charge tous les niveaux.
      * 
      * @param game référence au jeu principal
@@ -30,7 +30,13 @@ public class LevelManager {
         loadLevels();
     }
 
-        /**
+    public void update() {
+        if (isRoundEnded()) {
+            toNextLevel();
+        }
+    }
+
+    /**
      * Retourne le niveau actuellement actif.
      * 
      * @return niveau courant ou null si aucun niveau
@@ -41,28 +47,32 @@ public class LevelManager {
         }
         return levels[currentLevelIndex];
     }
-    
-        /**
+
+    /**
      * Charge tous les niveaux depuis les fichiers ressources/levels/levelX.lvl.
      * 
      * @param game référence au jeu principal
      */
-    private void loadLevels(){
+    private void loadLevels() {
         this.levels = new Level[nbLevels];
-        for(int i = 0; i < nbLevels; i++){
-            String filePath = "ressources/levels/level" + (i+1) + ".lvl";
+        for (int i = 0; i < nbLevels; i++) {
+            String filePath = "ressources/levels/level" + (i + 1) + ".lvl";
             this.levels[i] = new Level(filePath);
         }
     }
 
-        /**
+    /**
      * Passe au niveau suivant si disponible.
      * Ignore la demande si déjà au dernier niveau.
      */
-    public void toNextLevel(){
-        if(currentLevelIndex < nbLevels -1){
+    public void toNextLevel() {
+        if (currentLevelIndex < nbLevels - 1) {
             currentLevelIndex++;
         }
+    }
+
+    public boolean isRoundEnded() {
+        return getCurrentLevel().areAllDead();
     }
 
     public void drawSpriteV2(double positionx, double positiony, double size, String fileName) {

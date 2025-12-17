@@ -202,6 +202,10 @@ public abstract class Entity {
         }
     }
 
+    private void takeDamage(int damage){
+        this.health = Math.max(0, this.health - damage);
+    }
+
     public void removeMissilesOOB() {
         List<Missile> rmMissiles = new ArrayList<>();
         for (Missile missile : missiles) {
@@ -217,7 +221,7 @@ public abstract class Entity {
         List<Missile> toRemove = new ArrayList<>();
         for (Missile m : missiles) {
             if (m.isHitingEntity(this)) {
-                this.health = (this.health - 1);
+                takeDamage(1); // perde 1 HP
                 toRemove.add(m);
                 res = true;
             }

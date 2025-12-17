@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import engine.StdDraw;
 import game.Game;
 import game.LevelManager;
+import java.util.Random;
 
 /**
  * Classe abstraite représentant un ennemi générique dans le jeu.
@@ -15,6 +16,8 @@ public abstract class Enemy extends Entity {
     protected int score;
     protected int shootCooldownMax;
     protected int shootCooldown;
+    protected double initialPositionX;
+    protected double initialPositionY;
 
     public void setShootCooldown(int shootCooldown) {
         this.shootCooldown = shootCooldown;
@@ -33,6 +36,8 @@ public abstract class Enemy extends Entity {
 
     public Enemy(double positionx, double positiony, double size, int score, double speed, int shootCooldown) {
         super(positionx, positiony, size, 1, speed);
+        this.initialPositionX = positionx;
+        this.initialPositionY = positiony;
         this.score = score;
         this.shootCooldownMax = shootCooldown;
         this.shootCooldown = shootCooldown;
@@ -76,7 +81,7 @@ public abstract class Enemy extends Entity {
      * Tire un missile vers le bas (vers le joueur).
      */
     public void shoot() {
-        Missile m1 = new Missile(speed * 2, positionx, positiony - size / 2, EDirectionMissile.DOWN);
+        Missile m1 = new Missile(0.02, positionx, positiony - size / 2, EDirectionMissile.DOWN);
         missiles.add(m1);
 
     }
@@ -108,6 +113,17 @@ public abstract class Enemy extends Entity {
         }
 
         return false;
+    }
+
+    public void reset() {
+        positionx = initialPositionX;
+        positiony = initialPositionY;
+        removeAllMissiles();
+        setShootCooldown(90 + (new Random().nextInt(100)));// 3 sec + random 0-100 frames
+    }
+
+    public void animationStart(){
+        
     }
 
 }
