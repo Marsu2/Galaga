@@ -96,7 +96,7 @@ public abstract class Entity {
     /**
      * Dessine le sprite spécifique de l'entité (à implémenter).
      */
-    public abstract void drawSprite();
+    public abstract void draw();
 
     /**
      * Met à jour l'état de l'entité (mouvement, tirs, etc.).
@@ -122,7 +122,6 @@ public abstract class Entity {
         return health <= 0;
     }
 
-
     /**
      * Convertit un caractère en couleur pour les sprites pixelisés.
      * 
@@ -136,7 +135,7 @@ public abstract class Entity {
      * @return true si autorisé à tirer
      */
 
-    public void drawMissiles() {
+    protected void drawMissiles() {
         for (Missile missile : missiles) {
             missile.drawSprite();
         }
@@ -146,7 +145,7 @@ public abstract class Entity {
         this.health = Math.max(0, this.health - damage);
     }
 
-    public void removeMissilesOOB() {
+    protected void removeMissilesOOB() {
         List<Missile> rmMissiles = new ArrayList<>();
         for (Missile missile : missiles) {
             if (missile.isOutOfBound()) {

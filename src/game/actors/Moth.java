@@ -26,7 +26,7 @@ public class Moth extends Enemy {
     /**
      * Dessine le sprite personnalisé du papillon de nuit.
      */
-    public void drawSprite() {
+    public void draw() {
         if (sprite == null) {
             sprite = SpriteLoader.loadSprite("ressources/sprites/catcher.spr");
         }

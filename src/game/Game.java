@@ -21,7 +21,7 @@ public class Game {
      * Initialise le jeu avec joueur, ennemis, score et premier niveau.
      */
     public Game() {
-        player = new Player(0.5, 0.1, 0.06, 5, 0.02);
+        player = new Player(0.5, 0.15, 0.06, 5, 0.02);
         enemies = new LinkedList<>();
         score = new Score();
         manager = new LevelManager(player);
@@ -53,6 +53,7 @@ public class Game {
             StdDraw.show(); // on montre l'interface
             StdDraw.pause(30); // on attend 30 milisecondes avant de recommencer
         }
+        score.saveHighscore();
     }
 
     /**
@@ -61,20 +62,19 @@ public class Game {
      * @return true car on n'as pas encore de conidtions d'arrêt
      */
     private boolean isGameRunning() {
-        return true;
+        return player.getHealth() > 0;
     }
 
     /**
      * Dessin tous les éléments du jeu
      */
     public void draw() {
-        player.drawSprite();
+        player.draw();
         for (Entity e : enemies) {
-            e.drawSprite();
+            e.draw();
         }
 
         manager.draw();
-        
 
         // Dessin de la zone de score
 

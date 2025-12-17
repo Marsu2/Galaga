@@ -90,7 +90,7 @@ public abstract class Enemy extends Entity {
      * Dessine le sprite spécifique de l'ennemi
      */
 
-    public abstract void drawSprite();
+    public abstract void draw();
 
     /**
      * Vérifie si l'ennemi peut tirer en fonction de son cooldown.

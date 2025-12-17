@@ -22,7 +22,7 @@ public class LevelManager {
     private int currentLevelIndex;
     private Player player;
     private Color[][] spriteHP;
-    public int nbLevels = 2;
+    public int nbLevels = 3;
 
     /**
      * Initialise le gestionnaire de niveaux et charge tous les niveaux.
@@ -105,4 +105,9 @@ public class LevelManager {
         }
         SpriteLoader.drawSprite(spriteHP, positionx, positiony, size);
     }
+
+    public boolean winGame(){
+        return currentLevelIndex == nbLevels - 1 && isRoundEnded();
+    }
+
 }

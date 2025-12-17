@@ -26,7 +26,7 @@ public class Butterfly extends Enemy {
     /**
      * Dessine le sprite spécifique du papillon à sa position actuelle.
      */
-    public void drawSprite() {
+    public void draw() {
         if (sprite == null) {
             sprite = SpriteLoader.loadSprite("ressources/sprites/butterfly.spr");
         }

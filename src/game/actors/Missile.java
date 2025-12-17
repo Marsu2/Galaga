@@ -66,8 +66,8 @@ public class Missile {
      * Dessine le missile comme un petit rectangle rouge.
      */
     public void drawSprite() {
-        StdDraw.setPenColor(StdDraw.RED);
-        StdDraw.filledRectangle(positionx, positiony, 0.005, 0.01);
+        StdDraw.setPenColor(StdDraw.WHITE);
+        StdDraw.filledRectangle(positionx, positiony, 0.001, 0.01);
     }
 
     /**
@@ -89,7 +89,7 @@ public class Missile {
         double distanceX = this.positionx - e.positionx;
         double distanceY = this.positiony - e.positiony;
         double distance = distanceX * distanceX + distanceY * distanceY;
-        double hitboxes = e.size / 2 + 0.013; // taille du missile
+        double hitboxes = e.size / 2 + 0.01; // taille du missile
 
         if (distance <= hitboxes * hitboxes) {
             return true;

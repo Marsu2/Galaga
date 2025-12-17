@@ -28,7 +28,7 @@ public class Bee extends Enemy {
     /**
      * Dessine le sprite spécifique de l'abeille à sa position actuelle.
      */
-    public void drawSprite() {
+    public void draw() {
         if (sprite == null) {
             sprite = SpriteLoader.loadSprite("ressources/sprites/bee.spr");
         }

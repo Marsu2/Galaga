@@ -21,7 +21,7 @@ public class Score {
     private int score;
     private int highscore;
 
-        /**
+    /**
      * Initialise le score à 0 et charge le highscore depuis le fichier.
      */
     public Score() {
@@ -29,7 +29,7 @@ public class Score {
         this.highscore = readHighscore();
     }
 
-        /**
+    /**
      * Lit le highscore depuis le fichier highscore/highscore.sc.
      * Retourne 0 si le fichier n'existe pas ou lecture échouée.
      * 
@@ -64,7 +64,7 @@ public class Score {
      */
 
     public void saveHighscore() {
-        if(highscore< score){
+        if (highscore < score) {
             Path cheminDuFichier = Paths.get("ressources/highscore/highscore.sc");
             try (BufferedWriter writer = Files.newBufferedWriter(cheminDuFichier)) {
                 writer.write(score + "\n");
@@ -74,7 +74,7 @@ public class Score {
         }
     }
 
-        /**
+    /**
      * Retourne le score actuel de la partie.
      * 
      * @return score en cours
@@ -82,7 +82,6 @@ public class Score {
     public int getScore() {
         return score;
     }
-
 
     /**
      * Retourne le highscore persistant.
