@@ -137,13 +137,12 @@ public class Game {
         }
         enemies.removeAll(enemiesRemove);
         score.saveHighscore();
-        
-        
-        if(manager.isRoundEnded()){
+
+        if (manager.isRoundEnded()) {
             manager.toNextLevel();
             enemies = manager.getCurrentLevel().getEnemiesFormation();
         }
-        
+
     }
 
     private void playerGetHit() {
