@@ -122,8 +122,18 @@ public abstract class Enemy extends Entity {
         setShootCooldown(90 + (new Random().nextInt(100)));// 3 sec + random 0-100 frames
     }
 
-    public void animationStart(){
-        
+    public void animationStart() {
+
     }
 
+    public boolean checkHitBy(Player player) {
+        for (Missile missile : player.getMissiles()) {
+            if (missile.isHitingEntity(this)) {
+                this.takeDamage(1); // perde 1 HP
+                player.getMissiles().remove(missile);
+                return true;
+            }
+        }
+        return false;
+    }
 }

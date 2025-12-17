@@ -6,6 +6,13 @@
     "configurations": [
         {
             "type": "java",
+            "name": "StdDraw",
+            "request": "launch",
+            "mainClass": "engine.StdDraw",
+            "projectName": "Galaga_d1889a22"
+        },
+        {
+            "type": "java",
             "name": "App",
             "request": "launch",
             "mainClass": "engine.App",

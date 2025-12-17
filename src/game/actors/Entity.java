@@ -13,6 +13,7 @@ import java.awt.Color;
 
 import engine.StdDraw;
 import game.Game;
+import game.utils.SpriteLoader;
 
 /**
  * Classe abstraite mère de toutes les entités du jeu (joueur, ennemis).
@@ -25,7 +26,7 @@ public abstract class Entity {
     protected int health;
     protected double speed;
     protected List<Missile> missiles;
-    protected Game game;
+    protected Color[][] sprite;
 
     /**
      * Crée une nouvelle entité avec ses propriétés de base.
@@ -131,39 +132,11 @@ public abstract class Entity {
      */
 
     public void drawSpriteV2(double positionx, double positiony, double size, String fileName) {
-        // Lecture d'un fichier vu durant la séance du CM9
-        Path p = Paths.get(fileName);
-        try (BufferedReader reader = Files.newBufferedReader(p)) {
-            List<String> lines = new ArrayList<>();
-            String line;
-            while (((line = reader.readLine()) != null)) {
-                lines.add(line);
-            }
-            double height = lines.size();
-            double width = lines.get(0).length();
-
-            double pixelSize = size / width;
-            double startX = positionx - (size / 2);
-            double startY = positiony + (size / 2);
-
-            for (int row = 0; row < lines.size(); row++) {
-                String currentLine = lines.get(row);
-                for (int column = 0; column < currentLine.length(); column++) {
-                    char c = currentLine.charAt(column);
-                    Color color = decodeColor(c);
-                    // Position du pixel actuel en se basant sur le point de départ
-                    double px = startX + (column * pixelSize) + (pixelSize / 2);
-                    double py = startY - (row * pixelSize) - (pixelSize / 2);
-
-                    // On dessine kle pixel en fonction de la position
-                    StdDraw.setPenColor(color);
-                    StdDraw.filledSquare(px, py, pixelSize / 2);
-
-                }
-            }
-        } catch (IOException e) {
-            System.out.println(e);
+        if (sprite == null) {
+            sprite = SpriteLoader.loadSprite(fileName);
         }
+        SpriteLoader.drawSprite(sprite, positionx, positiony, size);
+
     }
 
     /**
@@ -172,23 +145,6 @@ public abstract class Entity {
      * @param c caractère représentant la couleur (R,G,B,Y,W)
      * @return couleur correspondante
      */
-
-    private Color decodeColor(char c) {
-        switch (c) {
-            case 'R':
-                return StdDraw.RED;
-            case 'G':
-                return StdDraw.GREEN;
-            case 'B':
-                return StdDraw.BLUE;
-            case 'Y':
-                return StdDraw.YELLOW;
-            case 'W':
-                return StdDraw.WHITE;
-            default:
-                return StdDraw.BLACK;
-        }
-    }
 
     /**
      * Vérifie si l'entité peut tirer (à implémenter).
@@ -202,7 +158,7 @@ public abstract class Entity {
         }
     }
 
-    private void takeDamage(int damage){
+    protected void takeDamage(int damage) {
         this.health = Math.max(0, this.health - damage);
     }
 
@@ -216,17 +172,20 @@ public abstract class Entity {
         missiles.removeAll(rmMissiles);
     }
 
-    public boolean checkHitBy(List<Missile> missiles) {
+    public boolean checkHitBy(List<Enemy> entities) {
         boolean res = false;
-        List<Missile> toRemove = new ArrayList<>();
-        for (Missile m : missiles) {
-            if (m.isHitingEntity(this)) {
-                takeDamage(1); // perde 1 HP
-                toRemove.add(m);
-                res = true;
+
+        for (Entity entity : entities) {
+            List<Missile> toRemove = new ArrayList<>();
+            for (Missile m : entity.getMissiles()) {
+                if (m.isHitingEntity(this)) {
+                    takeDamage(1); // perde 1 HP
+                    toRemove.add(m);
+                    res = true;
+                }
             }
+            missiles.removeAll(toRemove);
         }
-        missiles.removeAll(toRemove);
         return res;
     }
 

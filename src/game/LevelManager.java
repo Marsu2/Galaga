@@ -10,6 +10,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import engine.StdDraw;
+import game.actors.Player;
+import game.utils.SpriteLoader;
 
 /**
  * Gère le chargement et la progression entre les niveaux du jeu.
@@ -18,6 +20,8 @@ import engine.StdDraw;
 public class LevelManager {
     private Level[] levels;
     private int currentLevelIndex;
+    private Player player;
+    private Color[][] sprite;
     public int nbLevels = 2;
 
     /**
@@ -25,8 +29,9 @@ public class LevelManager {
      * 
      * @param game référence au jeu principal
      */
-    public LevelManager() {
+    public LevelManager(Player player) {
         this.currentLevelIndex = 0;
+        this.player = player;
         loadLevels();
     }
 
@@ -76,62 +81,9 @@ public class LevelManager {
     }
 
     public void drawSpriteV2(double positionx, double positiony, double size, String fileName) {
-        // Lecture d'un fichier vu durant la séance du CM9
-        Path p = Paths.get(fileName);
-        try (BufferedReader reader = Files.newBufferedReader(p)) {
-            List<String> lines = new ArrayList<>();
-            String line;
-            while (((line = reader.readLine()) != null)) {
-                lines.add(line);
-            }
-            double height = lines.size();
-            double width = lines.get(0).length();
-
-            double pixelSize = size / width;
-            double startX = positionx - (size / 2);
-            double startY = positiony + (size / 2);
-
-            for (int row = 0; row < lines.size(); row++) {
-                String currentLine = lines.get(row);
-                for (int column = 0; column < currentLine.length(); column++) {
-                    char c = currentLine.charAt(column);
-                    Color color = decodeColor(c);
-                    // Position du pixel actuel en se basant sur le point de départ
-                    double px = startX + (column * pixelSize) + (pixelSize / 2);
-                    double py = startY - (row * pixelSize) - (pixelSize / 2);
-
-                    // On dessine kle pixel en fonction de la position
-                    StdDraw.setPenColor(color);
-                    StdDraw.filledSquare(px, py, pixelSize / 2);
-
-                }
-            }
-        } catch (IOException e) {
-            System.out.println(e);
+        if (sprite == null) {
+            sprite = SpriteLoader.loadSprite(fileName);
         }
-    }
-
-    /**
-     * Convertit un caractère en couleur pour les sprites pixelisés.
-     * 
-     * @param c caractère représentant la couleur (R,G,B,Y,W)
-     * @return couleur correspondante
-     */
-
-    private Color decodeColor(char c) {
-        switch (c) {
-            case 'R':
-                return StdDraw.RED;
-            case 'G':
-                return StdDraw.GREEN;
-            case 'B':
-                return StdDraw.BLUE;
-            case 'Y':
-                return StdDraw.YELLOW;
-            case 'W':
-                return StdDraw.WHITE;
-            default:
-                return StdDraw.BLACK;
-        }
+        SpriteLoader.drawSprite(sprite, positionx, positiony, size);
     }
 }

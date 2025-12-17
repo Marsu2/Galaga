@@ -24,7 +24,7 @@ public class Game {
         player = new Player(0.5, 0.1, 0.06, 5, 0.02);
         enemies = new LinkedList<>();
         score = new Score();
-        manager = new LevelManager();
+        manager = new LevelManager(player);
         enemies = (manager.getCurrentLevel().getEnemiesFormation());
     }
 
@@ -125,7 +125,7 @@ public class Game {
             if (e.canShoot(enemies)) {
                 e.shoot();
             }
-            e.checkHitBy(player.getMissiles());
+            e.checkHitBy(player);
         }
 
         List<Enemy> enemiesRemove = new ArrayList<>();
@@ -146,10 +146,8 @@ public class Game {
     }
 
     private void playerGetHit() {
-        for (Enemy e : enemies) {
-            if (player.checkHitBy(e.getMissiles())) {
-                manager.getCurrentLevel().resetEnemies();
-            }
+        if (player.checkHitBy(enemies)) {
+            manager.getCurrentLevel().resetEnemies();
         }
     }
 }
