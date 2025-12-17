@@ -73,7 +73,7 @@ public class SpriteLoader {
                 double px = startX + (column * pixelSize) + (pixelSize / 2);
                 double py = startY - (row * pixelSize) - (pixelSize / 2);
 
-                // On dessine kle pixel en fonction de la position
+                // On dessine le pixel en fonction de la position
                 StdDraw.setPenColor(c);
                 StdDraw.filledSquare(px, py, pixelSize / 2);
 
