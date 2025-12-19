@@ -64,7 +64,7 @@ public class LevelManager {
         // draw le nombre de lvl passé
         drawLvlPassed(0.95, 0.07, 0.03, "ressources/sprites/level.spr");
 
-                // Dessin de la zone de score
+        // Dessin de la zone de score
 
         // Position du pixel de départ pour la ligne du haut
         double topPx = 0;
@@ -75,8 +75,6 @@ public class LevelManager {
 
         // On dessine le pixel en fonction de la position
         StdDraw.line(topPx, topPy, topPxEnd, topPyEnd);
-
-
 
     }
 
@@ -139,6 +137,7 @@ public class LevelManager {
 
     public void gameOver() {
         if (player.getHealth() <= 0) {
+            clear();
             drawGameOver();
             if (StdDraw.isKeyPressed(32)) {
                 reset();
@@ -158,7 +157,7 @@ public class LevelManager {
         StdDraw.text(Px, Py, "Game Over", 0.2);
         StdDraw.setFont();
         StdDraw.text(Px - 0.1, Py - 0.1, "Score", 0.2);
-        StdDraw.text(Px , Py - 0.1, "" + score.getScore(), 0.2);
+        StdDraw.text(Px, Py - 0.1, "" + score.getScore(), 0.2);
     }
 
     public boolean hasLevelChanged() {
@@ -178,4 +177,9 @@ public class LevelManager {
 
     }
 
+    private void clear() {
+        for (int i = 0; i < levels.length; i++) {
+            levels[i].setEnemiesFormation(new ArrayList<>());
+        }
+    }
 }
