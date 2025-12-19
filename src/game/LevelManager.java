@@ -64,6 +64,20 @@ public class LevelManager {
         // draw le nombre de lvl passé
         drawLvlPassed(0.95, 0.07, 0.03, "ressources/sprites/level.spr");
 
+                // Dessin de la zone de score
+
+        // Position du pixel de départ pour la ligne du haut
+        double topPx = 0;
+        double topPy = 0.9;
+        // Position du pixel d'arrivé pour la ligne du haut
+        double topPxEnd = 700;
+        double topPyEnd = 0.9;
+
+        // On dessine le pixel en fonction de la position
+        StdDraw.line(topPx, topPy, topPxEnd, topPyEnd);
+
+
+
     }
 
     /**

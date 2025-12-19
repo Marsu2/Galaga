@@ -1,3 +1,16 @@
+file://<WORKSPACE>/src/game/Score.java
+### java.util.NoSuchElementException: next on empty iterator
+
+occurred in the presentation compiler.
+
+presentation compiler configuration:
+
+
+action parameters:
+offset: 2435
+uri: file://<WORKSPACE>/src/game/Score.java
+text:
+```scala
 package game;
 
 import java.util.List;
@@ -97,7 +110,7 @@ public class Score {
 
     public void draw(){
         // on dessine score/High score
-        StdDraw.setPenColor(StdDraw.RED);
+        StdDraw.setPenColor@@(StdDraw.RED);
         StdDraw.text(0.15, 0.97, "SCORE");
         StdDraw.text(0.5, 0.97, "HIGH SCORE");
 
@@ -107,3 +120,25 @@ public class Score {
         StdDraw.text(0.5, 0.92, "" + highscore);
     }
 }
+
+```
+
+
+
+#### Error stacktrace:
+
+```
+scala.collection.Iterator$$anon$19.next(Iterator.scala:973)
+	scala.collection.Iterator$$anon$19.next(Iterator.scala:971)
+	scala.collection.mutable.MutationTracker$CheckedIterator.next(MutationTracker.scala:76)
+	scala.collection.IterableOps.head(Iterable.scala:222)
+	scala.collection.IterableOps.head$(Iterable.scala:222)
+	scala.collection.AbstractIterable.head(Iterable.scala:935)
+	dotty.tools.dotc.interactive.InteractiveDriver.run(InteractiveDriver.scala:164)
+	dotty.tools.pc.CachingDriver.run(CachingDriver.scala:45)
+	dotty.tools.pc.HoverProvider$.hover(HoverProvider.scala:40)
+	dotty.tools.pc.ScalaPresentationCompiler.hover$$anonfun$1(ScalaPresentationCompiler.scala:389)
+```
+#### Short summary: 
+
+java.util.NoSuchElementException: next on empty iterator

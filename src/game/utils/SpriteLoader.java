@@ -24,7 +24,7 @@ public class SpriteLoader {
         return res;
     }
 
-    private static List<String> loadFile(String fileName) {
+    public static List<String> loadFile(String fileName) {
         // Lecture d'un fichier vu durant la séance du CM9
         List<String> lines = new ArrayList<>();
         Path p = Paths.get(fileName);

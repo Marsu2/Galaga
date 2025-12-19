@@ -75,28 +75,8 @@ public class Game {
         }
 
         manager.draw();
+        score.draw();
 
-        // Dessin de la zone de score
-
-        // Position du pixel de départ pour la ligne du haut
-        double topPx = 0;
-        double topPy = 0.9;
-        // Position du pixel d'arrivé pour la ligne du haut
-        double topPxEnd = 700;
-        double topPyEnd = 0.9;
-
-        // On dessine le pixel en fonction de la position
-        StdDraw.line(topPx, topPy, topPxEnd, topPyEnd);
-
-        // on dessine score/High score
-        StdDraw.setPenColor(StdDraw.RED);
-        StdDraw.text(0.15, 0.97, "SCORE");
-        StdDraw.text(0.5, 0.97, "HIGH SCORE");
-
-        // on dessine le score/High score en dessous du dessin de score/High score
-        StdDraw.setPenColor(StdDraw.WHITE);
-        StdDraw.text(0.15, 0.92, "" + score.getScore());
-        StdDraw.text(0.5, 0.92, "" + score.getHighscore());
 
     }
 
