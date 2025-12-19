@@ -1,7 +1,6 @@
 package game.actors;
 
 import engine.StdDraw;
-import game.Game;
 import game.utils.SpriteLoader;
 
 /**
@@ -31,7 +30,7 @@ public class Player extends Entity {
     }
 
     /**
-     * Met à jour le joueur : mouvement et gestion de        saveHighscore();s tirs.
+     * Met à jour le joueur : mouvement et gestion de saveHighscore();s tirs.
      */
     public void update() {
         move();

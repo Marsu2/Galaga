@@ -1,11 +1,6 @@
 package game.actors;
 
 import java.util.List;
-import java.util.ArrayList;
-
-import engine.StdDraw;
-import game.Game;
-import game.LevelManager;
 import java.util.Random;
 
 /**

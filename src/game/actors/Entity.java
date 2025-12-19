@@ -1,19 +1,9 @@
 package game.actors;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
-import java.util.TreeMap;
-import java.awt.Color;
 
-import engine.StdDraw;
-import game.Game;
-import game.utils.SpriteLoader;
+import java.awt.Color;
 
 /**
  * Classe abstraite mère de toutes les entités du jeu (joueur, ennemis).

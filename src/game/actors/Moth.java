@@ -1,7 +1,5 @@
 package game.actors;
 
-import engine.StdDraw;
-import game.Game;
 import game.utils.SpriteLoader;
 
 /**

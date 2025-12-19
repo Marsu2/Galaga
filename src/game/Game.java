@@ -2,9 +2,6 @@ package game;
 
 import engine.StdDraw;
 import game.actors.*;
-import java.util.ArrayList;
-import java.util.List;
-
 /**
  * Classe principale du jeu.
  * Gère la boucle de jeu, les collisions, le rendu et la logique principale.

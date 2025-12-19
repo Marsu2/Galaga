@@ -2,11 +2,6 @@ package game;
 
 import java.awt.Color;
 import java.awt.Font;
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -186,8 +181,8 @@ public class LevelManager {
     public void clear() {
         for (int i = 0; i < levels.length; i++) {
             levels[i].setEnemiesFormation(new ArrayList<>());
+            enemies = levels[i].getEnemiesFormation();
         }
-        System.out.println("LVLCLZARED");
     }
 
     private void playerGetHit() {

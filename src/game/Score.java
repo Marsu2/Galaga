@@ -1,7 +1,6 @@
 package game;
 
 import java.util.List;
-import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -61,6 +60,7 @@ public class Score {
 
     public void saveHighscore() {
         if (highscore < score) {
+            // écriture du highscore dans le fichier CM9
             Path cheminDuFichier = Paths.get("ressources/highscore/highscore.sc");
             try (BufferedWriter writer = Files.newBufferedWriter(cheminDuFichier)) {
                 writer.write(score + "\n");
