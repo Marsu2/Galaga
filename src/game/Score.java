@@ -91,4 +91,10 @@ public class Score {
     public int getHighscore() {
         return highscore;
     }
+
+    public void reset() {
+        saveHighscore();
+        score = 0;
+
+    }
 }

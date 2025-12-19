@@ -11,6 +11,7 @@ import game.utils.SpriteLoader;
 public class Player extends Entity {
     private int coolDownShoot;
     private int coolDownShootMax;
+    private int hpMax;
 
     /**
      * Crée un nouveau joueur avec ses paramètres initiaux.
@@ -26,10 +27,11 @@ public class Player extends Entity {
         super(positionx, positiony, size, health, speed);
         coolDownShoot = 0;
         coolDownShootMax = 6;
+        hpMax = health;
     }
 
     /**
-     * Met à jour le joueur : mouvement et gestion des tirs.
+     * Met à jour le joueur : mouvement et gestion de        saveHighscore();s tirs.
      */
     public void update() {
         move();
@@ -59,7 +61,6 @@ public class Player extends Entity {
         if (StdDraw.isKeyPressed(39)) {
             if (positionx < 1) {
                 positionx += speed;
-
             }
         }
     }
@@ -81,7 +82,7 @@ public class Player extends Entity {
     public void shoot() {
         if (StdDraw.isKeyPressed(32) && canShoot()) {
             coolDownShoot = coolDownShootMax;
-            Missile m1 = new Missile(speed * 3, positionx, positiony + size / 2, EDirectionMissile.UP);
+            Missile m1 = new Missile(speed * 2, positionx, positiony + size / 2, EDirectionMissile.UP);
             missiles.add(m1);
         }
 
@@ -99,11 +100,15 @@ public class Player extends Entity {
         drawHp();
     }
 
-    private void drawHp(){
+    private void drawHp() {
         // Dessine de la barre de vie
         for (int i = 0; i < health; i++) {
             SpriteLoader.drawSprite(sprite, 0.05 + i * 0.03, 0.05, 0.05);
         }
+    }
+
+    public void resetHP() {
+        this.health = hpMax;
     }
 
 }
