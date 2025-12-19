@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import engine.StdDraw;
+import game.actors.Enemy;
 import game.actors.Player;
 import game.utils.SpriteLoader;
 
@@ -19,13 +20,13 @@ import game.utils.SpriteLoader;
  * Charge dynamiquement les niveaux depuis des fichiers .lvl.
  */
 public class LevelManager {
-    private boolean levelChanged = false;
     private Level[] levels;
     private int currentLevelIndex;
     private Player player;
     private Color[][] spriteHP;
     public int nbLevels = 3;
     private Score score;
+    private List<Enemy> enemies;
 
     /**
      * Initialise le gestionnaire de niveaux et charge tous les niveaux.
@@ -37,18 +38,41 @@ public class LevelManager {
         this.player = player;
         this.score = score;
         loadLevels();
+        this.enemies = getCurrentLevel().getEnemiesFormation();
     }
 
     public void update() {
         playerGetHit();
-        if (isRoundEnded()) {
-            levelChanged = true;
-            toNextLevel();
+        for (Enemy e : enemies) {
+            e.update();
         }
-        gameOver();
+
+        for (Enemy e : enemies) {
+            if (e.canShoot(enemies)) {
+                e.shoot();
+            }
+            e.checkHitBy(player);
+        }
+
+        List<Enemy> enemiesRemove = new ArrayList<>();
+        for (Enemy enemy : enemies) {
+            if (enemy.isDead()) {
+                enemiesRemove.add(enemy);
+                score.addScore(enemy);
+            }
+        }
+        enemies.removeAll(enemiesRemove);
+
+        if (isRoundEnded()) {
+            toNextLevel();
+            enemies = getCurrentLevel().getEnemiesFormation();
+        }
     }
 
     public void draw() {
+        for (Enemy e : enemies) {
+            e.draw();
+        }
 
         // Dessin de la zone d'information
         StdDraw.setPenColor(StdDraw.WHITE);
@@ -136,14 +160,8 @@ public class LevelManager {
         return currentLevelIndex == nbLevels - 1 && isRoundEnded();
     }
 
-    public void gameOver() {
-        if (player.getHealth() <= 0) {
-            clear();
-            drawGameOver();
-            if (StdDraw.isKeyPressed(32)) {
-                reset();
-            }
-        }
+    public Boolean isGameOver() {
+        return player.isDead();
     }
 
     public void drawGameOver() {
@@ -161,24 +179,15 @@ public class LevelManager {
         StdDraw.text(Px, Py - 0.1, "" + score.getScore(), 0.2);
     }
 
-    public boolean hasLevelChanged() {
-        if (levelChanged) {
-            levelChanged = false;
-            return true;
-        }
-        return false;
-    }
-
     public void reset() {
         loadLevels();
         this.currentLevelIndex = 0;
         player.resetHP();
-        this.levelChanged = true;
         score.reset();
 
     }
 
-    private void clear() {
+    public void clear() {
         for (int i = 0; i < levels.length; i++) {
             levels[i].setEnemiesFormation(new ArrayList<>());
         }
@@ -189,4 +198,5 @@ public class LevelManager {
             getCurrentLevel().resetEnemies();
         }
     }
+
 }

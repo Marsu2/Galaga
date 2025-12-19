@@ -14,17 +14,14 @@ public class Game {
     private Player player; // Jouer, seul éléments actuellement dans notre jeu
     private LevelManager manager;
     private Score score;
-    private List<Enemy> enemies;
 
     /**
      * Initialise le jeu avec joueur, ennemis, score et premier niveau.
      */
     public Game() {
-        player = new Player(0.5, 0.15, 0.06, 2, 0.02);
-        enemies = new ArrayList<>();
+        player = new Player(0.5, 0.15, 0.06, 12, 0.02);
         score = new Score();
         manager = new LevelManager(player, score);
-        enemies = (manager.getCurrentLevel().getEnemiesFormation());
     }
 
     /**
@@ -71,8 +68,9 @@ public class Game {
         player.draw();
         manager.draw();
         score.draw();
-        for (Entity e : enemies) {
-            e.draw();
+
+        if (manager.isGameOver()) {
+            manager.drawGameOver();
         }
     }
 
@@ -81,29 +79,12 @@ public class Game {
      */
     private void update() {
         player.update();
-        for (Entity e : enemies) {
-            e.update();
-        }
-
-        for (Enemy e : enemies) {
-            if (e.canShoot(enemies)) {
-                e.shoot();
-            }
-            e.checkHitBy(player);
-        }
-
-        List<Enemy> enemiesRemove = new ArrayList<>();
-        for (Enemy enemy : enemies) {
-            if (enemy.isDead()) {
-                enemiesRemove.add(enemy);
-                score.addScore(enemy);
-            }
-        }
-        enemies.removeAll(enemiesRemove);
-
         manager.update();
-        if (manager.hasLevelChanged()) {
-            enemies = manager.getCurrentLevel().getEnemiesFormation();
+        if(manager.isGameOver()){
+            if(StdDraw.isKeyPressed(32)){
+                manager.clear();
+                manager.reset();
+            }
         }
     }
 }
