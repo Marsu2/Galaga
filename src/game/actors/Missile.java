@@ -18,6 +18,8 @@ public class Missile {
     private double positiony;
     private double positionx;
     private EDirectionMissile direction;
+    private double width;
+    private double heigth;
 
     /**
      * Retourne la position verticale du missile.
@@ -50,6 +52,8 @@ public class Missile {
         this.positiony = positiony;
         this.positionx = positionx;
         this.direction = direction;
+        this.width = 0.001;
+        this.heigth = 0.01;
     }
 
     /**
@@ -67,7 +71,7 @@ public class Missile {
      */
     public void drawSprite() {
         StdDraw.setPenColor(StdDraw.WHITE);
-        StdDraw.filledRectangle(positionx, positiony, 0.001, 0.01);
+        StdDraw.filledRectangle(positionx, positiony, width, heigth);
     }
 
     /**
@@ -86,12 +90,10 @@ public class Missile {
      * @return true si collision détectée
      */
     public boolean isHitingEntity(Entity e) {
-        double distanceX = this.positionx - e.positionx;
-        double distanceY = this.positiony - e.positiony;
-        double distance = distanceX * distanceX + distanceY * distanceY;
-        double hitboxes = e.size / 2 + 0.01; // taille du missile
+        double distanceX = Math.abs(this.positionx - e.getPositionx()) - (this.width + e.getSize()/2);
+        double distanceY = Math.abs(this.positiony - e.getPositiony()) - (this.heigth + e.getSize()/2);
 
-        if (distance <= hitboxes * hitboxes) {
+        if(distanceX <= 0 && distanceY <=0){
             return true;
         }
         return false;

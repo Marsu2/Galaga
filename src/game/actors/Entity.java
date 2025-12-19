@@ -20,6 +20,10 @@ import game.utils.SpriteLoader;
  * Gère les propriétés communes et le rendu de sprites pixelisés.
  */
 public abstract class Entity {
+    public double getSize() {
+        return size;
+    }
+
     protected double positionx;
     protected double positiony;
     protected double size;
