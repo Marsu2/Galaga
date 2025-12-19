@@ -23,7 +23,7 @@ public class LevelManager {
     private Level[] levels;
     private int currentLevelIndex;
     private Player player;
-    private Color[][] spriteHP;
+    private Color[][] spriteLvl;
     public int nbLevels = 3;
     private Score score;
     private List<Enemy> enemies;
@@ -43,27 +43,22 @@ public class LevelManager {
 
     public void update() {
         playerGetHit();
+        List<Enemy> enemiesRemove = new ArrayList<>();
         for (Enemy e : enemies) {
             e.update();
-        }
-
-        for (Enemy e : enemies) {
             if (e.canShoot(enemies)) {
                 e.shoot();
             }
             e.checkHitBy(player);
-        }
-
-        List<Enemy> enemiesRemove = new ArrayList<>();
-        for (Enemy enemy : enemies) {
-            if (enemy.isDead()) {
-                enemiesRemove.add(enemy);
-                score.addScore(enemy);
+            if (e.isDead()) {
+                enemiesRemove.add(e);
+                score.addScore(e);
             }
         }
+
         enemies.removeAll(enemiesRemove);
 
-        if (isRoundEnded()) {
+        if (isRoundEnded() && !player.isDead()) {
             toNextLevel();
             enemies = getCurrentLevel().getEnemiesFormation();
         }
@@ -150,10 +145,10 @@ public class LevelManager {
     }
 
     private void drawLvl(double positionx, double positiony, double size, String fileName) {
-        if (spriteHP == null) {
-            spriteHP = SpriteLoader.loadSprite(fileName);
+        if (spriteLvl == null) {
+            spriteLvl = SpriteLoader.loadSprite(fileName);
         }
-        SpriteLoader.drawSprite(spriteHP, positionx, positiony, size);
+        SpriteLoader.drawSprite(spriteLvl, positionx, positiony, size);
     }
 
     public boolean winGame() {
@@ -184,6 +179,7 @@ public class LevelManager {
         this.currentLevelIndex = 0;
         player.resetHP();
         score.reset();
+        enemies = getCurrentLevel().getEnemiesFormation();
 
     }
 
@@ -191,6 +187,7 @@ public class LevelManager {
         for (int i = 0; i < levels.length; i++) {
             levels[i].setEnemiesFormation(new ArrayList<>());
         }
+        System.out.println("LVLCLZARED");
     }
 
     private void playerGetHit() {

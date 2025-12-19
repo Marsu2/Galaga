@@ -71,11 +71,10 @@ public class SpriteLoader {
             for (int column = 0; column < currentLine.length; column++) {
                 Color c = currentLine[column];
                 if (c != null) {
-                    // Position du pixel actuel en se basant sur le point de départ
+                    // Position du pixel que lon va dessiner
                     double px = startX + (column * pixelSize) + (pixelSize / 2);
                     double py = startY - (row * pixelSize) - (pixelSize / 2);
 
-                    // On dessine le pixel en fonction de la position
                     StdDraw.setPenColor(c);
                     StdDraw.filledSquare(px, py, (pixelSize / 2) * 1.1); // *1.1 pour eviter les trous dans les sprites
                 }

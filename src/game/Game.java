@@ -19,7 +19,7 @@ public class Game {
      * Initialise le jeu avec joueur, ennemis, score et premier niveau.
      */
     public Game() {
-        player = new Player(0.5, 0.15, 0.06, 12, 0.02);
+        player = new Player(0.5, 0.15, 0.06, 1, 0.02);
         score = new Score();
         manager = new LevelManager(player, score);
     }
@@ -80,9 +80,9 @@ public class Game {
     private void update() {
         player.update();
         manager.update();
-        if(manager.isGameOver()){
-            if(StdDraw.isKeyPressed(32)){
-                manager.clear();
+        if (manager.isGameOver()) {
+            manager.clear();
+            if (StdDraw.isKeyPressed(32)) {
                 manager.reset();
             }
         }
