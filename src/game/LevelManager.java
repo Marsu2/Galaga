@@ -40,6 +40,7 @@ public class LevelManager {
     }
 
     public void update() {
+        playerGetHit();
         if (isRoundEnded()) {
             levelChanged = true;
             toNextLevel();
@@ -180,6 +181,12 @@ public class LevelManager {
     private void clear() {
         for (int i = 0; i < levels.length; i++) {
             levels[i].setEnemiesFormation(new ArrayList<>());
+        }
+    }
+
+    private void playerGetHit() {
+        if (player.checkHitBy(getCurrentLevel().getEnemiesFormation())) {
+            getCurrentLevel().resetEnemies();
         }
     }
 }

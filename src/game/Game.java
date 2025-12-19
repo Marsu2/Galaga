@@ -3,7 +3,6 @@ package game;
 import engine.StdDraw;
 import game.actors.*;
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -22,7 +21,7 @@ public class Game {
      */
     public Game() {
         player = new Player(0.5, 0.15, 0.06, 2, 0.02);
-        enemies = new LinkedList<>();
+        enemies = new ArrayList<>();
         score = new Score();
         manager = new LevelManager(player, score);
         enemies = (manager.getCurrentLevel().getEnemiesFormation());
@@ -70,14 +69,11 @@ public class Game {
      */
     public void draw() {
         player.draw();
+        manager.draw();
+        score.draw();
         for (Entity e : enemies) {
             e.draw();
         }
-
-        manager.draw();
-        score.draw();
-
-
     }
 
     /**
@@ -85,7 +81,6 @@ public class Game {
      */
     private void update() {
         player.update();
-        playerGetHit();
         for (Entity e : enemies) {
             e.update();
         }
@@ -109,13 +104,6 @@ public class Game {
         manager.update();
         if (manager.hasLevelChanged()) {
             enemies = manager.getCurrentLevel().getEnemiesFormation();
-        }
-
-    }
-
-    private void playerGetHit() {
-        if (player.checkHitBy(enemies)) {
-            manager.getCurrentLevel().resetEnemies();
         }
     }
 }

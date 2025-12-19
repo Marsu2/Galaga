@@ -101,7 +101,6 @@ public class Player extends Entity {
     }
 
     private void drawHp() {
-        // Dessine de la barre de vie
         for (int i = 0; i < health; i++) {
             SpriteLoader.drawSprite(sprite, 0.05 + i * 0.03, 0.05, 0.05);
         }

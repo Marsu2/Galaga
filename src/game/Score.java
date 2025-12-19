@@ -90,12 +90,12 @@ public class Score {
 
     public void reset() {
         saveHighscore();
-        score = 0;
-        highscore = readHighscore();
+        this.highscore = readHighscore();
+        this.score = 0;
 
     }
 
-    public void draw(){
+    public void draw() {
         // on dessine score/High score
         StdDraw.setPenColor(StdDraw.RED);
         StdDraw.text(0.15, 0.97, "SCORE");
