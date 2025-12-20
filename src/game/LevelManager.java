@@ -26,7 +26,7 @@ public class LevelManager {
     /**
      * Initialise le gestionnaire de niveaux et charge tous les niveaux.
      * 
-     * @param game référence au jeu principal
+     * 
      */
     public LevelManager(Player player, Score score) {
         this.currentLevelIndex = 0;
