@@ -60,6 +60,9 @@ public class LevelManager {
             toNextLevel();
             enemies = getCurrentLevel().getEnemiesFormation();
         }
+        if (!player.isRespawning()) {
+            getCurrentLevel().formationMove();
+        }
     }
 
     public void draw() {

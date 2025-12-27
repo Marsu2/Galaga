@@ -20,6 +20,7 @@ public class Level {
     private List<Enemy> enemiesFormation;
     private int attackCooldown;
     private int shootCooldown;
+    private boolean direction; // false gauche, true droite
 
     /**
      * Définit le nom du niveau.
@@ -118,6 +119,7 @@ public class Level {
      */
     public Level(String filePath) {
         startRound(filePath);
+        this.direction = true;
     }
 
     /**
@@ -176,23 +178,47 @@ public class Level {
         }
     }
 
-    public void resetEnemies(){
-        for(Enemy enemy : enemiesFormation){
+    public void resetEnemies() {
+        for (Enemy enemy : enemiesFormation) {
             enemy.reset();
         }
     }
 
-    private void startRound(String filePath){
+    private void startRound(String filePath) {
         loadLevel(filePath);
     }
 
-    public boolean areAllDead(){
-        for(Enemy enemy : enemiesFormation){
-            if(!enemy.isDead()){
+    public boolean areAllDead() {
+        for (Enemy enemy : enemiesFormation) {
+            if (!enemy.isDead()) {
                 return false;
             }
         }
         return true;
+    }
+
+    private void formationinBound() {
+        for (Enemy enemy : enemiesFormation) {
+            if (!enemy.isDead()) {
+                if (enemy.getPositionx() < 0 || enemy.getPositionx() > 1) {
+                    direction = !direction;
+                    break;
+                }
+            }
+        }
+    }
+
+    public void formationMove() {
+        formationinBound();
+        for (Enemy enemy : enemiesFormation) {
+            if (!enemy.isDead()) {
+                if (direction)
+                    enemy.setPositionx(enemy.getPositionx() + formationSpeed);
+                else {
+                    enemy.setPositionx(enemy.getPositionx() - formationSpeed);
+                }
+            }
+        }
     }
 
 }

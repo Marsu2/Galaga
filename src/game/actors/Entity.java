@@ -15,6 +15,10 @@ public abstract class Entity {
     }
 
     protected double positionx;
+    public void setPositionx(double positionx) {
+        this.positionx = positionx;
+    }
+
     protected double positiony;
     protected double size;
     protected int health;
