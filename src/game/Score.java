@@ -39,6 +39,7 @@ public class Score {
      */
     private int readHighscore() {
         List<String> lines = SpriteLoader.loadFile("ressources/highscore/highscore.sc");
+        if (lines.isEmpty()) return 0;
         return Integer.parseInt(lines.get(0));
 
     }

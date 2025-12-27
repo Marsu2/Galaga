@@ -11,6 +11,9 @@ public class Player extends Entity {
     private int coolDownShoot;
     private int coolDownShootMax;
     private int hpMax;
+    private boolean isRespawning = false;
+    private int respawnTimer = 0;
+    private int respawnDuration = 60;
 
     /**
      * Crée un nouveau joueur avec ses paramètres initiaux.
@@ -33,13 +36,20 @@ public class Player extends Entity {
      * Met à jour le joueur : mouvement et gestion de saveHighscore();s tirs.
      */
     public void update() {
-        move();
-        shoot();
         removeMissilesOOB();
         for (Missile missile : missiles) {
             missile.update();
         }
 
+        if (isRespawning) {
+            respawnTimer--;
+            if (respawnTimer <= 0) {
+                isRespawning = false;
+            }
+            return;
+        }
+        move();
+        shoot();
         if (coolDownShoot > 0) {
             coolDownShoot--;
         }
@@ -94,19 +104,43 @@ public class Player extends Entity {
         if (sprite == null) {
             sprite = SpriteLoader.loadSprite("ressources/sprites/ship.spr");
         }
-        SpriteLoader.drawSprite(sprite, positionx, positiony, size);
-        drawMissiles();
         drawHp();
+        drawMissiles();
+
+        if (isRespawning)
+            return;
+
+        SpriteLoader.drawSprite(sprite, positionx, positiony, size);
+
     }
 
     private void drawHp() {
         for (int i = 0; i < health; i++) {
             SpriteLoader.drawSprite(sprite, 0.05 + i * 0.03, 0.05, 0.05);
         }
+        if (isRespawning && health > 0) {
+            if (respawnTimer % 10 < 5) {
+                SpriteLoader.drawSprite(sprite, 0.05 + health * 0.03, 0.05, 0.05);
+            }
+        }
     }
 
     public void resetHP() {
         this.health = hpMax;
+        isRespawning = false;
+        respawnTimer = 0;
+    }
+
+    public boolean isRespawning() {
+        return isRespawning;
+    }
+
+    public void setHit() {
+        this.positionx = 0.5;
+        this.positiony = 0.15;
+        this.isRespawning = true;
+        this.respawnTimer = respawnDuration;
+        this.missiles.clear();
     }
 
 }

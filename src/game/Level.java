@@ -184,9 +184,6 @@ public class Level {
 
     private void startRound(String filePath){
         loadLevel(filePath);
-        for (Enemy enemy : enemiesFormation) {
-            //TODO
-        }
     }
 
     public boolean areAllDead(){

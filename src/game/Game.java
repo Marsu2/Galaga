@@ -2,6 +2,7 @@ package game;
 
 import engine.StdDraw;
 import game.actors.*;
+
 /**
  * Classe principale du jeu.
  * Gère la boucle de jeu, les collisions, le rendu et la logique principale.
@@ -16,7 +17,7 @@ public class Game {
      * Initialise le jeu avec joueur, ennemis, score et premier niveau.
      */
     public Game() {
-        player = new Player(0.5, 0.15, 0.06, 1, 0.02);
+        player = new Player(0.5, 0.15, 0.06, 2, 0.02);
         score = new Score();
         manager = new LevelManager(player, score);
     }
@@ -67,7 +68,10 @@ public class Game {
         score.draw();
 
         if (manager.isGameOver()) {
-            manager.drawGameOver();
+            manager.drawGameEnd("Game Over");
+        }
+        else if (manager.winGame()) {
+            manager.drawGameEnd("You Win!");
         }
     }
 
@@ -77,7 +81,8 @@ public class Game {
     private void update() {
         player.update();
         manager.update();
-        if (manager.isGameOver()) {
+
+        if (manager.isGameOver() || manager.winGame()) {
             manager.clear();
             if (StdDraw.isKeyPressed(32)) {
                 manager.reset();

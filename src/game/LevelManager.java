@@ -45,12 +45,15 @@ public class LevelManager {
                 e.shoot();
             }
             e.checkHitBy(player);
-            if (e.isDead()) {
-                enemiesRemove.add(e);
+            if (e.isDead() && !e.getScored()) {
                 score.addScore(e);
+                e.setScored(true);
             }
-        }
+            if (e.canRemove()) {
+                enemiesRemove.add(e);
+            }
 
+        }
         enemies.removeAll(enemiesRemove);
 
         if (isRoundEnded() && !player.isDead()) {
@@ -147,14 +150,14 @@ public class LevelManager {
     }
 
     public boolean winGame() {
-        return currentLevelIndex == nbLevels - 1 && isRoundEnded();
+        return (currentLevelIndex == nbLevels - 1) && isRoundEnded();
     }
 
     public Boolean isGameOver() {
         return player.isDead();
     }
 
-    public void drawGameOver() {
+    public void drawGameEnd(String message) {
         StdDraw.setPenColor(StdDraw.RED);
         // Position du pixel de départ pour la ligne du bas
         double Px = 0.5;
@@ -163,10 +166,11 @@ public class LevelManager {
         //
         Font font = new Font("Arial", Font.BOLD, 32);
         StdDraw.setFont(font);
-        StdDraw.text(Px, Py, "Game Over", 0.2);
+        StdDraw.text(Px, Py, message, 0.2);
         StdDraw.setFont();
         StdDraw.text(Px - 0.1, Py - 0.1, "Score", 0.2);
         StdDraw.text(Px, Py - 0.1, "" + score.getScore(), 0.2);
+        StdDraw.text(Px, Py - 0.3, "Press space to restart", 0.2);
     }
 
     public void reset() {
@@ -186,7 +190,8 @@ public class LevelManager {
     }
 
     private void playerGetHit() {
-        if (player.checkHitBy(getCurrentLevel().getEnemiesFormation())) {
+        if (!player.isRespawning() && player.checkHitBy(getCurrentLevel().getEnemiesFormation())) {
+            player.setHit();
             getCurrentLevel().resetEnemies();
         }
     }

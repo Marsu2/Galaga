@@ -13,6 +13,7 @@ public abstract class Enemy extends Entity {
     protected int shootCooldown;
     protected double initialPositionX;
     protected double initialPositionY;
+    protected boolean scored;
 
     public void setShootCooldown(int shootCooldown) {
         this.shootCooldown = shootCooldown;
@@ -35,7 +36,9 @@ public abstract class Enemy extends Entity {
         this.initialPositionY = positiony;
         this.score = score;
         this.shootCooldownMax = shootCooldown;
-        this.shootCooldown = shootCooldown;
+        this.shootCooldown = shootCooldown + (new Random().nextInt(50)); // pour eviter que tous les ennemis tirent en
+                                                                         // meme temps
+        this.scored = false;
 
     }
 
@@ -48,17 +51,21 @@ public abstract class Enemy extends Entity {
         return score;
     }
 
+    public boolean getScored() {
+        return scored;
+    }
+
     /**
      * Met à jour l'ennemi : mouvement, tir automatique et gestion du cooldown.
      */
 
     public void update() {
-        move();
+
         removeMissilesOOB();
         for (Missile missile : missiles) {
             missile.update();
         }
-
+        move();
         if (shootCooldown > 0) {
             shootCooldown--;
         }
@@ -117,18 +124,27 @@ public abstract class Enemy extends Entity {
         setShootCooldown(90 + (new Random().nextInt(100)));// 3 sec + random 0-100 frames
     }
 
-    public void animationStart() {
-
-    }
-
     public boolean checkHitBy(Player player) {
         for (Missile missile : player.getMissiles()) {
             if (missile.isHitingEntity(this)) {
                 this.takeDamage(1); // perde 1 HP
                 player.getMissiles().remove(missile);
+                if (isDead()) {
+                    // pour le faire sortir de l'ecrna
+                    positionx = 10;
+                    positiony = -10;
+                }
                 return true;
             }
         }
         return false;
+    }
+
+    public boolean canRemove() {
+        return isDead() && missiles.isEmpty();
+    }
+
+    public void setScored(boolean scored) {
+        this.scored = scored;
     }
 }
