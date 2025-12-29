@@ -1,5 +1,7 @@
 package game.actors;
 
+import java.util.List;
+
 import engine.StdDraw;
 import game.utils.SpriteLoader;
 
@@ -125,7 +127,14 @@ public class Player extends Entity {
         }
     }
 
-    public void resetHP() {
+    public void reset() {
+        resetHP();
+        this.missiles.clear();
+        this.positionx = 0.5;
+        this.positiony = 0.15;
+    }
+
+    private void resetHP() {
         this.health = hpMax;
         isRespawning = false;
         respawnTimer = 0;
@@ -141,6 +150,25 @@ public class Player extends Entity {
         this.isRespawning = true;
         this.respawnTimer = respawnDuration;
         this.missiles.clear();
+    }
+
+    public boolean checkHitBy(List<Enemy> enemies) {
+        for (Enemy enemy : enemies) {
+            double distanceX = Math.abs(this.positionx - enemy.getPositionx()) - ((this.size + enemy.getSize()) / 2);
+            double distanceY = Math.abs(this.positiony - enemy.getPositiony()) - ((this.size + enemy.getSize()) / 2);
+            if (distanceX <= 0 && distanceY <= 0) {
+                takeDamage(1);
+                enemy.takeDamage(1);
+                return true;
+            }
+            for (Missile m : enemy.getMissiles()) {
+                if (m.isHitingEntity(this)) {
+                    takeDamage(1); // perde 1 HP
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 
 }

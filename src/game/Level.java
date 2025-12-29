@@ -7,6 +7,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import game.actors.*;
 
@@ -18,7 +19,7 @@ public class Level {
     private String levelName;
     private double formationSpeed;
     private List<Enemy> enemiesFormation;
-    private int attackCooldown;
+    private int attackCooldownMax;
     private int shootCooldown;
     private boolean direction; // false gauche, true droite
 
@@ -63,17 +64,17 @@ public class Level {
      * 
      * @return cooldown d'attaque (ms)
      */
-    public double getAttackCooldown() {
-        return attackCooldown;
+    public int getattackCooldownMax() {
+        return attackCooldownMax;
     }
 
     /**
      * Définit le délai d'attaque de la formation.
      * 
-     * @param attackCooldown nouveau cooldown (ms)
+     * @param attackCooldownMax nouveau cooldown (ms)
      */
-    public void setAttackCooldown(int attackCooldown) {
-        this.attackCooldown = attackCooldown;
+    public void setattackCooldownMax(int attackCooldownMax) {
+        this.attackCooldownMax = attackCooldownMax;
     }
 
     /**
@@ -81,7 +82,7 @@ public class Level {
      * 
      * @return cooldown de tir (ms)
      */
-    public double getShootCooldown() {
+    public int getShootCooldown() {
         return shootCooldown;
     }
 
@@ -118,7 +119,7 @@ public class Level {
      * @param filePath chemin vers le fichier de niveau
      */
     public Level(String filePath) {
-        startRound(filePath);
+        loadLevel(filePath);
         this.direction = true;
     }
 
@@ -145,7 +146,7 @@ public class Level {
             String[] firstsplit = firstLine.split(" ");
             this.levelName = firstsplit[0];
             this.formationSpeed = Double.parseDouble(firstsplit[1]);
-            this.attackCooldown = Integer.parseInt(firstsplit[2]);
+            this.attackCooldownMax = Integer.parseInt(firstsplit[2]);
             this.shootCooldown = Integer.parseInt(firstsplit[3]);
 
             for (int i = 1; i < lines.size(); i++) {
@@ -184,10 +185,6 @@ public class Level {
         }
     }
 
-    private void startRound(String filePath) {
-        loadLevel(filePath);
-    }
-
     public boolean areAllDead() {
         for (Enemy enemy : enemiesFormation) {
             if (!enemy.isDead()) {
@@ -211,7 +208,7 @@ public class Level {
     public void formationMove() {
         formationinBound();
         for (Enemy enemy : enemiesFormation) {
-            if (!enemy.isDead()) {
+            if (!enemy.isDead() && !enemy.isSoloMode()) {
                 if (direction)
                     enemy.setPositionx(enemy.getPositionx() + formationSpeed);
                 else {
@@ -219,6 +216,19 @@ public class Level {
                 }
             }
         }
+    }
+
+    public Enemy choseSolo() {
+        int randomIncr = new Random().nextInt(100);
+        for (int i = 0; i < enemiesFormation.size(); i++) {
+            Enemy enemy = enemiesFormation.get((i + randomIncr) % enemiesFormation.size());
+            if (enemy.isDead() || enemy.isSoloMode() || !enemy.botttomCleared(enemiesFormation)) {
+                continue;
+            }
+            enemy.setSoloMode(true);
+            return enemy;
+        }
+        return null;
     }
 
 }

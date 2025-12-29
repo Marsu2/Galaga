@@ -153,22 +153,7 @@ public abstract class Entity {
         missiles.removeAll(rmMissiles);
     }
 
-    public boolean checkHitBy(List<Enemy> entities) {
-        boolean res = false;
 
-        for (Entity entity : entities) {
-            List<Missile> toRemove = new ArrayList<>();
-            for (Missile m : entity.getMissiles()) {
-                if (m.isHitingEntity(this)) {
-                    takeDamage(1); // perde 1 HP
-                    toRemove.add(m);
-                    res = true;
-                }
-            }
-            missiles.removeAll(toRemove);
-        }
-        return res;
-    }
 
     public void removeAllMissiles() {
         missiles.clear();

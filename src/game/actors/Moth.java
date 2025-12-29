@@ -32,4 +32,10 @@ public class Moth extends Enemy {
         drawMissiles();
     }
 
+    public void move() {
+        if (soloMode) {
+            positiony -= speed;
+        }
+    }
+
 }

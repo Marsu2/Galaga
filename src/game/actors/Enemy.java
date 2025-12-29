@@ -14,6 +14,7 @@ public abstract class Enemy extends Entity {
     protected double initialPositionX;
     protected double initialPositionY;
     protected boolean scored;
+    protected boolean soloMode;
 
     public void setShootCooldown(int shootCooldown) {
         this.shootCooldown = shootCooldown;
@@ -39,6 +40,7 @@ public abstract class Enemy extends Entity {
         this.shootCooldown = shootCooldown + (new Random().nextInt(50)); // pour eviter que tous les ennemis tirent en
                                                                          // meme temps
         this.scored = false;
+        this.soloMode = false; // par defaut un enemie est tjrs dans la formation
 
     }
 
@@ -69,6 +71,7 @@ public abstract class Enemy extends Entity {
         if (shootCooldown > 0) {
             shootCooldown--;
         }
+        thisOutofBound();
 
     }
 
@@ -76,8 +79,7 @@ public abstract class Enemy extends Entity {
      * Déplace l'ennemi selon sa logique spécifique (à implémenter).
      */
 
-    public void move() {
-    }
+    public abstract void move();
 
     /**
      * Tire un missile vers le bas (vers le joueur).
@@ -102,19 +104,32 @@ public abstract class Enemy extends Entity {
      */
     public boolean canShoot(List<Enemy> enemies) {
         if (shootCooldown == 0) {
-            double marginWidth = size / 2;
-            for (Enemy enemy : enemies) {
-                if (Math.abs(enemy.getPositionx() - this.positionx) < marginWidth
-                        && enemy.getPositiony() < this.positiony) {
-                    shootCooldown = shootCooldownMax;
-                    return false;
-                }
-            }
             shootCooldown = shootCooldownMax;
-            return true;
+            if (botttomCleared(enemies)) {
+                return true;
+            }
         }
-
         return false;
+    }
+
+    public boolean isSoloMode() {
+        return soloMode;
+    }
+
+    public void setSoloMode(boolean soloMode) {
+        this.soloMode = soloMode;
+    }
+
+    public boolean botttomCleared(List<Enemy> enemies) {
+        double marginWidth = size / 2;
+        for (Enemy enemy : enemies) {
+            if (Math.abs(enemy.getPositionx() - this.positionx) < marginWidth
+                    && enemy.getPositiony() < this.positiony) {
+                shootCooldown = shootCooldownMax;
+                return false;
+            }
+        }
+        return true;
     }
 
     public void reset() {
@@ -122,6 +137,7 @@ public abstract class Enemy extends Entity {
         positiony = initialPositionY;
         removeAllMissiles();
         setShootCooldown(90 + (new Random().nextInt(100)));// 3 sec + random 0-100 frames
+        soloMode = false;
     }
 
     public boolean checkHitBy(Player player) {
@@ -146,5 +162,11 @@ public abstract class Enemy extends Entity {
 
     public void setScored(boolean scored) {
         this.scored = scored;
+    }
+
+    private void thisOutofBound(){
+        if(positionx < -0.1 || positionx > 1.1 || positiony < -0.1 || positiony > 1.1){
+            takeDamage(1);
+        }
     }
 }

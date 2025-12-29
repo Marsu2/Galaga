@@ -16,12 +16,15 @@ import game.utils.SpriteLoader;
  */
 public class LevelManager {
     private Level[] levels;
+    private Level currentLevel;
     private int currentLevelIndex;
     private Player player;
     private Color[][] spriteLvl;
     public int nbLevels = 3;
     private Score score;
     private List<Enemy> enemies;
+    private int soloCoolDownmax;
+    private int soloCoolDown;
 
     /**
      * Initialise le gestionnaire de niveaux et charge tous les niveaux.
@@ -33,7 +36,10 @@ public class LevelManager {
         this.player = player;
         this.score = score;
         loadLevels();
-        this.enemies = getCurrentLevel().getEnemiesFormation();
+        this.currentLevel = getCurrentLevel();
+        this.enemies = currentLevel.getEnemiesFormation();
+        this.soloCoolDownmax = currentLevel.getattackCooldownMax();
+        this.soloCoolDown = soloCoolDownmax;
     }
 
     public void update() {
@@ -58,10 +64,15 @@ public class LevelManager {
 
         if (isRoundEnded() && !player.isDead()) {
             toNextLevel();
-            enemies = getCurrentLevel().getEnemiesFormation();
         }
         if (!player.isRespawning()) {
-            getCurrentLevel().formationMove();
+            currentLevel.formationMove();
+        }
+        if (soloCoolDown > 0) {
+            soloCoolDown--;
+        } else if (soloCoolDownmax != -1) {
+            currentLevel.choseSolo();
+            soloCoolDown = soloCoolDownmax;
         }
     }
 
@@ -132,10 +143,13 @@ public class LevelManager {
         if (currentLevelIndex < nbLevels - 1) {
             currentLevelIndex++;
         }
+        currentLevel = getCurrentLevel();
+        enemies = currentLevel.getEnemiesFormation();
+        this.soloCoolDownmax = currentLevel.getattackCooldownMax();
     }
 
     public boolean isRoundEnded() {
-        return getCurrentLevel().areAllDead();
+        return currentLevel.areAllDead();
     }
 
     private void drawLvlPassed(double positionx, double positiony, double size, String fileName) {
@@ -179,9 +193,11 @@ public class LevelManager {
     public void reset() {
         loadLevels();
         this.currentLevelIndex = 0;
-        player.resetHP();
+        currentLevel = getCurrentLevel();
+        player.reset();
         score.reset();
-        enemies = getCurrentLevel().getEnemiesFormation();
+        enemies = currentLevel.getEnemiesFormation();
+        soloCoolDownmax = currentLevel.getattackCooldownMax();
 
     }
 
@@ -193,9 +209,9 @@ public class LevelManager {
     }
 
     private void playerGetHit() {
-        if (!player.isRespawning() && player.checkHitBy(getCurrentLevel().getEnemiesFormation())) {
+        if (!player.isRespawning() && player.checkHitBy(currentLevel.getEnemiesFormation())) {
             player.setHit();
-            getCurrentLevel().resetEnemies();
+            currentLevel.resetEnemies();
         }
     }
 

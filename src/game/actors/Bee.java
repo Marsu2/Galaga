@@ -1,5 +1,7 @@
 package game.actors;
 
+import java.util.Random;
+
 import game.utils.SpriteLoader;
 
 /**
@@ -7,6 +9,9 @@ import game.utils.SpriteLoader;
  * Hérite des comportements Enemy de base avec son propre sprite.
  */
 public class Bee extends Enemy {
+
+    private double target;
+
 
     /**
      * Crée une nouvelle abeille ennemie aux coordonnées spécifiées.
@@ -21,6 +26,7 @@ public class Bee extends Enemy {
 
     public Bee(double positionx, double positiony, double size, int score, double speed, int shootCooldown) {
         super(positionx, positiony, size, score, speed, shootCooldown);
+        this.target = new Random().nextDouble();
     }
 
     /**
@@ -32,6 +38,20 @@ public class Bee extends Enemy {
         }
         SpriteLoader.drawSprite(sprite, positionx, positiony, size);
         drawMissiles();
+    }
+
+    public void move() {
+        if (soloMode) {
+            if(Math.abs(positionx - target) < 0.05){
+                target = new Random().nextDouble();
+            }
+            if(positionx < target){
+                positionx += speed;
+            } else {
+                positionx -= speed;
+            }
+            positiony -= speed;
+        }
     }
 
 }

@@ -17,7 +17,7 @@ public class Game {
      * Initialise le jeu avec joueur, ennemis, score et premier niveau.
      */
     public Game() {
-        player = new Player(0.5, 0.15, 0.06, 2, 0.02);
+        player = new Player(0.5, 0.15, 0.06, 3, 0.02);
         score = new Score();
         manager = new LevelManager(player, score);
     }

@@ -90,10 +90,10 @@ public class Missile {
      * @return true si collision détectée
      */
     public boolean isHitingEntity(Entity e) {
-        double distanceX = Math.abs(this.positionx - e.getPositionx()) - (this.width + e.getSize()/2);
-        double distanceY = Math.abs(this.positiony - e.getPositiony()) - (this.heigth + e.getSize()/2);
+        double distanceX = Math.abs(this.positionx - e.getPositionx()) - ((this.width + e.getSize()) / 2);
+        double distanceY = Math.abs(this.positiony - e.getPositiony()) - ((this.heigth + e.getSize()) / 2);
 
-        if(distanceX <= 0 && distanceY <=0){
+        if (distanceX <= 0 && distanceY <= 0) {
             return true;
         }
         return false;
