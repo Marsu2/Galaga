@@ -69,6 +69,7 @@ public class LevelManager {
             currentLevel.formationMove();
         }
         if (soloCoolDown > 0) {
+            System.out.println(soloCoolDown);
             soloCoolDown--;
         } else if (soloCoolDownmax != -1) {
             currentLevel.choseSolo();
@@ -146,6 +147,7 @@ public class LevelManager {
         currentLevel = getCurrentLevel();
         enemies = currentLevel.getEnemiesFormation();
         this.soloCoolDownmax = currentLevel.getattackCooldownMax();
+        this.soloCoolDown = soloCoolDownmax;
     }
 
     public boolean isRoundEnded() {
@@ -198,6 +200,7 @@ public class LevelManager {
         score.reset();
         enemies = currentLevel.getEnemiesFormation();
         soloCoolDownmax = currentLevel.getattackCooldownMax();
+        soloCoolDown = soloCoolDownmax;
 
     }
 

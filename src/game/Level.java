@@ -219,16 +219,18 @@ public class Level {
     }
 
     public Enemy choseSolo() {
-        int randomIncr = new Random().nextInt(100);
-        for (int i = 0; i < enemiesFormation.size(); i++) {
-            Enemy enemy = enemiesFormation.get((i + randomIncr) % enemiesFormation.size());
-            if (enemy.isDead() || enemy.isSoloMode() || !enemy.botttomCleared(enemiesFormation)) {
-                continue;
+        List<Enemy> validPicks = new ArrayList<>();
+        for (Enemy enemy : enemiesFormation) {
+            if (!enemy.isDead() && !enemy.isSoloMode() && enemy.botttomClearedSolo(enemiesFormation)) {
+                validPicks.add(enemy);
             }
-            enemy.setSoloMode(true);
-            return enemy;
         }
-        return null;
+        if (validPicks.isEmpty()) {
+            return null;
+        }
+        Enemy chosen = validPicks.get(new Random().nextInt(validPicks.size()));
+        chosen.setSoloMode(true);
+        return chosen;
     }
 
 }

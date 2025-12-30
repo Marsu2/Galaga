@@ -12,7 +12,6 @@ public class Bee extends Enemy {
 
     private double target;
 
-
     /**
      * Crée une nouvelle abeille ennemie aux coordonnées spécifiées.
      * 
@@ -42,15 +41,22 @@ public class Bee extends Enemy {
 
     public void move() {
         if (soloMode) {
-            if(Math.abs(positionx - target) < 0.05){
-                target = new Random().nextDouble();
+            double distance = Math.abs(positionx - target);
+            if (distance < 0.05) {
+                // on choisit une nouvelle cible de l'autre coté
+                if (target < 0.5) {
+                    target = Math.min(0.9, (0.5 + new Random().nextDouble() / 2));
+                } else {
+                    target = Math.max(0.1, new Random().nextDouble() / 2);
+                }
             }
-            if(positionx < target){
+
+            if (positionx < target) {
                 positionx += speed;
             } else {
                 positionx -= speed;
             }
-            positiony -= speed;
+            positiony -= speed / 2;
         }
     }
 

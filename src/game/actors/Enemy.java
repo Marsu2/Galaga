@@ -105,7 +105,7 @@ public abstract class Enemy extends Entity {
     public boolean canShoot(List<Enemy> enemies) {
         if (shootCooldown == 0) {
             shootCooldown = shootCooldownMax;
-            if (botttomCleared(enemies)) {
+            if (botttomClearedShoot(enemies)) {
                 return true;
             }
         }
@@ -120,7 +120,7 @@ public abstract class Enemy extends Entity {
         this.soloMode = soloMode;
     }
 
-    public boolean botttomCleared(List<Enemy> enemies) {
+    public boolean botttomClearedShoot(List<Enemy> enemies) {
         double marginWidth = size / 2;
         for (Enemy enemy : enemies) {
             if (Math.abs(enemy.getPositionx() - this.positionx) < marginWidth
@@ -130,6 +130,16 @@ public abstract class Enemy extends Entity {
             }
         }
         return true;
+    }
+
+    public boolean botttomClearedSolo(List<Enemy> enemies) {
+        double minY = this.positiony;
+        for (Enemy enemy : enemies) {
+            if (enemy.getPositiony() < minY && !enemy.isSoloMode()) {
+                minY = enemy.getPositiony();
+            }
+        }
+        return positiony == minY;
     }
 
     public void reset() {
@@ -164,8 +174,8 @@ public abstract class Enemy extends Entity {
         this.scored = scored;
     }
 
-    private void thisOutofBound(){
-        if(positionx < -0.1 || positionx > 1.1 || positiony < -0.1 || positiony > 1.1){
+    private void thisOutofBound() {
+        if (positionx < -0.1 || positionx > 1.1 || positiony < -0.1 || positiony > 1.1) {
             takeDamage(1);
         }
     }
