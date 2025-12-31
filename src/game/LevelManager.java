@@ -25,6 +25,7 @@ public class LevelManager {
     private List<Enemy> enemies;
     private int soloCoolDownmax;
     private int soloCoolDown;
+    private int startTime;
 
     /**
      * Initialise le gestionnaire de niveaux et charge tous les niveaux.
@@ -40,9 +41,15 @@ public class LevelManager {
         this.enemies = currentLevel.getEnemiesFormation();
         this.soloCoolDownmax = currentLevel.getattackCooldownMax();
         this.soloCoolDown = soloCoolDownmax;
+        this.startTime = 90; // 3 sec
     }
 
     public void update() {
+        if (startTime > 0) {
+            // On ne met rien à jour tant que le nom du niveau est affiché
+            player.setMissiles(new ArrayList<>());
+            return;
+        }
         playerGetHit();
         List<Enemy> enemiesRemove = new ArrayList<>();
         for (Enemy e : enemies) {
@@ -58,7 +65,6 @@ public class LevelManager {
             if (e.canRemove()) {
                 enemiesRemove.add(e);
             }
-
         }
         enemies.removeAll(enemiesRemove);
 
@@ -69,7 +75,6 @@ public class LevelManager {
             currentLevel.formationMove();
         }
         if (soloCoolDown > 0) {
-            System.out.println(soloCoolDown);
             soloCoolDown--;
         } else if (soloCoolDownmax != -1) {
             currentLevel.choseSolo();
@@ -78,6 +83,11 @@ public class LevelManager {
     }
 
     public void draw() {
+        if (startTime > 0) {
+            currentLevel.drawLvlName();
+            startTime--;
+            return;
+        }
         for (Enemy e : enemies) {
             e.draw();
         }
@@ -143,11 +153,13 @@ public class LevelManager {
     public void toNextLevel() {
         if (currentLevelIndex < nbLevels - 1) {
             currentLevelIndex++;
+            currentLevel = getCurrentLevel();
+            enemies = currentLevel.getEnemiesFormation();
+            this.soloCoolDownmax = currentLevel.getattackCooldownMax();
+            this.soloCoolDown = soloCoolDownmax;
+            this.startTime = 90; // 3 sec
         }
-        currentLevel = getCurrentLevel();
-        enemies = currentLevel.getEnemiesFormation();
-        this.soloCoolDownmax = currentLevel.getattackCooldownMax();
-        this.soloCoolDown = soloCoolDownmax;
+
     }
 
     public boolean isRoundEnded() {
@@ -157,11 +169,11 @@ public class LevelManager {
     private void drawLvlPassed(double positionx, double positiony, double size, String fileName) {
         for (int i = 0; i < currentLevelIndex; i++) {
             double tempx = positionx - i * 0.04;
-            drawLvl(tempx, positiony, size, fileName);
+            drawLvlSprite(tempx, positiony, size, fileName);
         }
     }
 
-    private void drawLvl(double positionx, double positiony, double size, String fileName) {
+    private void drawLvlSprite(double positionx, double positiony, double size, String fileName) {
         if (spriteLvl == null) {
             spriteLvl = SpriteLoader.loadSprite(fileName);
         }
@@ -216,6 +228,10 @@ public class LevelManager {
             player.setHit();
             currentLevel.resetEnemies();
         }
+    }
+
+    public boolean isStartTime() {
+        return startTime <= 0;
     }
 
 }

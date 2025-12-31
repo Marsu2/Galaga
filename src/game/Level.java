@@ -1,5 +1,6 @@
 package game;
 
+import java.awt.Font;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -9,6 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import engine.StdDraw;
 import game.actors.*;
 
 /**
@@ -233,4 +235,10 @@ public class Level {
         return chosen;
     }
 
+    public void drawLvlName(){
+        Font font = new Font("Arial", Font.BOLD, 32);
+        StdDraw.setFont(font);
+        StdDraw.text(0.5, 0.5, levelName);
+        StdDraw.setFont();
+    }
 }

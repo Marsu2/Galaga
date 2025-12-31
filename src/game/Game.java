@@ -63,14 +63,15 @@ public class Game {
      * Dessin tous les éléments du jeu
      */
     public void draw() {
-        player.draw();
+        if (manager.isStartTime()) {
+            player.draw();
+        }
         manager.draw();
         score.draw();
 
         if (manager.isGameOver()) {
             manager.drawGameEnd("Game Over");
-        }
-        else if (manager.winGame()) {
+        } else if (manager.winGame()) {
             manager.drawGameEnd("You Win!");
         }
     }
@@ -79,7 +80,10 @@ public class Game {
      * Met a jour les attributs de tous les éléments du jeu
      */
     private void update() {
-        player.update();
+        if (manager.isStartTime()) {
+            player.update();
+        }
+
         manager.update();
 
         if (manager.isGameOver() || manager.winGame()) {
