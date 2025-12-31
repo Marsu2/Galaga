@@ -164,13 +164,16 @@ public class Level {
 
                 switch (type) {
                     case "Moth":
-                        enemiesFormation.add(new Moth(positionx, positiony, size, score, speed, shootCooldown));
+                        enemiesFormation.add(new Moth(positionx, positiony, size, score, 1, speed, shootCooldown));
                         break;
                     case "Butterfly":
-                        enemiesFormation.add(new Butterfly(positionx, positiony, size, score, speed, shootCooldown));
+                        enemiesFormation.add(new Butterfly(positionx, positiony, size, score, 1, speed, shootCooldown));
                         break;
                     case "Bee":
-                        enemiesFormation.add(new Bee(positionx, positiony, size, score, speed, shootCooldown));
+                        enemiesFormation.add(new Bee(positionx, positiony, size, score, 1, speed, shootCooldown));
+                        break;
+                    default:
+                        enemiesFormation.add(new Boss(positionx, positiony, size, score, 10, speed, shootCooldown));
                         break;
                 }
 
@@ -235,7 +238,7 @@ public class Level {
         return chosen;
     }
 
-    public void drawLvlName(){
+    public void drawLvlName() {
         Font font = new Font("Arial", Font.BOLD, 32);
         StdDraw.setFont(font);
         StdDraw.text(0.5, 0.5, levelName);

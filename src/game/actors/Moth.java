@@ -17,8 +17,8 @@ public class Moth extends Enemy {
      * @param game      référence à l'objet principal du jeu
      */
 
-    public Moth(double positionx, double positiony, double size, int score, double speed, int shootCooldown) {
-        super(positionx, positiony, size, score, speed, shootCooldown);
+    public Moth(double positionx, double positiony, double size, int score, int health, double speed, int shootCooldown) {
+        super(positionx, positiony, size, score, health, speed, shootCooldown);
     }
 
     /**

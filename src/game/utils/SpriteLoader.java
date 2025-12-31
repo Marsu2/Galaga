@@ -54,6 +54,8 @@ public class SpriteLoader {
                 return StdDraw.YELLOW;
             case 'W':
                 return StdDraw.WHITE;
+            case 'V':
+                return new Color(128, 0, 128); // Violet
             default:
                 return StdDraw.BLACK;
         }
@@ -81,6 +83,10 @@ public class SpriteLoader {
                 }
             }
         }
+    }
+
+    public static void drawImage(String fileName, double positionx, double positiony, double size) {
+        StdDraw.picture(positionx, positiony, fileName, size, size);
     }
 
 }

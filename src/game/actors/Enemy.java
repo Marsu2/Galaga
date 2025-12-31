@@ -31,8 +31,8 @@ public abstract class Enemy extends Entity {
      * @param game      référence au jeu principal
      */
 
-    public Enemy(double positionx, double positiony, double size, int score, double speed, int shootCooldown) {
-        super(positionx, positiony, size, 1, speed);
+    public Enemy(double positionx, double positiony, double size, int score, int health, double speed, int shootCooldown) {
+        super(positionx, positiony, size, health, speed);
         this.initialPositionX = positionx;
         this.initialPositionY = positiony;
         this.score = score;

@@ -33,7 +33,7 @@ public class LevelManager {
      * 
      */
     public LevelManager(Player player, Score score) {
-        this.currentLevelIndex = 0;
+        this.currentLevelIndex = 2;
         this.player = player;
         this.score = score;
         loadLevels();
@@ -116,7 +116,8 @@ public class LevelManager {
         double topPxEnd = 700;
         double topPyEnd = 0.9;
 
-        // On dessine le pixel en fonction de la position
+        // On dessine la ligne du haut
+        StdDraw.setPenColor(StdDraw.WHITE);
         StdDraw.line(topPx, topPy, topPxEnd, topPyEnd);
 
     }

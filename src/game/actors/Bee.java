@@ -23,8 +23,8 @@ public class Bee extends Enemy {
      * @param game      référence au jeu principal
      */
 
-    public Bee(double positionx, double positiony, double size, int score, double speed, int shootCooldown) {
-        super(positionx, positiony, size, score, speed, shootCooldown);
+    public Bee(double positionx, double positiony, double size, int health, int score, double speed, int shootCooldown) {
+        super(positionx, positiony, size,  score, health, speed, shootCooldown);
         this.target = new Random().nextDouble();
     }
 

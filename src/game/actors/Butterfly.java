@@ -19,8 +19,9 @@ public class Butterfly extends Enemy {
      * @param game      référence au jeu principal
      */
 
-    public Butterfly(double positionx, double positiony, double size, int score, double speed, int shootCooldown) {
-        super(positionx, positiony, size, score, speed, shootCooldown);
+    public Butterfly(double positionx, double positiony, double size, int score, int health, double speed,
+            int shootCooldown) {
+        super(positionx, positiony, size, score, health, speed, shootCooldown);
     }
 
     /**
