@@ -26,9 +26,9 @@ public class Game {
      * Initialise le jeu avec joueur, ennemis, score et premier niveau.
      */
     private void init() {
-        int canvaHeight = 700;
+        int canvasHeight = 700;
         int canvasWidth = 700;
-        StdDraw.setCanvasSize(canvaHeight, canvasWidth);
+        StdDraw.setCanvasSize(canvasHeight, canvasWidth);
         StdDraw.enableDoubleBuffering();
     }
 
@@ -69,9 +69,9 @@ public class Game {
         manager.draw();
         score.draw();
 
-        if (manager.isGameOver()) {
+        if (manager.hasLost()) {
             manager.drawGameEnd("Game Over");
-        } else if (manager.winGame()) {
+        } else if (manager.hasWon()) {
             manager.drawGameEnd("You Win!");
         }
     }
@@ -86,7 +86,7 @@ public class Game {
 
         manager.update();
 
-        if (manager.isGameOver() || manager.winGame()) {
+        if (manager.hasLost() || manager.hasWon()) {
             manager.clear();
             if (StdDraw.isKeyPressed(32)) {
                 manager.reset();

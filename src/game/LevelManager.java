@@ -180,11 +180,11 @@ public class LevelManager {
         SpriteLoader.drawSprite(spriteLvl, positionx, positiony, size);
     }
 
-    public boolean winGame() {
+    public boolean hasWon() {
         return (currentLevelIndex == nbLevels - 1) && isRoundEnded();
     }
 
-    public Boolean isGameOver() {
+    public Boolean hasLost() {
         return player.isDead();
     }
 
