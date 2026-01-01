@@ -6,8 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import engine.StdDraw;
-import game.actors.Enemy;
-import game.actors.Player;
+import game.actors.*;
 import game.utils.SpriteLoader;
 
 /**
@@ -45,6 +44,7 @@ public class LevelManager {
     }
 
     public void update() {
+        System.out.println(soloCoolDown);
         if (startTime > 0) {
             // On ne met rien à jour tant que le nom du niveau est affiché
             player.setMissiles(new ArrayList<>());
@@ -52,12 +52,14 @@ public class LevelManager {
         }
         playerGetHit();
         List<Enemy> enemiesRemove = new ArrayList<>();
+        List<Enemy> enemiesToAdd = new ArrayList<>();
         for (Enemy e : enemies) {
             e.update();
             if (e.canShoot(enemies)) {
                 e.shoot();
             }
             e.checkHitBy(player);
+            handleMothCapture(e, enemiesToAdd);
             if (e.isDead() && !e.getScored()) {
                 score.addScore(e);
                 e.setScored(true);
@@ -67,6 +69,7 @@ public class LevelManager {
             }
         }
         enemies.removeAll(enemiesRemove);
+        enemies.addAll(enemiesToAdd);
 
         if (isRoundEnded() && !player.isDead()) {
             toNextLevel();
@@ -226,13 +229,32 @@ public class LevelManager {
 
     private void playerGetHit() {
         if (!player.isRespawning() && player.checkHitBy(currentLevel.getEnemiesFormation())) {
-            player.setHit();
+            player.setHit(1);
             currentLevel.resetEnemies();
         }
     }
 
     public boolean isStartTime() {
         return startTime <= 0;
+    }
+
+    private void handleMothCapture(Enemy m, List<Enemy> enemiesToAdd) {
+        if (m instanceof Moth) {
+            Moth moth = (Moth) m;
+
+            if (!player.isRespawning() && moth.isNear(player)) {
+                player.setHit(1);
+                currentLevel.resetEnemies();
+                Bee capturedBee = moth.capture(player);
+                if (capturedBee != null) {
+                    enemiesToAdd.add(capturedBee);
+                }
+            }
+
+            if (moth.isDead() && moth.hasCaptured()) {
+                moth.releaseCapture(player);
+            }
+        }
     }
 
 }

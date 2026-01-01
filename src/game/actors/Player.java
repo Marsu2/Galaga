@@ -144,7 +144,8 @@ public class Player extends Entity {
         return isRespawning;
     }
 
-    public void setHit() {
+    public void setHit(int damage) {
+        takeDamage(damage);
         this.positionx = 0.5;
         this.positiony = 0.15;
         this.isRespawning = true;
@@ -154,16 +155,13 @@ public class Player extends Entity {
 
     public boolean checkHitBy(List<Enemy> enemies) {
         for (Enemy enemy : enemies) {
-            double distanceX = Math.abs(this.positionx - enemy.getPositionx()) - ((this.size + enemy.getSize()) / 2);
-            double distanceY = Math.abs(this.positiony - enemy.getPositiony()) - ((this.size + enemy.getSize()) / 2);
-            if (distanceX <= 0 && distanceY <= 0) {
-                takeDamage(1);
+
+            if (enemy.isColliding(this)) {
                 enemy.takeDamage(1);
                 return true;
             }
             for (Missile m : enemy.getMissiles()) {
                 if (m.isHitingEntity(this)) {
-                    takeDamage(1); // perde 1 HP
                     return true;
                 }
             }

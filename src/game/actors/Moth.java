@@ -16,8 +16,19 @@ public class Moth extends Enemy {
      * @param speed     vitesse de déplacement
      * @param game      référence à l'objet principal du jeu
      */
+    private Bee capturedBee = null;
+    private boolean hasCaptured = false;
 
-    public Moth(double positionx, double positiony, double size, int score, int health, double speed, int shootCooldown) {
+    public boolean hasCaptured() {
+        return hasCaptured;
+    }
+
+    public Bee getCapturedBee() {
+        return capturedBee;
+    }
+
+    public Moth(double positionx, double positiony, double size, int score, int health, double speed,
+            int shootCooldown) {
         super(positionx, positiony, size, score, health, speed, shootCooldown);
     }
 
@@ -36,6 +47,32 @@ public class Moth extends Enemy {
         if (soloMode) {
             positiony -= speed;
         }
+    }
+
+    public Bee capture(Player player) {
+        if (!hasCaptured) {
+            capturedBee = new Bee(positionx, positiony - (size * 1.2), size, 0, 1, speed*2, 100);
+
+            capturedBee.initialPositionX = positionx;
+            capturedBee.initialPositionY = positiony - (size * 1.2);
+            hasCaptured = true;
+            return capturedBee;
+        }
+        return null;
+    }
+
+    public void releaseCapture(Player player) {
+        if (hasCaptured && capturedBee != null) {
+            player.setHealth(player.getHealth() + 1);
+            this.hasCaptured = false;
+            this.capturedBee = null;
+        }
+    }
+
+    public boolean isNear(Player p) {
+        double distanceX = Math.abs(this.positionx - p.positionx);
+        double distanceY = Math.abs(this.positiony - p.positiony);
+        return (distanceX < (size + p.size) / 2 && distanceY < size * 2);
     }
 
 }

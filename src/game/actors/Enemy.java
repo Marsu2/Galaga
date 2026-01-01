@@ -31,7 +31,8 @@ public abstract class Enemy extends Entity {
      * @param game      référence au jeu principal
      */
 
-    public Enemy(double positionx, double positiony, double size, int score, int health, double speed, int shootCooldown) {
+    public Enemy(double positionx, double positiony, double size, int score, int health, double speed,
+            int shootCooldown) {
         super(positionx, positiony, size, health, speed);
         this.initialPositionX = positionx;
         this.initialPositionY = positiony;
@@ -121,9 +122,8 @@ public abstract class Enemy extends Entity {
     }
 
     public boolean botttomClearedShoot(List<Enemy> enemies) {
-        double marginWidth = size / 2;
         for (Enemy enemy : enemies) {
-            if (Math.abs(enemy.getPositionx() - this.positionx) < marginWidth
+            if (Math.abs(enemy.getPositionx() - this.positionx) < (size / 2)
                     && enemy.getPositiony() < this.positiony) {
                 shootCooldown = shootCooldownMax;
                 return false;
@@ -178,5 +178,11 @@ public abstract class Enemy extends Entity {
         if (positionx < -0.1 || positionx > 1.1 || positiony < -0.1 || positiony > 1.1) {
             takeDamage(1);
         }
+    }
+
+    public boolean isColliding(Player p) {
+        double distanceX = Math.abs(this.positionx - p.getPositionx()) - ((this.size + p.getSize()) / 2);
+        double distanceY = Math.abs(this.positiony - p.getPositiony()) - ((this.size + p.getSize()) / 2);
+        return (distanceX <= 0 && distanceY <= 0);
     }
 }
