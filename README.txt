@@ -1,5 +1,5 @@
-  METTRE NOMbinôme 1
-  binôme 2
+  BARBIER Elouan
+  ESNAULT Damien
 
 Voici les fonctionnalités implémentées dans votre projet Galaga :
 
