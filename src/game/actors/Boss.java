@@ -19,7 +19,8 @@ public class Boss extends Enemy {
      * @param game      référence au jeu principal
      */
 
-    public Boss(double positionx, double positiony, double size, int score, int health, double speed, int shootCooldown) {
+    public Boss(double positionx, double positiony, double size, int score, int health, double speed,
+            int shootCooldown) {
         super(positionx, positiony, size, score, health, speed, shootCooldown);
     }
 
@@ -38,6 +39,16 @@ public class Boss extends Enemy {
         if (soloMode) {
             return;
         }
+    }
+
+    @Override
+    public void shoot() {
+        // Le boss tire 2 missiles côte à côte
+        double offset = size / 4;
+        Missile m1 = new Missile(0.02, positionx - offset, positiony - size / 2, EDirectionMissile.DOWN);
+        Missile m2 = new Missile(0.02, positionx + offset, positiony - size / 2, EDirectionMissile.DOWN);
+        missiles.add(m1);
+        missiles.add(m2);
     }
 
 }
