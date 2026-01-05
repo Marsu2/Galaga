@@ -32,7 +32,7 @@ public class LevelManager {
      * 
      */
     public LevelManager(Player player, Score score) {
-        this.currentLevelIndex = 2;
+        this.currentLevelIndex = 0;
         this.player = player;
         this.score = score;
         loadLevels();
