@@ -11,12 +11,13 @@ public class Butterfly extends Enemy {
     /**
      * Crée un nouveau papillon ennemi aux coordonnées spécifiées.
      * 
-     * @param positionx position horizontale du papillon
-     * @param positiony position verticale du papillon
-     * @param size      taille du papillon
-     * @param score     points accordés quand le papillon est détruit
-     * @param speed     vitesse de déplacement du papillon
-     * @param game      référence au jeu principal
+     * @param positionx     position horizontale du papillon
+     * @param positiony     position verticale du papillon
+     * @param size          taille du papillon
+     * @param score         points accordés quand le papillon est détruit
+     * @param speed         vitesse de déplacement du papillon
+     * @param health        points de vie du papillon
+     * @param shootCooldown temps de recharge initial du tir
      */
 
     public Butterfly(double positionx, double positiony, double size, int score, int health, double speed,

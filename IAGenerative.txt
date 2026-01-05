@@ -12,3 +12,6 @@ Débuggage LevelManager.update()
 Inversion de l'ordres d'appels de fonctions qui provoquait une erreur durant le jeu.
 
 Aide à l'organisation du projet: pas d'exemple de prompt mais on lui posait comme question dans quel fichier est le plus interresant pour une méthode spécifique.
+
+
+Pas mal de commentaires pour gagner du temps. Mais vérification/modification tout de même.

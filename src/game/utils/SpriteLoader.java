@@ -13,6 +13,13 @@ import engine.StdDraw;
 
 public class SpriteLoader {
 
+    /**
+     * Charge un sprite depuis un fichier .spr et le convertit en matrice de
+     * Color.
+     *
+     * @param fileName le chemin du fichier contenant le sprite
+     * @return une matrice de couleurs représentant le sprite
+     */
     public static Color[][] loadSprite(String fileName) {
         List<String> lines = loadFile(fileName);
         if (lines.isEmpty()) {
@@ -27,6 +34,12 @@ public class SpriteLoader {
         return res;
     }
 
+    /**
+     * Lit le contenu complet d'un fichier .spr ligne par ligne.
+     *
+     * @param fileName le chemin du fichier à lire
+     * @return une liste contenant toutes les lignes du fichier
+     */
     public static List<String> loadFile(String fileName) {
         // Lecture d'un fichier vu durant la séance du CM9
         List<String> lines = new ArrayList<>();
@@ -42,6 +55,12 @@ public class SpriteLoader {
         return lines;
     }
 
+    /**
+     * Convertit un code caractère en objet Color.
+     *
+     * @param c le caractère représentant la couleur ('R' pour Rouge)
+     * @return la couleur correspondante ou Noir par défaut
+     */
     private static Color decodeColor(char c) {
         switch (c) {
             case 'R':
@@ -61,6 +80,14 @@ public class SpriteLoader {
         }
     }
 
+    /**
+     * Dessine un sprite à l'écran à une position donnée.
+     *
+     * @param sprite    la matrice de couleurs à dessiner
+     * @param positionx la position horizontale du centre du sprite
+     * @param positiony la position verticale du centre du sprite
+     * @param size      la taille d'affichage du sprite
+     */
     public static void drawSprite(Color[][] sprite, double positionx, double positiony, double size) {
         double height = sprite.length;
         double width = sprite[0].length;
@@ -84,6 +111,5 @@ public class SpriteLoader {
             }
         }
     }
-
 
 }

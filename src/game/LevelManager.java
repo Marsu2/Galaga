@@ -28,8 +28,9 @@ public class LevelManager {
 
     /**
      * Initialise le gestionnaire de niveaux et charge tous les niveaux.
-     * 
-     * 
+     *
+     * @param player l'instance du joueur
+     * @param score  l'instance du gestionnaire de score
      */
     public LevelManager(Player player, Score score) {
         this.currentLevelIndex = 0;
@@ -43,6 +44,9 @@ public class LevelManager {
         this.startTime = 90; // 3 sec
     }
 
+    /**
+     * Met à jour la logique du niveau courant (ennemis, collisions, progression).
+     */
     public void update() {
         System.out.println(soloCoolDown);
         if (startTime > 0) {
@@ -85,6 +89,9 @@ public class LevelManager {
         }
     }
 
+    /**
+     * Dessine le niveau courant, l'interface et les informations de jeu.
+     */
     public void draw() {
         if (startTime > 0) {
             currentLevel.drawLvlName();
@@ -138,9 +145,7 @@ public class LevelManager {
     }
 
     /**
-     * Charge tous les niveaux depuis les fichiers ressources/levels/levelX.lvl.
-     * 
-     * @param game référence au jeu principal
+     * Charge tous les niveaux depuis les fichiers de ressources.
      */
     private void loadLevels() {
         this.levels = new Level[nbLevels];
@@ -166,10 +171,23 @@ public class LevelManager {
 
     }
 
+    /**
+     * Vérifie si la manche est terminée (tous les ennemis éliminés).
+     *
+     * @return true si le niveau est fini
+     */
     public boolean isRoundEnded() {
         return currentLevel.areAllDead();
     }
 
+    /**
+     * Dessine les indicateurs de niveaux terminés sur l'interface.
+     *
+     * @param positionx position x de départ
+     * @param positiony position y
+     * @param size      taille du sprite
+     * @param fileName  chemin du sprite à utiliser
+     */
     private void drawLvlPassed(double positionx, double positiony, double size, String fileName) {
         for (int i = 0; i < currentLevelIndex; i++) {
             double tempx = positionx - i * 0.04;
@@ -177,6 +195,14 @@ public class LevelManager {
         }
     }
 
+    /**
+     * Charge et dessine un sprite d'interface spécifique.
+     *
+     * @param positionx position x
+     * @param positiony position y
+     * @param size      taille du sprite
+     * @param fileName  chemin du fichier sprite
+     */
     private void drawLvlSprite(double positionx, double positiony, double size, String fileName) {
         if (spriteLvl == null) {
             spriteLvl = SpriteLoader.loadSprite(fileName);
@@ -184,14 +210,29 @@ public class LevelManager {
         SpriteLoader.drawSprite(spriteLvl, positionx, positiony, size);
     }
 
+    /**
+     * Vérifie si le joueur a gagné la partie (tous les niveaux complétés).
+     *
+     * @return true si le joueur a gagné
+     */
     public boolean hasWon() {
         return (currentLevelIndex == nbLevels - 1) && isRoundEnded();
     }
 
+    /**
+     * Vérifie si le joueur a perdu la partie (player mort).
+     *
+     * @return true si le joueur a perdu
+     */
     public Boolean hasLost() {
         return player.isDead();
     }
 
+    /**
+     * Affiche le message de fin de partie (Victoire ou Game Over).
+     *
+     * @param message le message à afficher
+     */
     public void drawGameEnd(String message) {
         StdDraw.setPenColor(StdDraw.RED);
         // Position du pixel de départ pour la ligne du bas
@@ -208,6 +249,9 @@ public class LevelManager {
         StdDraw.text(Px, Py - 0.3, "Press space to restart", 0.2);
     }
 
+    /**
+     * Réinitialise le jeu, les niveaux et le joueur pour une nouvelle partie.
+     */
     public void reset() {
         loadLevels();
         this.currentLevelIndex = 0;
@@ -220,6 +264,9 @@ public class LevelManager {
 
     }
 
+    /**
+     * Vide les listes d'ennemis de tous les niveaux chargés.
+     */
     public void clear() {
         for (int i = 0; i < levels.length; i++) {
             levels[i].setEnemiesFormation(new ArrayList<>());
@@ -227,6 +274,9 @@ public class LevelManager {
         }
     }
 
+    /**
+     * Gère la détection et les conséquences si le joueur se fait toucher.
+     */
     private void playerGetHit() {
         if (!player.isRespawning() && player.checkHitBy(currentLevel.getEnemiesFormation())) {
             player.setHit(1);
@@ -234,10 +284,22 @@ public class LevelManager {
         }
     }
 
+    /**
+     * Vérifie si le temps d'attente de début de niveau est encore actif.
+     *
+     * @return true si le niveau est en phase de démarrage
+     */
     public boolean isStartTime() {
         return startTime <= 0;
     }
 
+    /**
+     * Gère la logique spécifique de capture du joueur par un ennemi "Moth".
+     *
+     * @param m            l'ennemi potentiel (Moth)
+     * @param enemiesToAdd liste pour ajouter les nouveaux ennemis générés (ex:
+     *                     abeille libérée)
+     */
     private void handleMothCapture(Enemy m, List<Enemy> enemiesToAdd) {
         if (m instanceof Moth) {
             Moth moth = (Moth) m;

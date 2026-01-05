@@ -7,18 +7,10 @@ import java.awt.Color;
 
 /**
  * Classe abstraite mère de toutes les entités du jeu (joueur, ennemis).
- * Gère les propriétés communes et le rendu de sprites pixelisés.
+ * Gère les propriétés communes.
  */
 public abstract class Entity {
-    public double getSize() {
-        return size;
-    }
-
     protected double positionx;
-    public void setPositionx(double positionx) {
-        this.positionx = positionx;
-    }
-
     protected double positiony;
     protected double size;
     protected int health;
@@ -34,7 +26,6 @@ public abstract class Entity {
      * @param size      taille de l'entité
      * @param health    points de vie initiaux
      * @param speed     vitesse de déplacement
-     * @param game      référence au jeu principal
      */
     public Entity(double positionx, double positiony, double size, int health, double speed) {
         this.positionx = positionx;
@@ -46,10 +37,39 @@ public abstract class Entity {
 
     }
 
+    /**
+     * Retourne la taille de l'entité.
+     *
+     * @return la taille de l'entité
+     */
+    public double getSize() {
+        return size;
+    }
+
+    /**
+     * Définit la positionX de l'entité.
+     *
+     * @param positionx la nouvelle coordonnée x
+     */
+    public void setPositionx(double positionx) {
+        this.positionx = positionx;
+    }
+
+    /**
+     * Retourne la liste des missiles de l'entité.
+     *
+     * @return la liste des missiles
+     */
+
     public List<Missile> getMissiles() {
         return missiles;
     }
 
+    /**
+     * Définit la liste des missiles de l'entité.
+     *
+     * @param missiles la nouvelle liste de missiles
+     */
     public void setMissiles(List<Missile> missiles) {
         this.missiles = missiles;
     }
@@ -74,7 +94,7 @@ public abstract class Entity {
     }
 
     /**
-     * Retourne la position horizontale.
+     * Retourne la position X.
      * 
      * @return coordonnée x
      */
@@ -83,7 +103,7 @@ public abstract class Entity {
     }
 
     /**
-     * Retourne la position verticale.
+     * Retourne la position Y.
      * 
      * @return coordonnée y
      */
@@ -92,7 +112,7 @@ public abstract class Entity {
     }
 
     /**
-     * Dessine le sprite spécifique de l'entité (à implémenter).
+     * Dessine le sprite spécifique de l'entité.
      */
     public abstract void draw();
 
@@ -114,35 +134,33 @@ public abstract class Entity {
     /**
      * Vérifie si l'entité est morte.
      * 
-     * @return true si health inferirieure a 0 ce quyi pose probleme
+     * @return true si health est inférieur ou égal à 0
      */
     public boolean isDead() {
         return health <= 0;
     }
 
     /**
-     * Convertit un caractère en couleur pour les sprites pixelisés.
-     * 
-     * @param c caractère représentant la couleur (R,G,B,Y,W)
-     * @return couleur correspondante
+     * Dessine tous les missiles tirés par cette entité.
      */
-
-    /**
-     * Vérifie si l'entité peut tirer (à implémenter).
-     * 
-     * @return true si autorisé à tirer
-     */
-
     protected void drawMissiles() {
         for (Missile missile : missiles) {
             missile.drawSprite();
         }
     }
 
+    /**
+     * Inflige des dégâts à l'entité sans dépasser 0.
+     *
+     * @param damage le montant des dégâts à soustraire aux points de vie
+     */
     protected void takeDamage(int damage) {
         this.health = Math.max(0, this.health - damage);
     }
 
+    /**
+     * Supprime les missiles qui sont sortis des limites de l'écran.
+     */
     protected void removeMissilesOOB() {
         List<Missile> rmMissiles = new ArrayList<>();
         for (Missile missile : missiles) {
@@ -153,11 +171,11 @@ public abstract class Entity {
         missiles.removeAll(rmMissiles);
     }
 
-
-
+    /**
+     * Supprime tous les missiles de l'entité.
+     */
     public void removeAllMissiles() {
         missiles.clear();
     }
-
 
 }

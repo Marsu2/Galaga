@@ -5,8 +5,8 @@ import game.Game;
 /**
  * Classe de lancement du projet
  * 
- * @author nom prenom binôme 1
- * @author nom prenom binôme 2
+ * @author BARBIER Elouan
+ * @author ESNAULT Damien
  */
 public class App {
     public static void main(String[] args) throws Exception {

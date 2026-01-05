@@ -11,12 +11,13 @@ public class Boss extends Enemy {
     /**
      * Crée un nouveau papillon ennemi aux coordonnées spécifiées.
      * 
-     * @param positionx position horizontale du boss
-     * @param positiony position verticale du boss
-     * @param size      taille du boss
-     * @param score     points accordés quand le boss est détruit
-     * @param speed     vitesse de déplacement du boss
-     * @param game      référence au jeu principal
+     * @param positionx     position horizontale du boss
+     * @param positiony     position verticale du boss
+     * @param size          taille du boss
+     * @param score         points accordés quand le boss est détruit
+     * @param speed         vitesse de déplacement du boss
+     * @param health        points de vie du boss
+     * @param shootCooldown temps de recharge initial du tir
      */
 
     public Boss(double positionx, double positiony, double size, int score, int health, double speed,

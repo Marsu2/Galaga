@@ -15,12 +15,13 @@ public class Bee extends Enemy {
     /**
      * Crée une nouvelle abeille ennemie aux coordonnées spécifiées.
      * 
-     * @param positionx position horizontale de l'abeille
-     * @param positiony position verticale de l'abeille
-     * @param size      taille de l'abeille
-     * @param score     points accordés quand l'abeille est détruite
-     * @param speed     vitesse de déplacement de l'abeille
-     * @param game      référence au jeu principal
+     * @param positionx     position horizontale de l'abeille
+     * @param positiony     position verticale de l'abeille
+     * @param size          taille de l'abeille
+     * @param score         points accordés quand l'abeille est détruite
+     * @param speed         vitesse de déplacement de l'abeille
+     * @param health        points de vie de l'abeille
+     * @param shootCooldown temps de recharge initial du tir
      */
 
     public Bee(double positionx, double positiony, double size, int score, int health, double speed,

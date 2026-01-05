@@ -39,7 +39,8 @@ public class Score {
      */
     private int readHighscore() {
         List<String> lines = SpriteLoader.loadFile("ressources/highscore/highscore.sc");
-        if (lines.isEmpty()) return 0;
+        if (lines.isEmpty())
+            return 0;
         return Integer.parseInt(lines.get(0));
 
     }
@@ -54,11 +55,9 @@ public class Score {
     }
 
     /**
-     * Sauvegarde le meilleur score dans le fichier.
-     * 
-     *
+     * Sauvegarde le meilleur score dans le fichier si le score actuel est
+     * supérieur.
      */
-
     public void saveHighscore() {
         if (highscore < score) {
             // écriture du highscore dans le fichier CM9
@@ -89,6 +88,9 @@ public class Score {
         return highscore;
     }
 
+    /**
+     * Réinitialise le score courant et recharge le highscore.
+     */
     public void reset() {
         saveHighscore();
         this.highscore = readHighscore();
@@ -96,6 +98,9 @@ public class Score {
 
     }
 
+    /**
+     * Affiche le score et le highscore sur l'interface du jeu.
+     */
     public void draw() {
         // on dessine score/High score
         StdDraw.setPenColor(StdDraw.RED);

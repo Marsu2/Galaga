@@ -25,7 +25,6 @@ public class Player extends Entity {
      * @param size      taille du vaisseau
      * @param health    points de vie initiaux
      * @param speed     vitesse de déplacement horizontal
-     * @param game      référence au jeu principal
      */
     public Player(double positionx, double positiony, double size, int health, double speed) {
         super(positionx, positiony, size, health, speed);
@@ -80,15 +79,15 @@ public class Player extends Entity {
      * Vérifie si le joueur peut tirer.
      * Limite à 3 missiles simultanés et respecte le cooldown.
      * 
-     * @return true si autorisé à tirer
+     * @return true si autorisé à tirer false sinon
      */
     public boolean canShoot() {
         return missiles.size() < 3 && coolDownShoot == 0;
     }
 
     /**
-     * Gère le tir du joueur avec la barre espace (code 32).
-     * Crée un missile montant avec cooldown.
+     * Gère le tir du joueur avec la barre espace.
+     * Créer un missile qui monte avec cooldown.
      */
     public void shoot() {
         if (StdDraw.isKeyPressed(32) && canShoot()) {
@@ -116,6 +115,9 @@ public class Player extends Entity {
 
     }
 
+    /**
+     * Dessine les points de vie restants du joueur à l'écran.
+     */
     private void drawHp() {
         for (int i = 0; i < health; i++) {
             SpriteLoader.drawSprite(sprite, 0.05 + i * 0.03, 0.05, 0.05);
@@ -127,6 +129,9 @@ public class Player extends Entity {
         }
     }
 
+    /**
+     * Réinitialise la position, les HP et les missiles du joueur.
+     */
     public void reset() {
         resetHP();
         this.missiles.clear();
@@ -134,16 +139,30 @@ public class Player extends Entity {
         this.positiony = 0.15;
     }
 
+    /**
+     * Réinitialise les points de vie au maximum et annule le statut de
+     * réapparition.
+     */
     private void resetHP() {
         this.health = hpMax;
         isRespawning = false;
         respawnTimer = 0;
     }
 
+    /**
+     * Vérifie si le joueur est en phase de réapparition (invulnérable).
+     *
+     * @return true si le joueur est en train de réapparaître
+     */
     public boolean isRespawning() {
         return isRespawning;
     }
 
+    /**
+     * Inflige des dégâts au joueur et commence le systeme de réapparition.
+     *
+     * @param damage le montant de dégâts reçus
+     */
     public void setHit(int damage) {
         takeDamage(damage);
         this.positionx = 0.5;
@@ -153,6 +172,12 @@ public class Player extends Entity {
         this.missiles.clear();
     }
 
+    /**
+     * Vérifie si le joueur est touché par l'un des ennemis ou leurs projectiles.
+     *
+     * @param enemies la liste des ennemis actifs
+     * @return true si le player est touché
+     */
     public boolean checkHitBy(List<Enemy> enemies) {
         for (Enemy enemy : enemies) {
 
