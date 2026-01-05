@@ -85,8 +85,5 @@ public class SpriteLoader {
         }
     }
 
-    public static void drawImage(String fileName, double positionx, double positiony, double size) {
-        StdDraw.picture(positionx, positiony, fileName, size, size);
-    }
 
 }
