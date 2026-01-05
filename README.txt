@@ -73,7 +73,12 @@ Sauvegarde du highscore à la fin
 
 Guide d'exécution du projet :
 
-...
+Pour exécuter le projet, exécuter le fichier app.java dans le dossier src/engine .
+Le niveau 1 se chargera automatiquement. Pour changer le niveau par défaut, il faut aller dans LevelManager.java puis dans le constructeur et modifier la valeur de l’attribut currentLevelIndex .
+
 
 Description de l'interface pour jouer avec votre projet :
-...
+
+Déplacement horizontal avec les flèches ← et →
+Tir de missiles avec la barre espace
+Pour relancer après un Game Over, presser la barre espace
