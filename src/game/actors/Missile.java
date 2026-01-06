@@ -67,7 +67,7 @@ public class Missile {
     }
 
     /**
-     * Dessine le missile comme un petit rectangle rouge.
+     * Dessine le missile comme un petit rectangle blanc.
      */
     public void drawSprite() {
         StdDraw.setPenColor(StdDraw.WHITE);

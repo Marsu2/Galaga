@@ -19,7 +19,7 @@ public class LevelManager {
     private int currentLevelIndex;
     private Player player;
     private Color[][] spriteLvl;
-    public int nbLevels = 3;
+    public int nbLevels;
     private Score score;
     private List<Enemy> enemies;
     private int soloCoolDownmax;
@@ -34,6 +34,8 @@ public class LevelManager {
      */
     public LevelManager(Player player, Score score) {
         this.currentLevelIndex = 0;
+        this.startTime = 90; // 3 sec
+        this.nbLevels = 3;
         this.player = player;
         this.score = score;
         loadLevels();
@@ -41,7 +43,6 @@ public class LevelManager {
         this.enemies = currentLevel.getEnemiesFormation();
         this.soloCoolDownmax = currentLevel.getattackCooldownMax();
         this.soloCoolDown = soloCoolDownmax;
-        this.startTime = 90; // 3 sec
     }
 
     /**
@@ -57,7 +58,7 @@ public class LevelManager {
     }
 
     /**
-     * Vérifie si la manche est terminée (tous les ennemis éliminés).
+     * Vérifie si le level est terminé (tous les ennemis sont morts).
      *
      * @return true si le niveau est fini
      */
@@ -66,7 +67,7 @@ public class LevelManager {
     }
 
     /**
-     * Vérifie si le joueur a gagné la partie (tous les niveaux complétés).
+     * Vérifie si le joueur a gagné la partie (tous les level finis).
      *
      * @return true si le joueur a gagné
      */
@@ -84,7 +85,7 @@ public class LevelManager {
     }
 
     /**
-     * Vérifie si le temps d'attente de début de niveau est encore actif.
+     * Vérifie si le temps d'attente de début de niveau est fini.
      *
      * @return true si le niveau peut commencer false sinon
      */
@@ -283,11 +284,10 @@ public class LevelManager {
     }
 
     /**
-     * Gère la logique spécifique de capture du joueur par un ennemi "Moth".
+     * Gère la logique de capture du joueur par un Moth.
      *
      * @param m            l'ennemi potentiel (Moth)
-     * @param enemiesToAdd liste pour ajouter les nouveaux ennemis générés (ex:
-     *                     abeille libérée)
+     * @param enemiesToAdd liste pour ajouter les nouveaux ennemis générés (abeille)
      */
     private void handleMothCapture(Enemy m, List<Enemy> enemiesToAdd) {
         if (m instanceof Moth) {

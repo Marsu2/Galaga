@@ -41,6 +41,10 @@ public class Bee extends Enemy {
         drawMissiles();
     }
 
+    /**
+     * Gère le mouvement de l'abeille, en utilisant une target aléatoire en
+     * soloMode.
+     */
     public void move() {
         if (soloMode) {
             double distance = Math.abs(positionx - target);

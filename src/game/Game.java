@@ -10,7 +10,7 @@ import game.actors.*;
 public class Game {
 
     private Player player; // Jouer, seul éléments actuellement dans notre jeu
-    private LevelManager manager;
+    private LevelManager manager; // Gestionnaire du déroullement des niveaux
     private Score score;
 
     /**

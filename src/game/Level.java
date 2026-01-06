@@ -15,7 +15,8 @@ import game.actors.*;
 
 /**
  * Représente un niveau de jeu chargé depuis un fichier.
- * Contient la formation d'ennemis et les paramètres de difficulté.
+ * Contient les parametre du niveau, la formation d'ennemis et ses paramètres
+ * des monstres.
  */
 public class Level {
     private String levelName;
@@ -65,7 +66,7 @@ public class Level {
     /**
      * Définit le délai d'attaque de la formation.
      * 
-     * @param attackCooldownMax nouveau cooldown (ms)
+     * @param attackCooldownMax nouveau cooldown
      */
     public void setattackCooldownMax(int attackCooldownMax) {
         this.attackCooldownMax = attackCooldownMax;
@@ -74,7 +75,7 @@ public class Level {
     /**
      * Définit le délai de tir des ennemis.
      * 
-     * @param shootCooldown nouveau cooldown (ms)
+     * @param shootCooldown nouveau cooldown
      */
     public void setShootCooldown(int shootCooldown) {
         this.shootCooldown = shootCooldown;
@@ -92,7 +93,7 @@ public class Level {
     /**
      * Retourne le délai d'attaque de la formation.
      * 
-     * @return cooldown d'attaque (ms)
+     * @return cooldown d'attaque
      */
     public int getattackCooldownMax() {
         return attackCooldownMax;
@@ -101,7 +102,7 @@ public class Level {
     /**
      * Retourne le délai de tir des ennemis.
      * 
-     * @return cooldown de tir (ms)
+     * @return cooldown de tir
      */
     public int getShootCooldown() {
         return shootCooldown;
@@ -184,12 +185,21 @@ public class Level {
         }
     }
 
+    /**
+     * Reset l'état de tous les ennemis de la formation (position, vie,
+     * etc).
+     */
     public void resetEnemies() {
         for (Enemy enemy : enemiesFormation) {
             enemy.reset();
         }
     }
 
+    /**
+     * Vérifie si tous les ennemis du niveau ont été éliminés.
+     * 
+     * @return true si la liste d'ennemis ne contient que des ennemis morts ou vide.
+     */
     public boolean areAllDead() {
         for (Enemy enemy : enemiesFormation) {
             if (!enemy.isDead()) {
@@ -199,6 +209,9 @@ public class Level {
         return true;
     }
 
+    /**
+     * Vérifie si la formation atteint les bords de l'écran et inverse la direction.
+     */
     private void formationinBound() {
         for (Enemy enemy : enemiesFormation) {
             if (!enemy.isDead()) {
@@ -210,6 +223,10 @@ public class Level {
         }
     }
 
+    /**
+     * Déplace la formation horizontalement selon la direction
+     * actuelle.
+     */
     public void formationMove() {
         formationinBound();
         for (Enemy enemy : enemiesFormation) {
@@ -223,6 +240,12 @@ public class Level {
         }
     }
 
+    /**
+     * Choisis aléatoirement un ennemi éligible (en bas de la formation) pour lancer
+     * une attaque en solo.
+     * 
+     * @return L'ennemi choisi pour attaquer, ou null si aucun n'est disponible.
+     */
     public Enemy choseSolo() {
         List<Enemy> validPicks = new ArrayList<>();
         for (Enemy enemy : enemiesFormation) {
@@ -238,6 +261,9 @@ public class Level {
         return chosen;
     }
 
+    /**
+     * Affiche le nom du niveau au centre de l'écran.
+     */
     public void drawLvlName() {
         Font font = new Font("Arial", Font.BOLD, 32);
         StdDraw.setFont(font);

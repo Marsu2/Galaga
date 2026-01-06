@@ -175,8 +175,8 @@ public abstract class Enemy extends Entity {
     }
 
     /**
-     * Vérifie si l'ennemi est le plus bas de sa colonne pour lancer une attaque
-     * solo.
+     * Vérifie si l'ennemi est le plus bas de sa formation pour pouvoir peut etre
+     * attaquer en solo.
      *
      * @param enemies la liste des ennemis
      * @return true si l'ennemi est éligible pour une attaque solo

@@ -159,7 +159,7 @@ public abstract class Entity {
     }
 
     /**
-     * Supprime les missiles qui sont sortis des limites de l'écran.
+     * Supprime les missiles qui sont sortis de l'ecran.
      */
     protected void removeMissilesOOB() {
         List<Missile> rmMissiles = new ArrayList<>();
@@ -172,7 +172,7 @@ public abstract class Entity {
     }
 
     /**
-     * Supprime tous les missiles de l'entité.
+     * Supprime tous les missiles de l'entite.
      */
     public void removeAllMissiles() {
         missiles.clear();

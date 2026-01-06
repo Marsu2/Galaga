@@ -36,6 +36,9 @@ public class Butterfly extends Enemy {
         drawMissiles();
     }
 
+    /**
+     * Gère le déplacement vertical du papillon en soloMode.
+     */
     public void move() {
         if (soloMode) {
             positiony -= speed;

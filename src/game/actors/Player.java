@@ -13,9 +13,9 @@ public class Player extends Entity {
     private int coolDownShoot;
     private int coolDownShootMax;
     private int hpMax;
-    private boolean isRespawning = false;
-    private int respawnTimer = 0;
-    private int respawnDuration = 60;
+    private boolean isRespawning;
+    private int respawnTimer;
+    private int respawnDuration;
 
     /**
      * Crée un nouveau joueur avec ses paramètres initiaux.
@@ -31,10 +31,13 @@ public class Player extends Entity {
         coolDownShoot = 0;
         coolDownShootMax = 6;
         hpMax = health;
+        respawnTimer = 0;
+        respawnDuration = 60;
+        isRespawning = false;
     }
 
     /**
-     * Vérifie si le joueur est en phase de réapparition (invulnérable).
+     * Vérifie si le joueur est en phase de réapparition (invulnérable/invisible).
      *
      * @return true si le joueur est en train de réapparaître
      */
@@ -43,7 +46,7 @@ public class Player extends Entity {
     }
 
     /**
-     * Met à jour le joueur : mouvement et gestion de saveHighscore();s tirs.
+     * Met à jour le joueur : mouvement missiles et respawn.
      */
     public void update() {
         removeMissilesOOB();
@@ -67,7 +70,7 @@ public class Player extends Entity {
 
     /**
      * Déplace le joueur horizontalement avec les flèches gauche/droite.
-     * Respecte les limites de l'écran (0 à 1).
+     * Respecte les limites de l'ecran.
      */
     public void move() {
         // Si la flèche gauche est pressé
@@ -86,7 +89,7 @@ public class Player extends Entity {
 
     /**
      * Vérifie si le joueur peut tirer.
-     * Limite à 3 missiles simultanés et respecte le cooldown.
+     * Limite à 3 missiles simultanes et respecte le cooldown.
      * 
      * @return true s'il peut tirer
      */
@@ -96,7 +99,7 @@ public class Player extends Entity {
 
     /**
      * Gère le tir du joueur avec la barre espace.
-     * Créer un missile qui monte avec cooldown.
+     * Créer un missile qui monte avec gestion du cooldown.
      */
     public void shoot() {
         if (StdDraw.isKeyPressed(32) && canShoot()) {
@@ -139,7 +142,7 @@ public class Player extends Entity {
     }
 
     /**
-     * Réinitialise la position, les HP et les missiles du joueur.
+     * Reset la position, les HP et les missiles du joueur.
      */
     public void reset() {
         resetHP();
@@ -148,7 +151,7 @@ public class Player extends Entity {
     }
 
     /**
-     * Réinitialise les points de vie au maximum et annule le statut de
+     * Reset les points de vie au maximum et annule le statut de
      * réapparition.
      */
     private void resetHP() {
@@ -158,7 +161,7 @@ public class Player extends Entity {
     }
 
     /**
-     * Reinitialise la position du joueur au centre bas de l'écran.
+     * Reset la position du joueur au centre bas de l'écran.
      */
     public void resetPosition() {
         this.positionx = 0.5;
@@ -166,7 +169,7 @@ public class Player extends Entity {
     }
 
     /**
-     * Inflige des dégâts au joueur et commence le systeme de réapparition.
+     * Inflige des dégâts au joueur et commence le systeme de respawn.
      *
      * @param damage le montant de dégâts reçus
      */

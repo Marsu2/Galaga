@@ -16,14 +16,12 @@ import game.utils.SpriteLoader;
  * Sauvegarde le highscore dans le fichier highscore/highscore.sc.
  */
 public class Score {
-    /**
-     * @param: score, highscore
-     * 
-     **/
+
     private int score;
     private int highscore;
 
     /**
+     * Constructeur.
      * Initialise le score à 0 et charge le highscore depuis le fichier.
      */
     public Score() {
@@ -80,16 +78,16 @@ public class Score {
     }
 
     /**
-     * Retourne le highscore persistant.
+     * Retourne le highscore.
      * 
-     * @return meilleur score historique
+     * @return meilleur score
      */
     public int getHighscore() {
         return highscore;
     }
 
     /**
-     * Réinitialise le score courant et recharge le highscore.
+     * Reset le score courant et recharge le highscore.
      */
     public void reset() {
         saveHighscore();

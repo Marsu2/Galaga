@@ -36,12 +36,18 @@ public class Boss extends Enemy {
         drawMissiles();
     }
 
+    /**
+     * Ne fait rien car pas de soloMode pour le boss.
+     */
     public void move() {
         if (soloMode) {
             return;
         }
     }
 
+    /**
+     * Tire deux missiles simultanément.
+     */
     @Override
     public void shoot() {
         double offset = size / 4;
