@@ -3,11 +3,11 @@ package game.actors;
 import game.utils.SpriteLoader;
 
 /**
- * Sous class de enemy pour MOTH qui ca pouvoir attaquer
+ * MOTH ennemie qui vole et va pouvoir capturer le joueur.
  **/
 public class Moth extends Enemy {
-    private Bee capturedBee = null;
-    private boolean hasCaptured = false;
+    private Bee capturedBee;
+    private boolean hasCaptured;
 
     /**
      * Initialise un nouveau papillon de nuit ennemi.
@@ -23,6 +23,8 @@ public class Moth extends Enemy {
     public Moth(double positionx, double positiony, double size, int score, int health, double speed,
             int shootCooldown) {
         super(positionx, positiony, size, score, health, speed, shootCooldown);
+        capturedBee = null;
+        hasCaptured = false;
     }
 
     /**
