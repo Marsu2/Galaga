@@ -12,7 +12,7 @@ import game.actors.*;
 import game.utils.SpriteLoader;
 
 /**
- * Gère le score actuel et le highscore persistant du joueur.
+ * Gère le score actuel et le highscore du joueur.
  * Sauvegarde le highscore dans le fichier highscore/highscore.sc.
  */
 public class Score {
