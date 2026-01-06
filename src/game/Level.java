@@ -26,21 +26,22 @@ public class Level {
     private boolean direction; // false gauche, true droite
 
     /**
+     * Charge un niveau depuis un fichier de configuration.
+     * 
+     * @param filePath chemin vers le fichier de niveau
+     */
+    public Level(String filePath) {
+        loadLevel(filePath);
+        this.direction = true;
+    }
+
+    /**
      * Définit le nom du niveau.
      * 
      * @param levelName nouveau nom
      */
     public void setLevelName(String levelName) {
         this.levelName = levelName;
-    }
-
-    /**
-     * Retourne la vitesse de la formation d'ennemis.
-     * 
-     * @return vitesse de formation
-     */
-    public double getFormationSpeed() {
-        return formationSpeed;
     }
 
     /**
@@ -62,15 +63,6 @@ public class Level {
     }
 
     /**
-     * Retourne le délai d'attaque de la formation.
-     * 
-     * @return cooldown d'attaque (ms)
-     */
-    public int getattackCooldownMax() {
-        return attackCooldownMax;
-    }
-
-    /**
      * Définit le délai d'attaque de la formation.
      * 
      * @param attackCooldownMax nouveau cooldown (ms)
@@ -80,21 +72,39 @@ public class Level {
     }
 
     /**
-     * Retourne le délai de tir des ennemis.
-     * 
-     * @return cooldown de tir (ms)
-     */
-    public int getShootCooldown() {
-        return shootCooldown;
-    }
-
-    /**
      * Définit le délai de tir des ennemis.
      * 
      * @param shootCooldown nouveau cooldown (ms)
      */
     public void setShootCooldown(int shootCooldown) {
         this.shootCooldown = shootCooldown;
+    }
+
+    /**
+     * Retourne la vitesse de la formation d'ennemis.
+     * 
+     * @return vitesse de formation
+     */
+    public double getFormationSpeed() {
+        return formationSpeed;
+    }
+
+    /**
+     * Retourne le délai d'attaque de la formation.
+     * 
+     * @return cooldown d'attaque (ms)
+     */
+    public int getattackCooldownMax() {
+        return attackCooldownMax;
+    }
+
+    /**
+     * Retourne le délai de tir des ennemis.
+     * 
+     * @return cooldown de tir (ms)
+     */
+    public int getShootCooldown() {
+        return shootCooldown;
     }
 
     /**
@@ -116,19 +126,9 @@ public class Level {
     }
 
     /**
-     * Charge un niveau depuis un fichier de configuration.
-     * 
-     * @param filePath chemin vers le fichier de niveau
-     */
-    public Level(String filePath) {
-        loadLevel(filePath);
-        this.direction = true;
-    }
-
-    /**
      * Charge les données du niveau depuis un fichier texte.
-     * Format : première ligne = nom vitesse attack shoot ; lignes suivantes = type
-     * x y size score speed
+     * 1ere ligne: les informations du niveau
+     * 2nde et suivantes: les ennemis et leurs parametres
      */
     private void loadLevel(String filePath) {
 

@@ -38,13 +38,24 @@ public abstract class Entity {
     }
 
     /**
-     * Retourne la taille de l'entité.
-     *
-     * @return la taille de l'entité
+     * Dessine le sprite spécifique de l'entité.
      */
-    public double getSize() {
-        return size;
-    }
+    public abstract void draw();
+
+    /**
+     * Met à jour l'état de l'entité (mouvement, tirs, etc.).
+     */
+    public abstract void update();
+
+    /**
+     * Déplace l'entité selon sa logique.
+     */
+    public abstract void move();
+
+    /**
+     * Fait tirer l'entité.
+     */
+    public abstract void shoot();
 
     /**
      * Définit la positionX de l'entité.
@@ -53,6 +64,33 @@ public abstract class Entity {
      */
     public void setPositionx(double positionx) {
         this.positionx = positionx;
+    }
+
+    /**
+     * Définit la liste des missiles de l'entité.
+     *
+     * @param missiles la nouvelle liste de missiles
+     */
+    public void setMissiles(List<Missile> missiles) {
+        this.missiles = missiles;
+    }
+
+    /**
+     * Met à jour les points de vie (jamais en négatif).
+     * 
+     * @param health nouveaux points de vie
+     */
+    public void setHealth(int health) {
+        this.health = Math.max(0, health);
+    }
+
+    /**
+     * Retourne la taille de l'entité.
+     *
+     * @return la taille de l'entité
+     */
+    public double getSize() {
+        return size;
     }
 
     /**
@@ -66,15 +104,6 @@ public abstract class Entity {
     }
 
     /**
-     * Définit la liste des missiles de l'entité.
-     *
-     * @param missiles la nouvelle liste de missiles
-     */
-    public void setMissiles(List<Missile> missiles) {
-        this.missiles = missiles;
-    }
-
-    /**
      * Retourne les points de vie actuels.
      * 
      * @return points de vie restants
@@ -82,15 +111,6 @@ public abstract class Entity {
 
     public int getHealth() {
         return health;
-    }
-
-    /**
-     * Met à jour les points de vie (jamais en négatif).
-     * 
-     * @param health nouveaux points de vie
-     */
-    public void setHealth(int health) {
-        this.health = Math.max(0, health);
     }
 
     /**
@@ -110,26 +130,6 @@ public abstract class Entity {
     public double getPositiony() {
         return positiony;
     }
-
-    /**
-     * Dessine le sprite spécifique de l'entité.
-     */
-    public abstract void draw();
-
-    /**
-     * Met à jour l'état de l'entité (mouvement, tirs, etc.).
-     */
-    public abstract void update();
-
-    /**
-     * Déplace l'entité selon sa logique.
-     */
-    public abstract void move();
-
-    /**
-     * Fait tirer l'entité.
-     */
-    public abstract void shoot();
 
     /**
      * Vérifie si l'entité est morte.

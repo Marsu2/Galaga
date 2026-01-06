@@ -34,6 +34,15 @@ public class Player extends Entity {
     }
 
     /**
+     * Vérifie si le joueur est en phase de réapparition (invulnérable).
+     *
+     * @return true si le joueur est en train de réapparaître
+     */
+    public boolean isRespawning() {
+        return isRespawning;
+    }
+
+    /**
      * Met à jour le joueur : mouvement et gestion de saveHighscore();s tirs.
      */
     public void update() {
@@ -79,7 +88,7 @@ public class Player extends Entity {
      * Vérifie si le joueur peut tirer.
      * Limite à 3 missiles simultanés et respecte le cooldown.
      * 
-     * @return true si autorisé à tirer false sinon
+     * @return true s'il peut tirer
      */
     public boolean canShoot() {
         return missiles.size() < 3 && coolDownShoot == 0;
@@ -134,9 +143,8 @@ public class Player extends Entity {
      */
     public void reset() {
         resetHP();
-        this.missiles.clear();
-        this.positionx = 0.5;
-        this.positiony = 0.15;
+        removeAllMissiles();
+        resetPosition();
     }
 
     /**
@@ -150,12 +158,11 @@ public class Player extends Entity {
     }
 
     /**
-     * Vérifie si le joueur est en phase de réapparition (invulnérable).
-     *
-     * @return true si le joueur est en train de réapparaître
+     * Reinitialise la position du joueur au centre bas de l'écran.
      */
-    public boolean isRespawning() {
-        return isRespawning;
+    public void resetPosition() {
+        this.positionx = 0.5;
+        this.positiony = 0.15;
     }
 
     /**
@@ -165,11 +172,10 @@ public class Player extends Entity {
      */
     public void setHit(int damage) {
         takeDamage(damage);
-        this.positionx = 0.5;
-        this.positiony = 0.15;
+        resetPosition();
         this.isRespawning = true;
         this.respawnTimer = respawnDuration;
-        this.missiles.clear();
+        removeAllMissiles();
     }
 
     /**

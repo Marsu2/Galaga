@@ -44,7 +44,6 @@ public class Boss extends Enemy {
 
     @Override
     public void shoot() {
-        // Le boss tire 2 missiles côte à côte
         double offset = size / 4;
         Missile m1 = new Missile(0.02, positionx - offset, positiony - size / 2, EDirectionMissile.DOWN);
         Missile m2 = new Missile(0.02, positionx + offset, positiony - size / 2, EDirectionMissile.DOWN);

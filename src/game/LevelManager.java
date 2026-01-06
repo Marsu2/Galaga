@@ -45,13 +45,61 @@ public class LevelManager {
     }
 
     /**
+     * Retourne le niveau actuellement actif.
+     * 
+     * @return niveau courant ou null si aucun niveau
+     */
+    public Level getCurrentLevel() {
+        if (levels.length == 0) {
+            return null;
+        }
+        return levels[currentLevelIndex];
+    }
+
+    /**
+     * Vérifie si la manche est terminée (tous les ennemis éliminés).
+     *
+     * @return true si le niveau est fini
+     */
+    public boolean isRoundEnded() {
+        return currentLevel.areAllDead();
+    }
+
+    /**
+     * Vérifie si le joueur a gagné la partie (tous les niveaux complétés).
+     *
+     * @return true si le joueur a gagné
+     */
+    public boolean hasWon() {
+        return (currentLevelIndex == nbLevels - 1) && isRoundEnded();
+    }
+
+    /**
+     * Vérifie si le joueur a perdu la partie (player mort).
+     *
+     * @return true si le joueur a perdu
+     */
+    public Boolean hasLost() {
+        return player.isDead();
+    }
+
+    /**
+     * Vérifie si le temps d'attente de début de niveau est encore actif.
+     *
+     * @return true si le niveau peut commencer false sinon
+     */
+    public boolean isStartTime() {
+        return startTime <= 0;
+    }
+
+    /**
      * Met à jour la logique du niveau courant (ennemis, collisions, progression).
      */
     public void update() {
-        System.out.println(soloCoolDown);
         if (startTime > 0) {
             // On ne met rien à jour tant que le nom du niveau est affiché
-            player.setMissiles(new ArrayList<>());
+            player.resetPosition();
+            player.removeAllMissiles();
             return;
         }
         playerGetHit();
@@ -133,19 +181,8 @@ public class LevelManager {
     }
 
     /**
-     * Retourne le niveau actuellement actif.
-     * 
-     * @return niveau courant ou null si aucun niveau
-     */
-    public Level getCurrentLevel() {
-        if (levels.length == 0) {
-            return null;
-        }
-        return levels[currentLevelIndex];
-    }
-
-    /**
      * Charge tous les niveaux depuis les fichiers de ressources.
+     * En créant une instance Level pour chaque fichier.
      */
     private void loadLevels() {
         this.levels = new Level[nbLevels];
@@ -172,16 +209,7 @@ public class LevelManager {
     }
 
     /**
-     * Vérifie si la manche est terminée (tous les ennemis éliminés).
-     *
-     * @return true si le niveau est fini
-     */
-    public boolean isRoundEnded() {
-        return currentLevel.areAllDead();
-    }
-
-    /**
-     * Dessine les indicateurs de niveaux terminés sur l'interface.
+     * Dessine le sprite level.spr pour afficher le nombre de niveaux passés.
      *
      * @param positionx position x de départ
      * @param positiony position y
@@ -189,43 +217,13 @@ public class LevelManager {
      * @param fileName  chemin du sprite à utiliser
      */
     private void drawLvlPassed(double positionx, double positiony, double size, String fileName) {
-        for (int i = 0; i < currentLevelIndex; i++) {
-            double tempx = positionx - i * 0.04;
-            drawLvlSprite(tempx, positiony, size, fileName);
-        }
-    }
-
-    /**
-     * Charge et dessine un sprite d'interface spécifique.
-     *
-     * @param positionx position x
-     * @param positiony position y
-     * @param size      taille du sprite
-     * @param fileName  chemin du fichier sprite
-     */
-    private void drawLvlSprite(double positionx, double positiony, double size, String fileName) {
         if (spriteLvl == null) {
             spriteLvl = SpriteLoader.loadSprite(fileName);
         }
-        SpriteLoader.drawSprite(spriteLvl, positionx, positiony, size);
-    }
-
-    /**
-     * Vérifie si le joueur a gagné la partie (tous les niveaux complétés).
-     *
-     * @return true si le joueur a gagné
-     */
-    public boolean hasWon() {
-        return (currentLevelIndex == nbLevels - 1) && isRoundEnded();
-    }
-
-    /**
-     * Vérifie si le joueur a perdu la partie (player mort).
-     *
-     * @return true si le joueur a perdu
-     */
-    public Boolean hasLost() {
-        return player.isDead();
+        for (int i = 0; i < currentLevelIndex; i++) {
+            double tempx = positionx - i * 0.04;
+            SpriteLoader.drawSprite(spriteLvl, tempx, positiony, size);
+        }
     }
 
     /**
@@ -282,15 +280,6 @@ public class LevelManager {
             player.setHit(1);
             currentLevel.resetEnemies();
         }
-    }
-
-    /**
-     * Vérifie si le temps d'attente de début de niveau est encore actif.
-     *
-     * @return true si le niveau est en phase de démarrage
-     */
-    public boolean isStartTime() {
-        return startTime <= 0;
     }
 
     /**

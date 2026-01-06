@@ -3,7 +3,7 @@ package game.actors;
 import engine.StdDraw;
 
 /**
- * Directions possibles pour les missiles.
+ * enum pour les directions possibles pour les missiles.
  */
 enum EDirectionMissile {
     UP, DOWN
@@ -22,6 +22,23 @@ public class Missile {
     private double heigth;
 
     /**
+     * Crée un nouveau missile avec ses paramètres initiaux.
+     * 
+     * @param speed     vitesse de déplacement
+     * @param positionx position horizontale initiale
+     * @param positiony position verticale initiale
+     * @param direction direction de tir (UP ou DOWN)
+     */
+    public Missile(double speed, double positionx, double positiony, EDirectionMissile direction) {
+        this.speed = speed;
+        this.positiony = positiony;
+        this.positionx = positionx;
+        this.direction = direction;
+        this.width = 0.001;
+        this.heigth = 0.01;
+    }
+
+    /**
      * Retourne la position verticale du missile.
      * 
      * @return coordonnée y
@@ -37,23 +54,6 @@ public class Missile {
      */
     public double getPositionx() {
         return positionx;
-    }
-
-    /**
-     * Crée un nouveau missile avec ses paramètres initiaux.
-     * 
-     * @param speed     vitesse de déplacement
-     * @param positionx position horizontale initiale
-     * @param positiony position verticale initiale
-     * @param direction direction de tir (UP ou DOWN)
-     */
-    public Missile(double speed, double positionx, double positiony, EDirectionMissile direction) {
-        this.speed = speed;
-        this.positiony = positiony;
-        this.positionx = positionx;
-        this.direction = direction;
-        this.width = 0.001;
-        this.heigth = 0.01;
     }
 
     /**

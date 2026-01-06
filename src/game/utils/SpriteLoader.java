@@ -18,7 +18,7 @@ public class SpriteLoader {
      * Color.
      *
      * @param fileName le chemin du fichier contenant le sprite
-     * @return une matrice de couleurs représentant le sprite
+     * @return une matrice de Color représentant le sprite
      */
     public static Color[][] loadSprite(String fileName) {
         List<String> lines = loadFile(fileName);
@@ -83,7 +83,7 @@ public class SpriteLoader {
     /**
      * Dessine un sprite à l'écran à une position donnée.
      *
-     * @param sprite    la matrice de couleurs à dessiner
+     * @param sprite    le sprite a dessiner
      * @param positionx la position horizontale du centre du sprite
      * @param positiony la position verticale du centre du sprite
      * @param size      la taille d'affichage du sprite

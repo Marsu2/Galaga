@@ -42,6 +42,34 @@ public abstract class Enemy extends Entity {
     }
 
     /**
+     * Déplace l'ennemi selon sa logique spécifique.
+     */
+    public abstract void move();
+
+    /**
+     * Dessine le sprite spécifique de l'ennemi
+     */
+    public abstract void draw();
+
+    /**
+     * Active ou désactive le mode solo pour cet ennemi.
+     *
+     * @param soloMode true pour activer le mode solo
+     */
+    public void setSoloMode(boolean soloMode) {
+        this.soloMode = soloMode;
+    }
+
+    /**
+     * Définit si le score de cet ennemi a été comptabilisé.
+     *
+     * @param scored true si le score a été compté
+     */
+    public void setScored(boolean scored) {
+        this.scored = scored;
+    }
+
+    /**
      * Définit le temps de recharge avant le prochain tir.
      *
      * @param shootCooldown le nombre de frames avant le prochain tir
@@ -69,6 +97,15 @@ public abstract class Enemy extends Entity {
     }
 
     /**
+     * Vérifie si l'ennemi est en mode "solo" (Il part en mission).
+     *
+     * @return true si l'ennemi est en mode solo
+     */
+    public boolean isSoloMode() {
+        return soloMode;
+    }
+
+    /**
      * Met à jour l'ennemi : mouvement, tir automatique et gestion du cooldown.
      */
     public void update() {
@@ -86,9 +123,15 @@ public abstract class Enemy extends Entity {
     }
 
     /**
-     * Déplace l'ennemi selon sa logique spécifique.
+     * Réinitialise l'ennemi à sa position initiale et ses états par défaut.
      */
-    public abstract void move();
+    public void reset() {
+        positionx = initialPositionX;
+        positiony = initialPositionY;
+        removeAllMissiles();
+        setShootCooldown(90 + (new Random().nextInt(100)));// 3 sec + random 0-100 frames
+        soloMode = false;
+    }
 
     /**
      * Tire un missile vers le bas (vers le joueur).
@@ -96,13 +139,7 @@ public abstract class Enemy extends Entity {
     public void shoot() {
         Missile m1 = new Missile(0.02, positionx, positiony - size / 2, EDirectionMissile.DOWN);
         missiles.add(m1);
-
     }
-
-    /**
-     * Dessine le sprite spécifique de l'ennemi
-     */
-    public abstract void draw();
 
     /**
      * Vérifie si l'ennemi peut tirer (cooldown écoulé et personne en dessous).
@@ -118,24 +155,6 @@ public abstract class Enemy extends Entity {
             }
         }
         return false;
-    }
-
-    /**
-     * Vérifie si l'ennemi est en mode "solo" (Il part en mission).
-     *
-     * @return true si l'ennemi est en mode solo
-     */
-    public boolean isSoloMode() {
-        return soloMode;
-    }
-
-    /**
-     * Active ou désactive le mode solo pour cet ennemi.
-     *
-     * @param soloMode true pour activer le mode solo
-     */
-    public void setSoloMode(boolean soloMode) {
-        this.soloMode = soloMode;
     }
 
     /**
@@ -173,17 +192,6 @@ public abstract class Enemy extends Entity {
     }
 
     /**
-     * Réinitialise l'ennemi à sa position initiale et ses états par défaut.
-     */
-    public void reset() {
-        positionx = initialPositionX;
-        positiony = initialPositionY;
-        removeAllMissiles();
-        setShootCooldown(90 + (new Random().nextInt(100)));// 3 sec + random 0-100 frames
-        soloMode = false;
-    }
-
-    /**
      * Vérifie si l'ennemi est touché par un missile du joueur.
      *
      * @param player le joueur (pour accéder à ses missiles)
@@ -213,15 +221,6 @@ public abstract class Enemy extends Entity {
      */
     public boolean canRemove() {
         return isDead() && missiles.isEmpty();
-    }
-
-    /**
-     * Définit si le score de cet ennemi a été comptabilisé.
-     *
-     * @param scored true si le score a été compté
-     */
-    public void setScored(boolean scored) {
-        this.scored = scored;
     }
 
     /**
