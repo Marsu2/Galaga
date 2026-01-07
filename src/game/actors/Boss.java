@@ -41,7 +41,7 @@ public class Boss extends Enemy {
      */
     public void move() {
         if (soloMode) {
-            return;
+            soloMode = false;
         }
     }
 
