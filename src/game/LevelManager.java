@@ -33,7 +33,7 @@ public class LevelManager {
      * @param score  l'instance du gestionnaire de score
      */
     public LevelManager(Player player, Score score) {
-        this.currentLevelIndex = 2;
+        this.currentLevelIndex = 0;
         this.startTime = 90; // 3 sec
         this.nbLevels = 3;
         this.player = player;
